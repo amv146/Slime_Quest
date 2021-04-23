@@ -277,6 +277,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 192656653}
   m_CullTransparentMesh: 0
+--- !u!1 &275419226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 275419227}
+  - component: {fileID: 275419228}
+  m_Layer: 5
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &275419227
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275419226}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1043869005}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &275419228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275419226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df910974a769f41d88dd683dfd9e8c41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - text: hi
+    options: []
+    id: 1.1
+    image: {fileID: 0}
+  - text: hello
+    options:
+    - text: 
+      targetId: 1.1
+      unityEvent:
+        m_PersistentCalls:
+          m_Calls: []
+    id: 1.2
+    image: {fileID: 0}
 --- !u!1 &311737221
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,7 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 263161f6e6a134b48b1c3cf7b0cc25a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialogueBox: {fileID: 91725763}
+  TextBox: {fileID: 91725763}
   TextWaitFrames: 9
 --- !u!114 &311737226
 MonoBehaviour:
@@ -520,6 +582,7 @@ GameObject:
   - component: {fileID: 733408534}
   - component: {fileID: 733408533}
   - component: {fileID: 733408532}
+  - component: {fileID: 733408537}
   m_Layer: 5
   m_Name: Panel-Option2-Background (2)
   m_TagString: Untagged
@@ -643,6 +706,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733408530}
   m_CullTransparentMesh: 0
+--- !u!114 &733408537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733408530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7d31a1a10064c2cbca52cdb3f231a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TextBox: {fileID: 1291660197}
+  TextWaitFrames: 5
 --- !u!1 &828620019
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,6 +836,7 @@ GameObject:
   - component: {fileID: 902667063}
   - component: {fileID: 902667062}
   - component: {fileID: 902667066}
+  - component: {fileID: 902667065}
   m_Layer: 5
   m_Name: Panel-Conversation
   m_TagString: Untagged
@@ -883,6 +961,22 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &902667065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902667058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e90162fa1e54bd5ba56f2234c12425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  optionControllers:
+  - {fileID: 1443674041}
+  - {fileID: 733408537}
+  dialogueController: {fileID: 311737225}
 --- !u!114 &902667066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1135,6 +1229,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1149707016}
+  - {fileID: 275419227}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1487,6 +1582,7 @@ GameObject:
   - component: {fileID: 1443674037}
   - component: {fileID: 1443674038}
   - component: {fileID: 1443674036}
+  - component: {fileID: 1443674041}
   m_Layer: 5
   m_Name: Panel-Option1-Background (1)
   m_TagString: Untagged
@@ -1610,6 +1706,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1443674034}
   m_CullTransparentMesh: 0
+--- !u!114 &1443674041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443674034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7d31a1a10064c2cbca52cdb3f231a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TextBox: {fileID: 192656655}
+  TextWaitFrames: 5
 --- !u!1 &2080006951
 GameObject:
   m_ObjectHideFlags: 0
