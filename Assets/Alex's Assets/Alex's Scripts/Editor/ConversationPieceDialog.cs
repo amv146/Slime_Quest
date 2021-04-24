@@ -51,14 +51,14 @@ public class ConversationPieceDialog : ScriptableWizard
     void OnDrawOption(Rect rect, int index, bool isActive, bool isFocused)
     {
         var item = conversationPiece.options[index];
-        var i = System.Array.IndexOf(targets, item.targetId);
+        var i = System.Array.IndexOf(targets, item.nextDialogueID);
         if (i < 0) i = 0;
         var r = rect;
         r.height = 16;
         r.width = rect.width * 0.2f;
         i = EditorGUI.Popup(r, i, targets);
         r.x += r.width;
-        item.targetId = targets[i];
+        item.nextDialogueID = targets[i];
         r.x += r.width;
         r.width = rect.width * 0.6f;
         item.text = EditorGUI.TextField(r, item.text);
@@ -67,7 +67,7 @@ public class ConversationPieceDialog : ScriptableWizard
 
     private void OnAdd(ReorderableList list)
     {
-        list.list.Add(new ConversationOption() { targetId = "", text = "" });
+        list.list.Add(new ConversationOption() { nextDialogueID = "", text = "" });
     }
 
     void OnWizardCreate()

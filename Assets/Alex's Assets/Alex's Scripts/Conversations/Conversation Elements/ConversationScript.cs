@@ -32,10 +32,10 @@ public class ConversationScript : MonoBehaviour, ISerializationCallbackReceiver
                     var options = i.options;
                     for (var j = 0; j < options.Count; j++)
                     {
-                        if (options[j].targetId == originalConversationPiece.id)
+                        if (options[j].nextDialogueID == originalConversationPiece.id)
                         {
                             var c = options[j];
-                            c.targetId = newConversationPiece.id;
+                            c.nextDialogueID = newConversationPiece.id;
                             options[j] = c;
                         }
                     }
