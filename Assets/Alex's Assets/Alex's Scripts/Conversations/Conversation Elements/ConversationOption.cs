@@ -4,14 +4,19 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public class ConversationOption
+public class ConversationOption : ScriptableObject
 {
     public string text;
     public string nextDialogueID;
-    public UnityEvent unityEvent;
+    public UnityEvent optionEvent;
+
+    public ConversationOption() {
+
+    }
 
     public ConversationOption(string text = "", string nextDialogueID = "") {
         this.text = text;
         this.nextDialogueID = nextDialogueID;
+        this.optionEvent = null;
     }
 }

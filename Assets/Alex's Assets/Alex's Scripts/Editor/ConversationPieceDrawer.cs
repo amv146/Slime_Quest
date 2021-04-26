@@ -45,7 +45,7 @@ public class ConversationOptionDrawer : PropertyDrawer
         rect.height = 16;
         rect.width = position.width * 0.25f;
         EditorGUI.BeginProperty(rect, label, property);
-        EditorGUI.PropertyField(rect, property.FindPropertyRelative("targetId"), GUIContent.none);
+        EditorGUI.PropertyField(rect, property.FindPropertyRelative("nextDialogueID"), GUIContent.none);
         rect.x += rect.width;
         rect.width = 72;
         EditorGUI.PropertyField(rect, property.FindPropertyRelative("image"), GUIContent.none);
@@ -54,6 +54,8 @@ public class ConversationOptionDrawer : PropertyDrawer
         EditorGUI.PropertyField(rect, property.FindPropertyRelative("text"), GUIContent.none);
         rect.x += rect.width;
         EditorGUI.PropertyField(rect, property.FindPropertyRelative("enabled"), GUIContent.none);
+        rect.y += 20;
+        EditorGUI.PropertyField(rect, property.FindPropertyRelative("optionEvents"), GUIContent.none);
         EditorGUI.EndProperty();
     }
 

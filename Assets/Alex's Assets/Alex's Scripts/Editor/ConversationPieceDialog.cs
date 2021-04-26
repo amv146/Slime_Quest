@@ -39,6 +39,7 @@ public class ConversationPieceDialog : ScriptableWizard
     void BuildOptionList()
     {
         options = new ReorderableList(conversationPiece.options, typeof(ConversationOption), true, true, true, true);
+        options.elementHeight = 2.5f * EditorGUIUtility.singleLineHeight;
         options.drawElementCallback = OnDrawOption;
         options.drawHeaderCallback = OnDrawOptionHeader;
     }
@@ -51,17 +52,35 @@ public class ConversationPieceDialog : ScriptableWizard
     void OnDrawOption(Rect rect, int index, bool isActive, bool isFocused)
     {
         var item = conversationPiece.options[index];
-        var i = System.Array.IndexOf(targets, item.nextDialogueID);
-        if (i < 0) i = 0;
-        var r = rect;
-        r.height = 16;
-        r.width = rect.width * 0.2f;
-        i = EditorGUI.Popup(r, i, targets);
-        r.x += r.width;
-        item.nextDialogueID = targets[i];
-        r.x += r.width;
-        r.width = rect.width * 0.6f;
-        item.text = EditorGUI.TextField(r, item.text);
+        var targetIndex = System.Array.IndexOf(targets, item.nextDialogueID);
+
+        if (targetIndex < 0) {
+            targetIndex = 0;
+        }
+
+        var optionRect = rect;
+        optionRect.height = 16;
+        optionRect.width = rect.width * 0.2f;
+
+        targetIndex = EditorGUI.Popup(optionRect, targetIndex, targets);
+
+        item.nextDialogueID = targets[targetIndex];
+
+        optionRect.x += optionRect.width * 2;
+        optionRect.width = rect.width * 0.6f;
+
+        item.text = EditorGUI.TextField(optionRect, item.text);
+
+        optionRect.x = rect.x;
+        optionRect.y += optionRect.height * 1.2f;
+        optionRect.width = rect.width * 0.2f;
+
+        if (GUI.Button(optionRect, "More", EditorStyles.miniButton)) {
+            ConversationOptionEditor.More(conversationScript, conversationPiece, item);
+        }
+
+
+
         conversationPiece.options[index] = item;
     }
 
@@ -124,6 +143,17 @@ public class ConversationPieceDialog : ScriptableWizard
         conversationPiece.image = (Sprite)EditorGUILayout.ObjectField(conversationPiece.image, typeof(Sprite), false);
         EditorGUILayout.PrefixLabel("Text");
         conversationPiece.text = EditorGUILayout.TextArea(conversationPiece.text);
+
+        if (options == null || options.count == 0) {
+            var targetIndex = System.Array.IndexOf(targets, conversationPiece.nextDialogueID);
+            if (targetIndex < 0) {
+                targetIndex = 0;
+            }
+
+            EditorGUILayout.PrefixLabel("Next Dialogue ID");
+            conversationPiece.nextDialogueID = targets[EditorGUILayout.Popup(targetIndex, targets)];
+        }
+        
 
         if (conversationScript.items.Count > 0)
         {

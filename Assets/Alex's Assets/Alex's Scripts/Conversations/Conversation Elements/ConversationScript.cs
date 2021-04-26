@@ -13,6 +13,10 @@ public class ConversationScript : MonoBehaviour, ISerializationCallbackReceiver
             return index.ContainsKey(id);
         }
 
+        public ConversationPiece GetFirstPiece() {
+            return items[0];
+        }
+
         public ConversationPiece Get(string id)
         {
             return index[id];

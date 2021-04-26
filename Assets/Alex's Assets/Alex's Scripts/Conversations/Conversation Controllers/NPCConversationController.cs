@@ -5,17 +5,51 @@ using UnityEngine.UI;
 
 public class NPCConversationController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    private ConversationPiece currentPiece;
+    public ConversationPieceController conversationPieceController;
+    public ConversationScript currentScript;
+
+    public void GoToNextPiece(ConversationPiece piece) {
+        if (piece == null) {
+            return;
+        }
+        else {
+            currentPiece = piece;
+            conversationPieceController.BeginPiece(piece);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+    public void StartConversation(ConversationScript conversation) {
+        currentScript = conversation;
+        GoToNextPiece(currentScript.GetFirstPiece());
     }
 
-    void StartConversation(ConversationScript conversation) {
+    public void NavigateLeft() {
+        if (conversationPieceController.GetHighlightedOptionNumber() == 0) {
+            return;
+        }
+        else {
+            conversationPieceController.SetHighlighted(conversationPieceController.GetHighlightedOptionNumber() - 1);
+        }
+    }
+
+    public void NavigateRight() {
+        if (conversationPieceController.GetHighlightedOptionNumber() == 1) {
+            return;
+        }
+        else {
+            conversationPieceController.SetHighlighted(conversationPieceController.GetHighlightedOptionNumber() + 1);
+        }
+    }
+
+
+    public void SelectOption() {
+        ConversationPiece nextPiece = currentScript.Get(conversationPieceController.GetNextPieceIDFromOption(GetHighlightedPiece()));
+        GoToNextPiece(nextPiece);
+    }
+
+    public int GetHighlightedPiece() {
+        return conversationPieceController.GetHighlightedOptionNumber();
     }
 }

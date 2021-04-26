@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class ConversationUIElementController : MonoBehaviour {
     protected string textToPrint = "";
@@ -10,6 +11,23 @@ public class ConversationUIElementController : MonoBehaviour {
     public Text TextBox;
     public int TextWaitFrames;
 
+    public Action method;
+
+    public bool shouldPrintText
+    {
+        get
+        {
+            return _shouldPrintText;
+        }
+        set
+        {
+            _shouldPrintText = value;
+            if (!_shouldPrintText && method != null) {
+                StartCoroutine(StartMethod());
+            }
+        }
+    }
+
     private void FixedUpdate() {
         if (ShouldPrintText()) {
             if (IsFinishedWaiting()) {
@@ -17,7 +35,7 @@ public class ConversationUIElementController : MonoBehaviour {
             }
         }
         else {
-            SetShouldPrintText(false);
+            shouldPrintText = false;
         }
     }
 
@@ -28,7 +46,7 @@ public class ConversationUIElementController : MonoBehaviour {
     }
 
     protected bool ShouldPrintText() {
-        return (_shouldPrintText && textToPrint != "");
+        return (shouldPrintText && textToPrint != "");
     }
 
     protected bool IsFinishedWaiting() {
@@ -44,12 +62,17 @@ public class ConversationUIElementController : MonoBehaviour {
     }
 
     public void PrintText() {
+        method = null;
         _shouldPrintText = true;
     }
 
     public void SetText(string text) {
-
         textToPrint = text;
+    }
+
+    public void Reset() {
+        TextBox.text = "";
+        framesLeftToWait = TextWaitFrames;
     }
 
     public bool IsDonePrinting() {
@@ -59,4 +82,19 @@ public class ConversationUIElementController : MonoBehaviour {
     virtual protected void SetShouldPrintText(bool value) {
         _shouldPrintText = value;
     }
+
+    IEnumerator StartMethod() {
+        yield return new WaitForSeconds(0.2f);
+        if (method != null) {
+            method();
+        }
+        method = null;
+    }
+
+
+    public void PrintText(Action action) {
+        PrintText();
+        method = action;
+    }
+
 }

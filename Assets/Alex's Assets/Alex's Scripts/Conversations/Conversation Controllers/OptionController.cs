@@ -29,7 +29,7 @@ public class OptionController : ConversationUIElementController {
     }
 
     public void InvokeEvent() {
-        option.unityEvent.Invoke();
+        option.optionEvent.Invoke();
     }
 
     public void SetEnabled(bool enabled) {
