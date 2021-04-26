@@ -20,7 +20,14 @@ public class ConversationPieceDialog : ScriptableWizard
     {
         var w = ScriptableWizard.DisplayWizard<ConversationPieceDialog>("New Conversation Piece", "Create");
         w.conversationScript = conversationScript;
-        w.targets = (from i in conversationScript.items select i.id).ToArray();
+
+        List<string> tempTargets = new List<string>();
+        tempTargets.Add("None");
+        foreach (ConversationPiece conversationPiece in conversationScript.items) {
+            tempTargets.Add(conversationPiece.id);
+        }
+
+        w.targets = tempTargets.ToArray();
         w.conversationPiece = new ConversationPiece() { id = "", text = "", options = new List<ConversationOption>() };
         w.isUpdate = false;
     }
@@ -29,7 +36,16 @@ public class ConversationPieceDialog : ScriptableWizard
     {
         var w = ScriptableWizard.DisplayWizard<ConversationPieceDialog>("Edit Conversation Piece", "Update");
         Debug.Log(w.targets);
-        w.targets = (from i in conversationScript.items select i.id).ToArray();
+
+        List<string> tempTargets = new List<string>();
+        tempTargets.Add("None");
+        foreach (ConversationPiece tempConversationPiece in conversationScript.items) {
+            if (tempConversationPiece.id != conversationPiece.id) {
+                tempTargets.Add(tempConversationPiece.id);
+            }
+        }
+
+        w.targets = tempTargets.ToArray();
         w.originalConversationPiece = conversationPiece;
         w.conversationPiece = conversationPiece;
         w.conversationScript = conversationScript;
@@ -151,7 +167,14 @@ public class ConversationPieceDialog : ScriptableWizard
             }
 
             EditorGUILayout.PrefixLabel("Next Dialogue ID");
-            conversationPiece.nextDialogueID = targets[EditorGUILayout.Popup(targetIndex, targets)];
+            int length = targets.Length + 1;
+            List<string> dialogueIDOptions = new List<string>();
+            for (int i = 0; i < targets.Length; ++i) {
+                if (targets[i] != conversationPiece.id) {
+                    dialogueIDOptions.Add(targets[i]);
+                }
+            }
+            conversationPiece.nextDialogueID = targets[EditorGUILayout.Popup(targetIndex, dialogueIDOptions.ToArray())];
         }
         
 

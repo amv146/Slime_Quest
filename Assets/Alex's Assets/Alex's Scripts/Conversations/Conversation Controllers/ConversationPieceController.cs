@@ -66,4 +66,8 @@ public class ConversationPieceController : MonoBehaviour {
     public string GetNextPieceIDFromOption(int index) {
         return conversationPiece.GetNextDialogue(index);
     }
+
+    public void InvokeEvents(int optionNum) {
+        optionControllers[optionNum].InvokeEvent();
+    }
 }

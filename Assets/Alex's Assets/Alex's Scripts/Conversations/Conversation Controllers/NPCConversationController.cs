@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class NPCConversationController : MonoBehaviour
 {
-    private ConversationPiece currentPiece;
     public ConversationPieceController conversationPieceController;
     public ConversationScript currentScript;
 
@@ -14,7 +13,6 @@ public class NPCConversationController : MonoBehaviour
             return;
         }
         else {
-            currentPiece = piece;
             conversationPieceController.BeginPiece(piece);
         }
     }
@@ -44,12 +42,31 @@ public class NPCConversationController : MonoBehaviour
     }
 
 
-    public void SelectOption() {
-        ConversationPiece nextPiece = currentScript.Get(conversationPieceController.GetNextPieceIDFromOption(GetHighlightedPiece()));
+    public bool SelectOption() {
+        int selectedOption = GetHighlightedPiece();
+        if (selectedOption != -1) {
+            conversationPieceController.InvokeEvents(selectedOption);
+        }
+        string nextDialogueID = conversationPieceController.GetNextPieceIDFromOption(selectedOption);
+        if (nextDialogueID == "None") {
+            return false;
+        }
+
+        ConversationPiece nextPiece = currentScript.Get(nextDialogueID);
         GoToNextPiece(nextPiece);
+
+        return true;
     }
 
     public int GetHighlightedPiece() {
         return conversationPieceController.GetHighlightedOptionNumber();
+    }
+
+    public void Hide() {
+        this.gameObject.SetActive(false);
+    }
+
+    public void Show() {
+        this.gameObject.SetActive(true);
     }
 }

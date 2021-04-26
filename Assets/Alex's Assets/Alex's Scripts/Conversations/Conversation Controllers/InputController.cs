@@ -24,7 +24,9 @@ public class InputController : MonoBehaviour {
             conversationController.NavigateRight();
         }
         else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter)) {
-            conversationController.SelectOption();
+            if (!conversationController.SelectOption()) {
+                conversationController.Hide();
+            }
         }
     }
 
