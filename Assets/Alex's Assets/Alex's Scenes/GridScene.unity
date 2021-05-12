@@ -323,6 +323,7 @@ MonoBehaviour:
   movementAmount: 3
   readyToMove: 1
   currentTile: {fileID: 0}
+  castRadius: 3
 --- !u!1 &1111830718
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +434,7 @@ MonoBehaviour:
   movementAmount: 3
   readyToMove: 1
   currentTile: {fileID: 0}
+  castRadius: 3
 --- !u!1 &1222047372
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,7 +482,6 @@ MonoBehaviour:
   SelectedObject: {fileID: 1111830724}
   characters:
   - {fileID: 1111830724}
-  - {fileID: 360863833}
   isHighlightEnabled: 1
   inMoveMode: 1
 --- !u!4 &1222047375
