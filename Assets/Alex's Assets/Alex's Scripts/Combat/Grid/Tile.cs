@@ -57,11 +57,11 @@ public class Tile : Node
     }
 
     private void OnMouseEnter() {
-        StartCoroutine(StartCallback(true));
+        pathFindCallback(this, true);
     }
 
     private void OnMouseExit() {
-        StartCoroutine(StartCallback(false));
+        pathFindCallback(this, false);
     }
 
     private void OnMouseDown() {

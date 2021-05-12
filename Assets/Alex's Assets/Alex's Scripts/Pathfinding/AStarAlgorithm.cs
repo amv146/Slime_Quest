@@ -13,17 +13,11 @@ public static class AStarAlgorithm {
         openList.Clear();
         openList.Enqueue(startTile);
 
-        int counter = 0;
-        Debug.Log(maxNodes);
-
         while (openList.Count > 0) {
             Node currentNode = openList.Dequeue();
             closedList.Add(currentNode);
             if (currentNode == targetTile) {
                 break;
-            }
-            if (counter == maxNodes) {
-                return RetracePath(currentNode);
             }
             List<Node> neighbors = GetWalkableAdjacentTiles(currentNode);
 
@@ -40,8 +34,6 @@ public static class AStarAlgorithm {
                     }
                 }
             }
-
-            counter++;
         }
         return RetracePath(targetTile);
     }
@@ -92,12 +84,18 @@ public static class AStarAlgorithm {
         }
     }
 
-    public static IEnumerator ResetTiles() {
-        yield return null;
+    public static void ResetTiles(TileGrid tileGrid) {;
         foreach (Tile tile in TileMap) {
+            tile.ResetWeight();
             tile.parentNode = null;
             tile.SetHCost(0);
             tile.SetGCost(0);
+        }
+    }
+
+    public static void SetWeights(List<CharacterController> characters) {
+        foreach (CharacterController character in characters) {
+            character.currentTile.weight = 10000;
         }
     }
 }

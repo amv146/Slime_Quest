@@ -20,6 +20,7 @@ public class Node : MonoBehaviour, IComparable {
     private float distance;
     public float weight = 1;
     public Node parentNode;
+    public float defaultWeight = 1;
 
     public float FCost() {
         return cost + distance;
@@ -45,6 +46,9 @@ public class Node : MonoBehaviour, IComparable {
         return distance;
     }
 
+    public void ResetWeight() {
+        weight = defaultWeight;
+    }
 
 
     public List<(int, int)> GetAllAdjacentTileCoords() {

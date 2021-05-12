@@ -24,16 +24,31 @@ public class TileGrid : MonoBehaviour
     private Tile[,] tiles;
 
     public Material TileGrassHighlighted;
+    public Material TileGrassAttack;
     public Material TileGrass;
 
     public CharacterController SelectedObject;
+    public List<CharacterController> characters;
 
     private List<Tile> path = new List<Tile>();
     public bool isHighlightEnabled = true;
 
+    public bool inMoveMode = true;
+    public bool inAttackMode
+    {
+        set
+        {
+            inMoveMode = !value;
+        }
+        get
+        {
+            return !inMoveMode;
+        }
+    }
+
     private void Start() {
         tiles = new Tile[GetXLength(), GetZLength()];
-        Tile.clickCallback = MoveSelectedObjectTo;
+        Tile.clickCallback = RunClickCallback;
         Tile.pathFindCallback = SwitchPathHighlight;
         Tile.tileGrassHighlighted = TileGrassHighlighted;
         Tile.tileGrass = TileGrass;
@@ -61,7 +76,14 @@ public class TileGrid : MonoBehaviour
             }
         }
         SelectedObject.currentTile = tiles[0, 0];
+       
         AStarAlgorithm.TileMap = tiles;
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.A)) {
+            inMoveMode = !inMoveMode;
+        }
     }
 
     public int GetXLength() {
@@ -94,14 +116,39 @@ public class TileGrid : MonoBehaviour
         return this.path;
     }
     public List<Tile> GetNewPath(Tile tile) {
-        StartCoroutine(AStarAlgorithm.ResetTiles());
-
+        if (IsTileOccupied(tile)) {
+            return new List<Tile>(0);
+        }
+        AStarAlgorithm.ResetTiles(this);
+        AStarAlgorithm.SetWeights(characters);
         path.Clear();
+        int counter = 0;
         foreach (Node node in AStarAlgorithm.GetShortestPossiblePath(SelectedObject.currentTile, tile, SelectedObject.movementAmount)) {
-            path.Add(tiles[node.X, node.Y]);
+            if (inMoveMode) {
+                if (counter == SelectedObject.movementAmount + 1) {
+                    break;
+                }
+                path.Add(tiles[node.X, node.Y]);
+            }
+            else if (inAttackMode) {
+                if (node == tile || GetDiagonalDistance(SelectedObject.currentTile, node) == 3) {
+                    path.Add(tiles[node.X, node.Y]);
+                    break;
+                }
+            }
+            counter++;
         }
 
         return path;
+    }
+
+    public bool IsTileOccupied(Tile tile) {
+        foreach (CharacterController character in characters) {
+            if (character.currentTile == tile) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void SwitchPathHighlight(Tile tile, bool highlight) {
@@ -121,30 +168,41 @@ public class TileGrid : MonoBehaviour
     }
 
     public void SwitchHighlight(Tile tile, bool highlight) {
-        if (highlight) {
-            tile.SetMaterialTo(TileGrassHighlighted);
+        if (inMoveMode) {
+            if (highlight) {
+                tile.SetMaterialTo(TileGrassHighlighted);
+            }
+            else {
+                tile.SetMaterialTo(TileGrass);
+            }
         }
-        else {
-            tile.SetMaterialTo(TileGrass);
+        else if (inAttackMode) {
+            if (highlight) {
+                tile.SetMaterialTo(TileGrassAttack);
+            }
+            else {
+                tile.SetMaterialTo(TileGrass);
+            }
         }
 
         tile.isHighlighted = highlight;
     }
 
-
-    public void ToggleHighlight(Tile tile) {
-        if (!tile.isHighlighted) {
-            tile.SetMaterialTo(TileGrassHighlighted);
-        }
-        else {
-            tile.SetMaterialTo(TileGrass);
-        }
-
-        tile.isHighlighted = !tile.isHighlighted;
-    }
-
     public Tile GetTileAt(int x, int z) {
         return tiles[x, z];
+    }
+
+    public void RunClickCallback(Tile tile) {
+        if (inMoveMode) {
+            MoveSelectedObjectTo(tile);
+        }
+        else if (inAttackMode) {
+            CastPlayerSpellAt(path[path.Count - 1]);
+        }
+    }
+
+    public void CastPlayerSpellAt(Tile tile) {
+        SelectedObject.CastSpell(tile);
     }
 
     public void MoveSelectedObjectTo(Tile tile) {
@@ -152,16 +210,36 @@ public class TileGrid : MonoBehaviour
         if (!SelectedObject.readyToMove) {
             return;
         }
-        SelectedObject.MoveTo(TileCoordToWorldCoord(path[0]));
         StartCoroutine(RunMoveObjectTo(tile));
     }
 
     IEnumerator RunMoveObjectTo(Tile tile) {
+        Tile firstTile = SelectedObject.currentTile;
         foreach (Tile pathTile in path) {
+            if (firstTile == pathTile) {
+                continue;
+            }
             SelectedObject.MoveTo(TileCoordToWorldCoord(pathTile));
             SelectedObject.currentTile = pathTile;
             yield return new WaitUntil(() => SelectedObject.readyToMove);
         }
         isHighlightEnabled = true;
+
+    }
+
+    public static int GetEuclidianDistance(Node startNode, Node targetNode) {
+        return Mathf.Abs(startNode.X - targetNode.X) + Mathf.Abs(startNode.Y - targetNode.Y);
+    }
+
+    public static int GetDiagonalDistance(Node startNode, Node targetNode) {
+        int XDistance = Mathf.Abs(startNode.X - targetNode.X);
+        int YDistance = Mathf.Abs(startNode.Y - targetNode.Y);
+
+        if (XDistance <= YDistance) {
+            return YDistance;
+        }
+        else {
+            return XDistance;
+        }
     }
 }

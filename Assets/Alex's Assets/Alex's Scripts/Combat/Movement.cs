@@ -1,24 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class CharacterController : MonoBehaviour
-{
+public class Movement : MonoBehaviour {
     float moveDuration = 0.3f;
     public int movementAmount = 3;
-    public Tile currentTile;
-
     public bool readyToMove = true;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+
+    void Start() {
+
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
     }
 
     public void MoveTo(Vector3 position) {
