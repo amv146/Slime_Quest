@@ -39,7 +39,7 @@ public class HealthController : MonoBehaviour
         {
             IsAlive = false;
             //End Battle
-            Destroy(transform.parent.gameObject);
+            transform.parent.gameObject.SetActive(false);
         }
     }
 }

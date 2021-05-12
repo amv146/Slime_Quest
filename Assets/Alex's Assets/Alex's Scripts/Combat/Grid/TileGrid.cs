@@ -80,7 +80,7 @@ public class TileGrid : MonoBehaviour
             }
         }
         characters[0].currentTile = tiles[0, 0];
-        characters[1].currentTile = tiles[5, 0];
+        characters[1].currentTile = tiles[3, 3];
        //Make new object for sensei
        //Cpooadoasopd
         AStarAlgorithm.TileMap = tiles;
