@@ -22,10 +22,12 @@ public class PlayerController : MonoBehaviour
     private bool flipX = true;
     private bool flipY = true;
 
+    //public VectorValue startingPos;
+
 
     void Start()
     {
-        
+        //transform.position = startingPos.initialValue;
     }
 
     // Update is called once per frame

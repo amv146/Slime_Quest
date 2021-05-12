@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Lukes Cool Assets/Scenes/Crossroads.unity
+    guid: 630ec1fa935fd134bbb00ea9f6eb71cb
+  - enabled: 1
+    path: Assets/Lukes Cool Assets/Scenes/DojoInterior.unity
+    guid: e9ae2fb008c80204d954e98620a236ed
+  - enabled: 1
+    path: Assets/Alex's Assets/Alex's Scenes/GridScene.unity
+    guid: 0be7001567a8a4ffb9945045071456c9
+  - enabled: 1
+    path: Assets/Lukes Cool Assets/Scenes/Tutorial.unity
+    guid: 95410c18c91254847baf748ba7e2dc53
   m_configObjects: {}
