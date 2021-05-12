@@ -131,12 +131,19 @@ public class TileGrid : MonoBehaviour
                 path.Add(tiles[node.X, node.Y]);
             }
             else if (inAttackMode) {
-                if (node == tile || GetDiagonalDistance(SelectedObject.currentTile, node) == 3) {
-                    path.Add(tiles[node.X, node.Y]);
+                if (GetDiagonalDistance(SelectedObject.currentTile, node) > SelectedObject.castRadius) {
                     break;
+                }
+                if (node == tile || GetDiagonalDistance(SelectedObject.currentTile, node) == SelectedObject.castRadius) {
+                    path.Add(tiles[node.X, node.Y]);
                 }
             }
             counter++;
+        }
+        if (inAttackMode) {
+            Tile temp = path[path.Count - 1];
+            path = new List<Tile>();
+            path.Add(temp);
         }
 
         return path;

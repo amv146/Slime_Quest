@@ -8,6 +8,7 @@ public class CharacterController : Movement
     public Tile currentTile;
     public List<Spell> spells;
     public SpellCallback castCallback;
+    public int castRadius = 3;
     // Start is called before the first frame update
 
 
