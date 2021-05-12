@@ -9,6 +9,7 @@ public class CombatSystem : MonoBehaviour {
     public TileGrid tileGrid;
     public CharacterController player;
     private List<CharacterController> characters;
+    
 
     // Use this for initialization
     void Start() {
@@ -40,7 +41,7 @@ public class CombatSystem : MonoBehaviour {
         return null;
     }
 
-    private void RunBoxSpell(Tile targetTile, Spell spell, int layer) {
+    private void RunBoxSpell(Tile targetTile, Spell spell, int layer, CharacterController character) {
         for (int i = targetTile.X - layer; i <= targetTile.X + layer; ++i) {
             if (i < 0 || i >= tileGrid.GetXLength()) {
                 continue;
@@ -51,15 +52,36 @@ public class CombatSystem : MonoBehaviour {
                         continue;
                     }
                     tileGrid.SwitchHighlight(tileGrid.GetTileAt(i, j), true);
+                    if(tileGrid.IsTileOccupied(tileGrid.GetTileAt(i, j)))
+                    {
+                        if(tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, j)) != character && tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, j)) != null)
+                        {
+                            tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, j)).DecreaseHealth();
+                        }
+                    }
                 }
             }
             else {
                 if (!(targetTile.Y - layer < 0)) {
                     tileGrid.SwitchHighlight(tileGrid.GetTileAt(i, targetTile.Y - layer), true);
+                    if(tileGrid.IsTileOccupied(tileGrid.GetTileAt(i, targetTile.Y - layer)))
+                    {
+                        if(tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y - layer)) != character && tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y - layer)) != null)
+                        {
+                            tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y - layer)).DecreaseHealth();
+                        }
+                    }
                 }
 
                 if (!(targetTile.Y + layer >= tileGrid.GetZLength())) {
                     tileGrid.SwitchHighlight(tileGrid.GetTileAt(i, targetTile.Y + layer), true);
+                    if(tileGrid.IsTileOccupied(tileGrid.GetTileAt(i, targetTile.Y + layer)))
+                    {
+                        if(tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y + layer)) != character && tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y + layer)) != null)
+                        {
+                            tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y + layer)).DecreaseHealth();
+                        }
+                    }
                 }
             }
         }
@@ -121,7 +143,7 @@ public class CombatSystem : MonoBehaviour {
     private IEnumerator RunSpellSequence(CharacterController character, Tile targetTile, Spell spell) {
         for (int layer = 1; layer <= spell.radius; ++layer) {
             if (spell.radiusType == SpellRadiusType.Box) {
-                RunBoxSpell(targetTile, spell, layer);
+                RunBoxSpell(targetTile, spell, layer, character);
             }
             yield return new WaitForSeconds(0.5f);
         }

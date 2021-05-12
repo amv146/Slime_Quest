@@ -34,6 +34,10 @@ public class TileGrid : MonoBehaviour
     public bool isHighlightEnabled = true;
 
     public bool inMoveMode = true;
+    public bool IsPlayerTurn;
+
+    public Text TurnText;
+
     public bool inAttackMode
     {
         set
@@ -75,8 +79,10 @@ public class TileGrid : MonoBehaviour
                 }
             }
         }
-        SelectedObject.currentTile = tiles[0, 0];
-       
+        characters[0].currentTile = tiles[0, 0];
+        characters[1].currentTile = tiles[3, 3];
+       //Make new object for sensei
+       //Cpooadoasopd
         AStarAlgorithm.TileMap = tiles;
     }
 
@@ -84,6 +90,7 @@ public class TileGrid : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A)) {
             inMoveMode = !inMoveMode;
         }
+        
     }
 
     public int GetXLength() {
@@ -157,6 +164,14 @@ public class TileGrid : MonoBehaviour
         }
         return false;
     }
+    public CharacterController doesTileHaveCharacter(Tile tile) {
+        foreach (CharacterController character in characters) {
+            if (character.currentTile == tile) {
+                return character;
+            }
+        }
+        return null;
+    }
 
     public void SwitchPathHighlight(Tile tile, bool highlight) {
         if (!isHighlightEnabled) {
@@ -200,16 +215,18 @@ public class TileGrid : MonoBehaviour
     }
 
     public void RunClickCallback(Tile tile) {
-        if (inMoveMode) {
+        if (inMoveMode && IsPlayerTurn) {
             MoveSelectedObjectTo(tile);
         }
-        else if (inAttackMode) {
+        else if (inAttackMode && IsPlayerTurn) {
             CastPlayerSpellAt(path[path.Count - 1]);
         }
     }
 
     public void CastPlayerSpellAt(Tile tile) {
         SelectedObject.CastSpell(tile);
+        IsPlayerTurn = !IsPlayerTurn;
+        TurnText.GetComponent<TextController>().UpdateUI(IsPlayerTurn);
     }
 
     public void MoveSelectedObjectTo(Tile tile) {
@@ -231,6 +248,8 @@ public class TileGrid : MonoBehaviour
             yield return new WaitUntil(() => SelectedObject.readyToMove);
         }
         isHighlightEnabled = true;
+        IsPlayerTurn = !IsPlayerTurn;
+        TurnText.GetComponent<TextController>().UpdateUI(IsPlayerTurn);
 
     }
 
@@ -248,5 +267,10 @@ public class TileGrid : MonoBehaviour
         else {
             return XDistance;
         }
+    }
+    public void changeTurns()
+    {
+        IsPlayerTurn = !IsPlayerTurn;
+        TurnText.GetComponent<TextController>().UpdateUI(IsPlayerTurn);
     }
 }

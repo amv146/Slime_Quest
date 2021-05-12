@@ -3,7 +3,8 @@
 public enum SpellRadiusType {
     Line,
     Box,
-    Circle
+    Circle,
+    Front
 }
 
 public enum SpellType {
