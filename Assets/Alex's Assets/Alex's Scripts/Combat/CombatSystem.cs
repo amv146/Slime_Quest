@@ -52,35 +52,32 @@ public class CombatSystem : MonoBehaviour {
                         continue;
                     }
                     tileGrid.SwitchHighlight(tileGrid.GetTileAt(i, j), true);
-                    if(tileGrid.IsTileOccupied(tileGrid.GetTileAt(i, j)))
+                    if(tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, j)) != character && tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, j)) != null)
                     {
-                        if(tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, j)) != character && tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, j)) != null)
-                        {
-                            tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, j)).DecreaseHealth();
-                        }
+                        Debug.Log("Hit");
+
+                        tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, j)).DecreaseHealth();
                     }
                 }
             }
             else {
                 if (!(targetTile.Y - layer < 0)) {
                     tileGrid.SwitchHighlight(tileGrid.GetTileAt(i, targetTile.Y - layer), true);
-                    if(tileGrid.IsTileOccupied(tileGrid.GetTileAt(i, targetTile.Y - layer)))
+                    if(tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y - layer)) != character && tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y - layer)) != null)
                     {
-                        if(tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y - layer)) != character && tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y - layer)) != null)
-                        {
-                            tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y - layer)).DecreaseHealth();
-                        }
+                        Debug.Log("Hit");
+
+                        tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y - layer)).DecreaseHealth();
                     }
                 }
 
                 if (!(targetTile.Y + layer >= tileGrid.GetZLength())) {
                     tileGrid.SwitchHighlight(tileGrid.GetTileAt(i, targetTile.Y + layer), true);
-                    if(tileGrid.IsTileOccupied(tileGrid.GetTileAt(i, targetTile.Y + layer)))
+                    if(tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y + layer)) != character && tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y + layer)) != null)
                     {
-                        if(tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y + layer)) != character && tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y + layer)) != null)
-                        {
-                            tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y + layer)).DecreaseHealth();
-                        }
+                        Debug.Log("Hit");
+
+                        tileGrid.doesTileHaveCharacter(tileGrid.GetTileAt(i, targetTile.Y + layer)).DecreaseHealth();
                     }
                 }
             }

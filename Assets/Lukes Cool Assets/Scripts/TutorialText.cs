@@ -11,7 +11,7 @@ public class TutorialText : MonoBehaviour
     public GameObject tileGrid;
 
     public CharacterController character;
-    public CharacterController enemy;
+    public GameObject enemy;
 
     // Start is called before the first frame update
     void Start()
@@ -58,7 +58,7 @@ public class TutorialText : MonoBehaviour
         yield return new WaitForSeconds(5f);
         tileGrid.GetComponent<TileGrid>().changeTurns();
         tutorialText.text = "";
-        while(enemy.IsAlive() && character.IsAlive())
+        while(enemy.GetComponent<CharacterController>().IsAlive() && character.IsAlive())
         {
             if(!tileGrid.GetComponent<TileGrid>().IsPlayerTurn)
             {
@@ -104,12 +104,13 @@ public class TutorialText : MonoBehaviour
                         }
                     }
                 }
-                enemy.MoveTo(pos);
-                while(!enemy.readyToMove)
+                enemy.GetComponent<CharacterController>().MoveTo(pos);
+                while(!enemy.GetComponent<CharacterController>().readyToMove)
                 {
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(0.1f);
                 }
-                enemy.currentTile = tileGrid.GetComponent<TileGrid>().GetTileAt((int)enemy.transform.position.x,(int)enemy.transform.position.y);
+                enemy.GetComponent<CharacterController>().currentTile = tileGrid.GetComponent<TileGrid>().GetTileAt((int)enemy.transform.position.x,(int)enemy.transform.position.z);
+                Debug.Log("X: "+enemy.GetComponent<CharacterController>().currentTile.tileX+" Z: "+enemy.GetComponent<CharacterController>().currentTile.tileZ);
                 tileGrid.GetComponent<TileGrid>().changeTurns();
             }
             yield return new WaitForSeconds(1f);

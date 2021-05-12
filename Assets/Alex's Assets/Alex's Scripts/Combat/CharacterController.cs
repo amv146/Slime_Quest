@@ -33,4 +33,7 @@ public class CharacterController : Movement
     {
         return hc.IsAlive;
     }
+    public void setTile(Tile T) {
+        
+    }
 }
