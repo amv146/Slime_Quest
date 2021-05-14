@@ -8,7 +8,7 @@ public static class AStarAlgorithm {
     private static PriorityQueue<Node> openList = new PriorityQueue<Node>();
     private static List<Node> closedList = new List<Node>();
 
-    public static List<Node> GetShortestPossiblePath(Tile startTile, Tile targetTile, int maxNodes = -1) {
+    public static List<Node> GetShortestPossiblePath(Tile startTile, Tile targetTile) {
         closedList.Clear();
         openList.Clear();
         openList.Enqueue(startTile);

@@ -89,6 +89,12 @@ public class TileGrid : MonoBehaviour
     private void Update() {
         if (Input.GetKeyDown(KeyCode.A)) {
             inMoveMode = !inMoveMode;
+            if (inMoveMode) {
+                AStarAlgorithm.SetWeights(characters);
+            }
+            else {
+                AStarAlgorithm.ResetTiles(this);
+            }
         }
         
     }
@@ -130,7 +136,7 @@ public class TileGrid : MonoBehaviour
         AStarAlgorithm.SetWeights(characters);
         path.Clear();
         int counter = 0;
-        foreach (Node node in AStarAlgorithm.GetShortestPossiblePath(SelectedObject.currentTile, tile, SelectedObject.movementAmount)) {
+        foreach (Node node in AStarAlgorithm.GetShortestPossiblePath(SelectedObject.currentTile, tile)) {
             if (inMoveMode) {
                 if (counter == SelectedObject.movementAmount + 1) {
                     break;
@@ -156,21 +162,46 @@ public class TileGrid : MonoBehaviour
         return path;
     }
 
+    public bool IsTileOccupied(Tile tile, out CharacterController character) {
+        foreach (CharacterController tempCharacter in characters) {
+            if (tempCharacter.currentTile == tile) {
+                character = tempCharacter;
+                return true;
+            }
+        }
+        character = null;
+        return false;
+    }
+
+    public bool IsTileOccupied(int x, int z, out CharacterController character) {
+        Tile tile = GetTileAt(x, z);
+        foreach (CharacterController tempCharacter in characters) {
+            if (tempCharacter.currentTile == tile) {
+                character = tempCharacter;
+                return true;
+            }
+        }
+        character = null;
+        return false;
+    }
+
     public bool IsTileOccupied(Tile tile) {
-        foreach (CharacterController character in characters) {
-            if (character.currentTile == tile) {
+        foreach (CharacterController tempCharacter in characters) {
+            if (tempCharacter.currentTile == tile) {
                 return true;
             }
         }
         return false;
     }
-    public CharacterController doesTileHaveCharacter(Tile tile) {
-        foreach (CharacterController character in characters) {
-            if (character.currentTile == tile) {
-                return character;
+
+    public bool IsTileOccupied(int x, int z) {
+        Tile tile = GetTileAt(x, z);
+        foreach (CharacterController tempCharacter in characters) {
+            if (tempCharacter.currentTile == tile) {
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     public void SwitchPathHighlight(Tile tile, bool highlight) {
@@ -218,7 +249,7 @@ public class TileGrid : MonoBehaviour
         if (inMoveMode && IsPlayerTurn) {
             MoveSelectedObjectTo(tile);
         }
-        else if (inAttackMode && IsPlayerTurn) {
+        else if (inAttackMode) {
             CastPlayerSpellAt(path[path.Count - 1]);
         }
     }

@@ -20,8 +20,12 @@ public class CharacterController : Movement
 
     public void CastSpell(Tile targetTile) {
         Spell newSpell = new Spell();
-        newSpell.radius = 1;
-        newSpell.radiusType = SpellRadiusType.Box;
+        newSpell.radius = 2;
+        newSpell.radiusType = SpellRadiusType.Line;
+        newSpell.action = (enemy) =>
+        {
+            enemy.DecreaseHealth();
+        };
         castCallback(this, targetTile, newSpell);
     }
     public void DecreaseHealth()
