@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,7 +28,10 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        //transform.position = startingPos.initialValue;
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (SceneDataManager.Instance.scenePositions.ContainsKey(sceneName)) {
+            transform.position = SceneDataManager.Instance.scenePositions[SceneManager.GetActiveScene().name];
+        }
     }
 
     // Update is called once per frame
