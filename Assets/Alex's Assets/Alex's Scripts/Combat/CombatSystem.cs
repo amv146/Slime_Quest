@@ -27,8 +27,8 @@ public class CombatSystem : MonoBehaviour {
     }
 
     void CastSpell(CharacterController character, Tile targetTile, Spell spell) {
-        tileGrid.inAttackMode = true;
-        StartCoroutine(RunSpellSequence(character, targetTile, spell));
+        tileGrid.mode = GridMode.Knockback;
+        StartCoroutine(KnockbackPlayer(character, targetTile, spell));
     }
 
     Tile[,] GetSpellTiles(Tile targetTile, Spell spell) {
@@ -43,19 +43,60 @@ public class CombatSystem : MonoBehaviour {
         return null;
     }
 
+    IEnumerator KnockbackPlayer(CharacterController character, Tile targetTile, Spell spell) {
+        CharacterController enemyController = null;
+
+        if (spell.knockbackRadius == 0) {
+            yield break;
+        }
+        else {
+            for (int layer = 0; layer <= spell.radius; ++layer) {
+                if (spell.radiusType == SpellRadiusType.Box) {
+                    enemyController = RunBoxSpell(targetTile, spell, layer, character);
+                }
+                else if (spell.radiusType == SpellRadiusType.Circle) {
+                    enemyController = RunCircleSpell(targetTile, spell, layer, character);
+                }
+            }
+
+            if (spell.radiusType == SpellRadiusType.Line) {
+                List<Node> path = AStarAlgorithm.GetShortestPossiblePath(character.currentTile, targetTile);
+                for (int i = 0; i < path.Count; ++i) {
+                    if (tileGrid.IsTileOccupied(path[i].X, path[i].Y, out CharacterController tileEnemy) && tileEnemy != character) {
+                        enemyController = tileEnemy;
+                    }
+                }
+            }
+
+            if (enemyController != null) {
+                tileGrid.SelectedObject = enemyController;
+                yield return new WaitUntil(tileGrid.KnockbackTileExists);
+                tileGrid.isHighlightEnabled = false;
+                tileGrid.Arrow.Disable();
+            }
+            StartCoroutine(RunSpellSequence(character, targetTile, spell));
+        }
+
+    }
+
     
 
     private IEnumerator RunSpellSequence(CharacterController character, Tile targetTile, Spell spell) {
+        tileGrid.mode = GridMode.Attack;
+        AStarAlgorithm.ResetTiles(tileGrid);
         if (spell.radiusType == SpellRadiusType.Box || spell.radiusType == SpellRadiusType.Circle) {
-            for (int layer = 1; layer <= spell.radius; ++layer) {
+            for (int layer = 0; layer <= spell.radius; ++layer) {
                 if (spell.radiusType == SpellRadiusType.Box) {
                     RunBoxSpell(targetTile, spell, layer, character,
                         (tile) =>
                         {
                             tileGrid.SwitchHighlight(tile, true);
+
                         },
                         (tile, otherCharacter) =>
                         {
+                            otherCharacter.currentTile = tileGrid.GetKnockbackTile();
+                            otherCharacter.MoveTo(tileGrid.TileCoordToWorldCoord(tileGrid.GetKnockbackTile()));
                             Debug.Log("Hit!");
                             spell.action(otherCharacter);
                         });
@@ -68,6 +109,8 @@ public class CombatSystem : MonoBehaviour {
                         },
                         (tile, otherCharacter) =>
                         {
+                            otherCharacter.currentTile = tileGrid.GetKnockbackTile();
+                            otherCharacter.MoveTo(tileGrid.TileCoordToWorldCoord(tileGrid.GetKnockbackTile()));
                             Debug.Log("Hit!");
                             spell.action(otherCharacter);
                         });
@@ -90,6 +133,10 @@ public class CombatSystem : MonoBehaviour {
                 }
                 yield return new WaitForSeconds(0.5f);
             }
+
+            tileGrid.mode = GridMode.Attack;
+            tileGrid.SelectedObject = character;
+            tileGrid.ResetKnockbackTile();
         }
         else if (spell.radiusType == SpellRadiusType.Line) {
             List<Node> path = AStarAlgorithm.GetShortestPossiblePath(character.currentTile, targetTile);
@@ -102,11 +149,13 @@ public class CombatSystem : MonoBehaviour {
                     },
                     (tile, otherCharacter) =>
                     {
+                        otherCharacter.currentTile = tileGrid.GetKnockbackTile();
+                        otherCharacter.MoveTo(tileGrid.TileCoordToWorldCoord(tileGrid.GetKnockbackTile()));
                         Debug.Log("Hit!");
                         spell.action(otherCharacter);
                     });
                 }
-                yield return new WaitForSeconds(0.20f);
+                yield return new WaitForSeconds(0.10f);
             }
 
             for (int i = 0; i < path.Count; ++i) {
@@ -117,9 +166,13 @@ public class CombatSystem : MonoBehaviour {
                         tileGrid.SwitchHighlight(tile, false);
                     });
                 }
-                yield return new WaitForSeconds(0.20f);
+                yield return new WaitForSeconds(0.10f);
             }
 
+
+            tileGrid.SelectedObject = character;
+            tileGrid.ResetKnockbackTile();
+            tileGrid.isHighlightEnabled = true;
         }
     }
 }

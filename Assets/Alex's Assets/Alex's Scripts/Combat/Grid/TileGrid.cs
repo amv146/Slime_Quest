@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Mathf;
+using System;
+using static TileGrid;
 
 public class TileGrid : MonoBehaviour
 {
@@ -21,7 +25,7 @@ public class TileGrid : MonoBehaviour
     public bool ShouldAutoGenerate;
 
     public GameObject TilePrefab;
-    private Tile[,] tiles;
+    public Tile[,] tiles;
 
     public Material TileGrassHighlighted;
     public Material TileGrassAttack;
@@ -30,28 +34,39 @@ public class TileGrid : MonoBehaviour
     public CharacterController SelectedObject;
     public List<CharacterController> characters;
 
+    public static Material ArrowStraight;
+    public static Material ArrowCorner;
+    public static Material ArrowEnd;
+    public static Material SelectCursor;
+
+    public Material ArrowStraightPublic;
+    public Material ArrowCornerPublic;
+    public Material ArrowEndPublic;
+    public Material SelectCursorPublic;
+
     private List<Tile> path = new List<Tile>();
     public bool isHighlightEnabled = true;
 
-    public bool inMoveMode = true;
     public bool IsPlayerTurn;
 
     public Text TurnText;
 
-    public bool inAttackMode
-    {
-        set
-        {
-            inMoveMode = !value;
-        }
-        get
-        {
-            return !inMoveMode;
-        }
-    }
+    public DirectionArrow Arrow;
+
+    public GridMode mode = GridMode.Move;
+
+    private Tile knockbackTile;
+
+    public Spell currentSpell;
 
     private void Start() {
-        tiles = new Tile[GetXLength(), GetZLength()];
+        ArrowStraight = ArrowStraightPublic;
+        ArrowCorner = ArrowCornerPublic;
+        ArrowEnd = ArrowEndPublic;
+        SelectCursor = SelectCursorPublic;
+
+        tiles = new Tile[this.GetXLength(), this.GetZLength()];
+        Arrow.gameObject.SetActive(false);
         Tile.clickCallback = RunClickCallback;
         Tile.pathFindCallback = SwitchPathHighlight;
         Tile.tileGrassHighlighted = TileGrassHighlighted;
@@ -81,6 +96,7 @@ public class TileGrid : MonoBehaviour
         }
         characters[0].currentTile = tiles[0, 0];
         characters[1].currentTile = tiles[3, 3];
+        characters[1].transform.position = this.TileCoordToWorldCoord(characters[1].currentTile);
        //Make new object for sensei
        //Cpooadoasopd
         AStarAlgorithm.TileMap = tiles;
@@ -88,33 +104,15 @@ public class TileGrid : MonoBehaviour
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.A)) {
-            inMoveMode = !inMoveMode;
-            if (inMoveMode) {
+            mode = 1 - mode;
+            if (mode == GridMode.Move) {
                 AStarAlgorithm.SetWeights(characters);
             }
-            else {
+            else if (mode == GridMode.Attack) {
                 AStarAlgorithm.ResetTiles(this);
             }
         }
         
-    }
-
-    public int GetXLength() {
-        return Mathf.RoundToInt(Mathf.Abs(xMax + 1 - xMin) / xSpacing);
-    }
-
-    public int GetZLength() {
-        return Mathf.RoundToInt(Mathf.Abs(zMax + 1 - zMin) / zSpacing);
-    }
-
-
-
-    public Vector3 TileCoordToWorldCoord(int x, int z) {
-        return new Vector3(xMin + (xSpacing * x), SelectedObject.transform.position.y, zMin + (zSpacing * z));
-    }
-
-    public Vector3 TileCoordToWorldCoord(Tile tile) {
-        return new Vector3(xMin + (xSpacing * tile.X), SelectedObject.transform.position.y, zMin + (zSpacing * tile.Z));
     }
 
     /** private bool SetUpTile(int tileX, int tileZ, GameObject gameObject, out Tile tile) {
@@ -129,80 +127,77 @@ public class TileGrid : MonoBehaviour
         return this.path;
     }
     public List<Tile> GetNewPath(Tile tile) {
-        if (IsTileOccupied(tile)) {
-            return new List<Tile>(0);
-        }
         AStarAlgorithm.ResetTiles(this);
-        AStarAlgorithm.SetWeights(characters);
+        if (mode == GridMode.Move) {
+            AStarAlgorithm.SetWeights(characters);
+        }
         path.Clear();
         int counter = 0;
         foreach (Node node in AStarAlgorithm.GetShortestPossiblePath(SelectedObject.currentTile, tile)) {
-            if (inMoveMode) {
-                if (counter == SelectedObject.movementAmount + 1) {
+            Tile tileTemp = this.GetTileAt(node);
+
+            if (mode == GridMode.Move) {
+                if (!isHighlightEnabled) {
                     break;
                 }
+                if (counter == 0) {
+                    tileTemp.ChangeTileMaterial(SelectCursor);
+                }
+                tileTemp.SetTileMaterialAndRotation();
                 path.Add(tiles[node.X, node.Y]);
-            }
-            else if (inAttackMode) {
-                if (GetDiagonalDistance(SelectedObject.currentTile, node) > SelectedObject.castRadius) {
+                if (counter == SelectedObject.movementAmount || counter == this.GetEuclidianDistance(SelectedObject.currentTile, tile)) {
+                    tileTemp.ChangeTileMaterial(ArrowEnd);
+                    tileTemp.AddMaterial(SelectCursor);
                     break;
                 }
-                if (node == tile || GetDiagonalDistance(SelectedObject.currentTile, node) == SelectedObject.castRadius) {
+                else {
+                    tileTemp.RemoveLastMaterial();
+                }
+            }
+            else if (mode == GridMode.Attack) {
+                if (!isHighlightEnabled) {
+                    break;
+                }
+                if (this.GetDiagonalDistance(SelectedObject.currentTile, node) > SelectedObject.castRadius) {
+                    break;
+                }
+                if (node == tile || this.GetDiagonalDistance(SelectedObject.currentTile, node) == SelectedObject.castRadius) {
                     path.Add(tiles[node.X, node.Y]);
+                    tileTemp.RemoveLastMaterial();
+                }
+            }
+            else if (mode == GridMode.Knockback) {
+                if (counter == 0) {
+                    tileTemp.ChangeTileMaterial(SelectCursor);
+                }
+                if (this.GetDiagonalDistance(SelectedObject.currentTile, node) > currentSpell.knockbackRadius) {
+                    break;
+                }
+                if (node == tile || this.GetDiagonalDistance(SelectedObject.currentTile, node) == currentSpell.knockbackRadius) {
+                    path.Add(tiles[node.X, node.Y]);
+                    tileTemp.RemoveLastMaterial();
                 }
             }
             counter++;
         }
-        if (inAttackMode) {
+        if (mode == GridMode.Attack) {
             Tile temp = path[path.Count - 1];
             path = new List<Tile>();
             path.Add(temp);
+            temp.ChangeTileMaterial(SelectCursor);
+        }
+        if (mode == GridMode.Knockback) {
+            Tile temp = path[path.Count - 1];
+            path = new List<Tile>();
+            path.Add(temp);
+            temp.ChangeTileMaterial(SelectCursor);
+            Arrow.SetDirection(SelectedObject.currentTile, temp);
         }
 
         return path;
     }
 
-    public bool IsTileOccupied(Tile tile, out CharacterController character) {
-        foreach (CharacterController tempCharacter in characters) {
-            if (tempCharacter.currentTile == tile) {
-                character = tempCharacter;
-                return true;
-            }
-        }
-        character = null;
-        return false;
-    }
-
-    public bool IsTileOccupied(int x, int z, out CharacterController character) {
-        Tile tile = GetTileAt(x, z);
-        foreach (CharacterController tempCharacter in characters) {
-            if (tempCharacter.currentTile == tile) {
-                character = tempCharacter;
-                return true;
-            }
-        }
-        character = null;
-        return false;
-    }
-
-    public bool IsTileOccupied(Tile tile) {
-        foreach (CharacterController tempCharacter in characters) {
-            if (tempCharacter.currentTile == tile) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public bool IsTileOccupied(int x, int z) {
-        Tile tile = GetTileAt(x, z);
-        foreach (CharacterController tempCharacter in characters) {
-            if (tempCharacter.currentTile == tile) {
-                return true;
-            }
-        }
-        return false;
-    }
+    
 
     public void SwitchPathHighlight(Tile tile, bool highlight) {
         if (!isHighlightEnabled) {
@@ -221,40 +216,52 @@ public class TileGrid : MonoBehaviour
     }
 
     public void SwitchHighlight(Tile tile, bool highlight) {
-        if (inMoveMode) {
+        if (mode == GridMode.Move || mode == GridMode.Knockback) {
             if (highlight) {
-                tile.SetMaterialTo(TileGrassHighlighted);
+                tile.transform.GetChild(0).gameObject.SetActive(true);
             }
             else {
-                tile.SetMaterialTo(TileGrass);
+                tile.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
-        else if (inAttackMode) {
+        else if (mode == GridMode.Attack) {
             if (highlight) {
-                tile.SetMaterialTo(TileGrassAttack);
+                tile.RemoveLastMaterial();
+                tile.ChangeTileMaterial(TileGrassAttack);
+                tile.GetTileChild().SetActive(true);
             }
             else {
-                tile.SetMaterialTo(TileGrass);
+                tile.transform.GetChild(0).gameObject.SetActive(false);
+            }
+        }
+        else if (mode == GridMode.Knockback) {
+            if (highlight) {
+                tile.RemoveLastMaterial();
+                tile.ChangeTileMaterial(SelectCursor);
+                tile.GetTileChild().SetActive(true);
+            }
+            else {
+                tile.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
 
         tile.isHighlighted = highlight;
     }
 
-    public Tile GetTileAt(int x, int z) {
-        return tiles[x, z];
-    }
-
     public void RunClickCallback(Tile tile) {
-        if (inMoveMode && IsPlayerTurn) {
+        if (mode == GridMode.Move && IsPlayerTurn) {
             MoveSelectedObjectTo(tile);
         }
-        else if (inAttackMode) {
+        else if (mode == GridMode.Attack) {
             CastPlayerSpellAt(path[path.Count - 1]);
+        }
+        else if (mode == GridMode.Knockback) {
+            knockbackTile = tile;
         }
     }
 
     public void CastPlayerSpellAt(Tile tile) {
+        currentSpell = SelectedObject.spells[0];
         SelectedObject.CastSpell(tile);
         IsPlayerTurn = !IsPlayerTurn;
         TurnText.GetComponent<TextController>().UpdateUI(IsPlayerTurn);
@@ -274,7 +281,7 @@ public class TileGrid : MonoBehaviour
             if (firstTile == pathTile) {
                 continue;
             }
-            SelectedObject.MoveTo(TileCoordToWorldCoord(pathTile));
+            SelectedObject.MoveTo(this.TileCoordToWorldCoord(pathTile));
             SelectedObject.currentTile = pathTile;
             yield return new WaitUntil(() => SelectedObject.readyToMove);
         }
@@ -284,24 +291,22 @@ public class TileGrid : MonoBehaviour
 
     }
 
-    public static int GetEuclidianDistance(Node startNode, Node targetNode) {
-        return Mathf.Abs(startNode.X - targetNode.X) + Mathf.Abs(startNode.Y - targetNode.Y);
-    }
-
-    public static int GetDiagonalDistance(Node startNode, Node targetNode) {
-        int XDistance = Mathf.Abs(startNode.X - targetNode.X);
-        int YDistance = Mathf.Abs(startNode.Y - targetNode.Y);
-
-        if (XDistance <= YDistance) {
-            return YDistance;
-        }
-        else {
-            return XDistance;
-        }
-    }
     public void changeTurns()
     {
         IsPlayerTurn = !IsPlayerTurn;
         TurnText.GetComponent<TextController>().UpdateUI(IsPlayerTurn);
     }
+
+    public bool KnockbackTileExists() {
+        return (knockbackTile != null);
+    }
+
+    public Tile GetKnockbackTile() {
+        return knockbackTile;
+    }
+
+    public void ResetKnockbackTile() {
+        knockbackTile = null;
+    }
+    
 }
