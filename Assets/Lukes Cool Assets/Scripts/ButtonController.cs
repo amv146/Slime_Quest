@@ -153,10 +153,13 @@ public class ButtonController : MonoBehaviour
                     //Parse the keycode into a string
                     string keyString = key.ToString();
                     //Change Specified Keybinding to this Keycode
-                    pData.updateKeybinding(Keybinding,keyString);
-
-                    this.GetComponentInChildren<Text>().text = "Keybinding: " + keyString;
-                    isExit = true;
+                    KeyCode keycode = (KeyCode)System.Enum.Parse(typeof(KeyCode), keyString);
+                    if(!pData.isDuplicate(keycode))
+                    {
+                        pData.updateKeybinding(Keybinding,keyString);
+                        this.GetComponentInChildren<Text>().text = "Keybinding: " + keyString;
+                        isExit = true;
+                    }
                     break;
 
                 }

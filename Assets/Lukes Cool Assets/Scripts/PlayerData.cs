@@ -213,6 +213,26 @@ public class PlayerData : MonoBehaviour
     {
         return (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(keybinding));
     }
+    public bool isDuplicate(KeyCode key)
+    {
+        
+        KeyCode up = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("KeybindingUp"));
+        KeyCode down = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("KeybindingDown"));
+        KeyCode left = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("KeybindingLeft"));
+        KeyCode right = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("KeybindingRight"));
+        KeyCode abilityone = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("KeybindingAbiltyOne"));
+        KeyCode abilitytwo = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("KeybindingAbiltyTwo"));
+        KeyCode pausemenu = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("KeybindingPauseMenu"));
+        if(key == up || key == down || key == left || key == right || key == abilityone || key == abilitytwo || key == pausemenu)
+        {
+            return true;
+        }
+        else
+        {
+            return  false;
+        }
+
+    }
     // Update is called once per frame
     void Update()
     {
