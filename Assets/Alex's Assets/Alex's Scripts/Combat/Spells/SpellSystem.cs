@@ -7,7 +7,8 @@ using System.Collections.Generic;
 public class SpellSystem {
     public static TileGrid tileGrid;
 
-    public static void RunBoxSpell(Tile targetTile, Spell spell, int layer, CharacterController character, Action<Tile> alwaysActions, Action<Tile, CharacterController> offensiveActions = null) {
+    public static CharacterController RunBoxSpell(Tile targetTile, Spell spell, int layer, CharacterController character, Action<Tile> alwaysActions = null, Action<Tile, CharacterController> offensiveActions = null) {
+        CharacterController enemy = null;
         for (int i = targetTile.X - layer; i <= targetTile.X + layer; ++i) {
             if (i < 0 || i >= tileGrid.GetXLength()) {
                 continue;
@@ -18,9 +19,10 @@ public class SpellSystem {
                         continue;
                     }
                     Tile tile = tileGrid.GetTileAt(i, j);
-                    alwaysActions(tile);
+                    alwaysActions?.Invoke(tile);
                     if(tileGrid.IsTileOccupied(tile, out CharacterController tileCharacter) && tileCharacter != character)
                     {
+                        enemy = tileCharacter;
                         offensiveActions?.Invoke(tile, tileCharacter);
                     }
                 }
@@ -28,26 +30,31 @@ public class SpellSystem {
             else {
                 if (!(targetTile.Y - layer < 0)) {
                     Tile tile = tileGrid.GetTileAt(i, targetTile.Y - layer);
-                    alwaysActions(tile);
+                    alwaysActions?.Invoke(tile);
                     if(tileGrid.IsTileOccupied(tile, out CharacterController tileCharacter) && tileCharacter != character)
                     {
+                        enemy = tileCharacter;
                         offensiveActions?.Invoke(tile, tileCharacter);
                     }
                 }
 
                 if (!(targetTile.Y + layer >= tileGrid.GetZLength())) {
                     Tile tile = tileGrid.GetTileAt(i, targetTile.Y + layer);
-                    alwaysActions(tile);
+                    alwaysActions?.Invoke(tile);
                     if(tileGrid.IsTileOccupied(tile, out CharacterController tileCharacter) && tileCharacter != character)
                     {
+                        enemy = tileCharacter;
                         offensiveActions?.Invoke(tile, tileCharacter);
                     }
                 }
             }
         }
+
+        return enemy;
     }
 
-    public static void RunCircleSpell(Tile targetTile, Spell spell, int layer, CharacterController character, Action<Tile> alwaysActions, Action<Tile, CharacterController> offensiveActions = null) {
+    public static CharacterController RunCircleSpell(Tile targetTile, Spell spell, int layer, CharacterController character, Action<Tile> alwaysActions = null, Action<Tile, CharacterController> offensiveActions = null) {
+        CharacterController enemy = null;
         for (int i = targetTile.X - layer; i <= targetTile.X + layer; ++i) {
             if (i < 0 || i >= tileGrid.GetXLength()) {
                 continue;
@@ -61,20 +68,26 @@ public class SpellSystem {
                 }
 
                 Tile tile = tileGrid.GetTileAt(i, j);
-                alwaysActions(tile);
+                alwaysActions?.Invoke(tile);
 
                 if (tileGrid.IsTileOccupied(tile, out CharacterController tileCharacter) && tileCharacter != character) {
+                    enemy = tileCharacter;
                     offensiveActions?.Invoke(tile, tileCharacter);
                 }
             }
         }
+
+        return enemy;
     }
 
-    public static void RunLineSpell(Tile tile, Spell spell, CharacterController character, Action<Tile> alwaysActions, Action<Tile, CharacterController> offensiveActions = null) {
+    public static CharacterController RunLineSpell(Tile tile, Spell spell, CharacterController character, Action<Tile> alwaysActions, Action<Tile, CharacterController> offensiveActions = null) {
         alwaysActions(tile);
-
+        CharacterController enemy = null;
         if (tileGrid.IsTileOccupied(tile, out CharacterController tileCharacter) && tileCharacter != character) {
+            enemy = tileCharacter;
             offensiveActions?.Invoke(tile, tileCharacter);
         }
+
+        return enemy;
     }
 }

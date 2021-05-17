@@ -42,6 +42,10 @@ public class Node : MonoBehaviour, IComparable {
         return Mathf.Abs(targetNode.X - X) + Mathf.Abs(targetNode.Y - Y);
     }
 
+    public Vector2 GetDirectionVector(Node targetNode) {
+        return new Vector2(targetNode.X - this.X, targetNode.Y - this.Y);
+    }
+
     public float HCost() {
         return distance;
     }

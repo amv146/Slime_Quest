@@ -35,7 +35,9 @@ public static class AStarAlgorithm {
                 }
             }
         }
-        return RetracePath(targetTile);
+        List<Node> result = RetracePath(targetTile);
+        
+        return result;
     }
 
 
