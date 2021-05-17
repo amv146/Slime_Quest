@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public KeyCode MoveRightKeybinding;
 
     public KeyCode PauseKeybinding;
+    public GameObject PauseMenu;
 
 
     private bool flipX = true;
@@ -47,7 +48,8 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKey(PauseKeybinding))
         {
-           SceneManager.LoadScene("Pause Menu");
+            PauseMenu.SetActive(true);
+            Time.timeScale = 0;
            
         }
         if(Input.GetKey(MoveUpKeybinding))

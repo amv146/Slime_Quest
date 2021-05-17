@@ -13,6 +13,8 @@ public class CharacterController : Movement
     public SpellCallback castCallback;
     public int castRadius = 3;
     public Spell currentSpell;
+    public KeyCode KeybindingAbilityOne;
+    public KeyCode KeybindingAbilityTwo;
     // Start is called before the first frame update
     private void Start() 
     {

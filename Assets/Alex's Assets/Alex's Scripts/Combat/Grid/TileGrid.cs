@@ -29,6 +29,7 @@ public class TileGrid : MonoBehaviour
 
     public CharacterController SelectedObject;
     public List<CharacterController> characters;
+    public GameObject character;
 
     public static Material ArrowStraight;
     public static Material ArrowCorner;
@@ -102,7 +103,7 @@ public class TileGrid : MonoBehaviour
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.A)) {
+        if (Input.GetKeyDown(character.GetComponent<CharacterController>().KeybindingAbilityOne)) {
             mode = 1 - mode;
             if (mode == GridMode.Move) {
                 AStarAlgorithm.SetWeights(characters);

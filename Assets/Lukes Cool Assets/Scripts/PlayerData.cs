@@ -9,84 +9,106 @@ public class PlayerData : MonoBehaviour
     public GameObject Character;
     void Start()
     {
-            if(PlayerPrefs.HasKey("KeybindingUp"))
-            {
-                // The Key Exists
-                string up = PlayerPrefs.GetString("KeybindingUp");
-                //Update Keybinding
-                KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), up);
-                player.GetComponent<PlayerController>().MoveUpKeybinding = key;
+        if(PlayerPrefs.HasKey("KeybindingUp"))
+        {
+            // The Key Exists
+            string up = PlayerPrefs.GetString("KeybindingUp");
+            //Update Keybinding
+            KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), up);
+            player.GetComponent<PlayerController>().MoveUpKeybinding = key;
 
-                //Questions for prate
-                //For storing user input should I store the string and parse it to a Keycode
-                //Also, is the best way to change the user input to put the user in a loop until they press a button
-                //That button will have the new keybinding associated to it unless another keybinding has the same keycode
-            } 
-            if(PlayerPrefs.HasKey("KeybindingDown"))
-            {
-                // The Key Exists
-                string down = PlayerPrefs.GetString("KeybindingDown");
-                //Update Keybinding
-                KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), down);
-                player.GetComponent<PlayerController>().MoveDownKeybinding = key;
+            //Questions for prate
+            //For storing user input should I store the string and parse it to a Keycode
+            //Also, is the best way to change the user input to put the user in a loop until they press a button
+            //That button will have the new keybinding associated to it unless another keybinding has the same keycode
+        } 
+        else
+        {
+            PlayerPrefs.SetString("KeybindingUp", "W");
+            PlayerPrefs.Save();
+        }
+        if(PlayerPrefs.HasKey("KeybindingDown"))
+        {
+            // The Key Exists
+            string down = PlayerPrefs.GetString("KeybindingDown");
+            //Update Keybinding
+            KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), down);
+            player.GetComponent<PlayerController>().MoveDownKeybinding = key;
 
-            } 
-            if(PlayerPrefs.HasKey("KeybindingLeft"))
-            {
-                // The Key Exists
-                string left = PlayerPrefs.GetString("KeybindingLeft");
-                //Update Keybinding
-                KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), left);
-                player.GetComponent<PlayerController>().MoveLeftKeybinding = key;
+        } 
+        else
+        {
+            PlayerPrefs.SetString("KeybindingDown", "S");
+            PlayerPrefs.Save();
+        }
+        if(PlayerPrefs.HasKey("KeybindingLeft"))
+        {
+            // The Key Exists
+            string left = PlayerPrefs.GetString("KeybindingLeft");
+            //Update Keybinding
+            KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), left);
+            player.GetComponent<PlayerController>().MoveLeftKeybinding = key;
 
-            } 
-            if(PlayerPrefs.HasKey("KeybindingRight"))
-            {
-                // The Key Exists
-                string right = PlayerPrefs.GetString("KeybindingRight");
-                //Update Keybinding
-                KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), right);
-                player.GetComponent<PlayerController>().MoveRightKeybinding = key;
+        } 
+        else
+        {
+            PlayerPrefs.SetString("KeybindingLeft", "A");
+            PlayerPrefs.Save();
+        }
+        if(PlayerPrefs.HasKey("KeybindingRight"))
+        {
+            // The Key Exists
+            string right = PlayerPrefs.GetString("KeybindingRight");
+            //Update Keybinding
+            KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), right);
+            player.GetComponent<PlayerController>().MoveRightKeybinding = key;
 
-            } 
-            if(PlayerPrefs.HasKey("KeybindingAbiltyOne"))
-            {
-                // The Key Exists
-                string abilityone = PlayerPrefs.GetString("KeybindingAbiltyOne");
-                //Update Keybinding
-                KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), abilityone);
-                Character.GetComponent<CharacterController>().KeybindingAbiltyOne = key;
-            } 
-            if(PlayerPrefs.HasKey("KeybindingAbiltyTwo"))
-            {
-                // The Key Exists
-                string abilitytwo = PlayerPrefs.GetString("KeybindingAbiltyTwo");
-                //Update Keybinding
-                KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), abilitytwo);
-                Character.GetComponent<CharacterController>().KeybindingAbiltyTwo = key;
-            } 
-            if(PlayerPrefs.HasKey("KeybindingPauseMenu"))
-            {
-                // The Key Exists
-                string pause = PlayerPrefs.GetString("KeybindingPauseMenu");
-                //Update Keybinding
-                KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), pause);
-                player.GetComponent<PlayerController>().PauseKeybinding = key;
-            } 
-
-            else
-            {
-                //Default Keybindings
-                PlayerPrefs.SetString("KeybindingUp", "W");
-                PlayerPrefs.SetString("KeybindingDown", "S");
-                PlayerPrefs.SetString("KeybindingLeft", "A");
-                PlayerPrefs.SetString("KeybindingRight", "D");
-                PlayerPrefs.SetString("KeybindingPauseMenu", "Escape");
-                PlayerPrefs.SetString("KeybindingAbiltyOne", "1");
-                PlayerPrefs.SetString("KeybindingAbiltyTwo", "2");
-                // Save the preference to an external file
-                PlayerPrefs.Save();
-            }
+        } 
+        else
+        {
+            PlayerPrefs.SetString("KeybindingRight", "D");
+            PlayerPrefs.Save();
+        }
+        if(PlayerPrefs.HasKey("KeybindingAbiltyOne"))
+        {
+            // The Key Exists
+            string abilityone = PlayerPrefs.GetString("KeybindingAbiltyOne");
+            //Update Keybinding
+            KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), abilityone);
+            Character.GetComponent<CharacterController>().KeybindingAbilityOne = key;
+        } 
+        else
+        {
+            PlayerPrefs.SetString("KeybindingAbiltyOne", "1");
+            PlayerPrefs.Save();
+        }
+        if(PlayerPrefs.HasKey("KeybindingAbiltyTwo"))
+        {
+            // The Key Exists
+            string abilitytwo = PlayerPrefs.GetString("KeybindingAbiltyTwo");
+            //Update Keybinding
+            KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), abilitytwo);
+            Character.GetComponent<CharacterController>().KeybindingAbilityTwo = key;
+        } 
+        else
+        {
+            PlayerPrefs.SetString("KeybindingAbiltyTwo", "2");
+            PlayerPrefs.Save();
+        }
+        if(PlayerPrefs.HasKey("KeybindingPauseMenu"))
+        {
+            // The Key Exists
+            string pause = PlayerPrefs.GetString("KeybindingPauseMenu");
+            //Update Keybinding
+            KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), pause);
+            player.GetComponent<PlayerController>().PauseKeybinding = key;
+        } 
+        else
+        {
+            PlayerPrefs.SetString("KeybindingPauseMenu", "Escape");
+            PlayerPrefs.Save();
+        }
+        PlayerPrefs.Save();
     }
     public void updateKeybinding(string KeybindingName, string newKeybinding)
     {
@@ -117,8 +139,10 @@ public class PlayerData : MonoBehaviour
         else if(KeybindingName == "KeybindingPauseMenu")
         {
             PlayerPrefs.SetString("KeybindingPauseMenu", newKeybinding);
+            Debug.Log(6);
         }
         // Save the preference to an external file
+        
         PlayerPrefs.Save();
         //Update Keybindings
         if(PlayerPrefs.HasKey("KeybindingUp"))
@@ -160,14 +184,18 @@ public class PlayerData : MonoBehaviour
         if(PlayerPrefs.HasKey("KeybindingAbiltyOne"))
         {
             // The Key Exists
-            string lives = PlayerPrefs.GetString("KeybindingAbiltyOne");
+            string abilityone = PlayerPrefs.GetString("KeybindingAbiltyOne");
             //Update Keybinding
+            KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), abilityone);
+            Character.GetComponent<CharacterController>().KeybindingAbilityOne = key;
         } 
         if(PlayerPrefs.HasKey("KeybindingAbiltyTwo"))
         {
             // The Key Exists
-            string lives = PlayerPrefs.GetString("KeybindingAbiltyTwo");
+            string abilitytwo = PlayerPrefs.GetString("KeybindingAbiltyTwo");
             //Update Keybinding
+            KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), abilitytwo);
+            Character.GetComponent<CharacterController>().KeybindingAbilityTwo = key;
 
         } 
         if(PlayerPrefs.HasKey("KeybindingPauseMenu"))
@@ -177,7 +205,9 @@ public class PlayerData : MonoBehaviour
             //Update Keybinding
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), pause);
             player.GetComponent<PlayerController>().PauseKeybinding = key;
+            Debug.Log(5);
         }
+        PlayerPrefs.Save();
     }
     public KeyCode GetKeybind(string keybinding)
     {

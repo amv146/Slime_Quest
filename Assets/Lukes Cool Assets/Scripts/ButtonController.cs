@@ -14,12 +14,15 @@ using UnityEngine.SceneManagement;
 public class ButtonController : MonoBehaviour
 {
     public string Keybinding;
+    public GameObject PauseMenu;
     public string SceneToChange;
     public enum ButtonType
     {
         SceneChanger,
         Keybinding,
-        Exit
+        Exit,
+        Resume,
+        Pause
     }
     public ButtonType BType;
 
@@ -29,13 +32,16 @@ public class ButtonController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        if(BType == ButtonType.Keybinding)
+        {
+            pData = PlayerData.GetComponent<PlayerData>();
+            this.GetComponentInChildren<Text>().text = "Keybinding: "+pData.GetKeybind(Keybinding);
+        }
     }
     public void updateButtonText()
     {
         if(BType == ButtonType.Keybinding)
         {
-            pData = PlayerData.GetComponent<PlayerData>();
             this.GetComponentInChildren<Text>().text = "Keybinding: "+pData.GetKeybind(Keybinding);
         }
     }
@@ -46,6 +52,7 @@ public class ButtonController : MonoBehaviour
     }
     public void OnButtonPress()
     {
+
         if(BType == ButtonType.Keybinding)
         {
             StartCoroutine(getButton());
@@ -54,7 +61,20 @@ public class ButtonController : MonoBehaviour
         {
             SceneManager.LoadScene(SceneToChange);
         }
-        
+        else if(BType == ButtonType.Resume)
+        {
+            PauseMenu.SetActive(false);
+            Time.timeScale = 1;
+        }
+        else if(BType == ButtonType.Exit)
+        {
+            Application.Quit();
+        }
+        else if(BType == ButtonType.Pause)
+        {
+            PauseMenu.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
     IEnumerator getButton()
     {
@@ -130,13 +150,12 @@ public class ButtonController : MonoBehaviour
             {
                 if(Input.GetKey(key))
                 {
-                    Debug.Log(1);
                     //Parse the keycode into a string
                     string keyString = key.ToString();
                     //Change Specified Keybinding to this Keycode
-
                     pData.updateKeybinding(Keybinding,keyString);
-                    this.GetComponentInChildren<Text>().text = "Keybinding: "+keyString;
+
+                    this.GetComponentInChildren<Text>().text = "Keybinding: " + keyString;
                     isExit = true;
                     break;
 

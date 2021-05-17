@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2416780920262986287
 Transform:
@@ -83,10 +83,12 @@ MonoBehaviour:
   BackSprite: {fileID: 21300000, guid: 238e18a569a1fbe428915ff202b5f6ef, type: 3}
   MoveSpeed: 10
   Anim: {fileID: 2416780920980298296}
-  MoveUpKeybinding: 0
-  MoveDownKeybinding: 0
-  MoveLeftKeybinding: 0
-  MoveRightKeybinding: 0
+  MoveUpKeybinding: 98
+  MoveDownKeybinding: 115
+  MoveLeftKeybinding: 97
+  MoveRightKeybinding: 100
+  PauseKeybinding: 118
+  PauseMenu: {fileID: 0}
 --- !u!1 &2416780920721984604
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +106,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2416780920721984603
 Transform:
@@ -197,7 +199,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2416780920980298297
 Transform:
