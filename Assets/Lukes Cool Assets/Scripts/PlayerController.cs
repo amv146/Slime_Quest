@@ -19,6 +19,13 @@ public class PlayerController : MonoBehaviour
     
     public Animator Anim;
 
+    public KeyCode MoveUpKeybinding;
+    public KeyCode MoveDownKeybinding;
+    public KeyCode MoveLeftKeybinding;
+    public KeyCode MoveRightKeybinding;
+
+    public KeyCode PauseKeybinding;
+
 
     private bool flipX = true;
     private bool flipY = true;
@@ -32,13 +39,42 @@ public class PlayerController : MonoBehaviour
         if (SceneDataManager.Instance.scenePositions.ContainsKey(sceneName)) {
             transform.position = SceneDataManager.Instance.scenePositions[SceneManager.GetActiveScene().name];
         }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        moveInput.x = Input.GetAxis("Horizontal");
-        moveInput.y = Input.GetAxis("Vertical");
+        if(Input.GetKey(PauseKeybinding))
+        {
+           SceneManager.LoadScene("Pause Menu");
+           
+        }
+        if(Input.GetKey(MoveUpKeybinding))
+        {
+            moveInput.y = 1;
+        }
+        else if(Input.GetKey(MoveDownKeybinding))
+        {
+            moveInput.y = -1;
+        }
+        else
+        {
+            moveInput.y = 0;
+        }
+        if(Input.GetKey(MoveLeftKeybinding))
+        {
+            moveInput.x = -1;
+        }
+        else if(Input.GetKey(MoveRightKeybinding))
+        {
+            moveInput.x = 1;
+        }
+        else
+        {
+            moveInput.x = 0;
+        }
+        
 
         PlayerRigidBody.velocity = new Vector3(moveInput.x * MoveSpeed, PlayerRigidBody.velocity.y, moveInput.y * MoveSpeed);
 
