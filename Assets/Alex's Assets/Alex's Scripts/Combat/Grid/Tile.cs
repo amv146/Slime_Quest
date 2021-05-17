@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 public delegate void ClickCallback(Tile tile);
-public delegate void HighlightCallback(Tile tile, bool highlight);
+public delegate void HighlightCallback(Tile tile);
 
 public class Tile : Node
 {
@@ -53,15 +53,11 @@ public class Tile : Node
     }
 
     private void OnMouseEnter() {
-        pathFindCallback(this, true);
+        pathFindCallback(this);
     }
 
     private void OnMouseExit() {
-        pathFindCallback(this, false);
-    }
-
-    private void OnMouseDown() {
-        pathFindCallback(this, false);
+        pathFindCallback(this);
     }
 
     public void SetTileCoords(int x, int z) {
@@ -69,40 +65,55 @@ public class Tile : Node
         tileZ = z;
     }
 
-    public void SetMaterialTo(Material material) {
-        gameObject.GetComponentInChildren<MeshRenderer>().material = material;
-    }
-
-    IEnumerator StartCallback(bool highlight) {
-        yield return null;
-        pathFindCallback(this, highlight);
-    }
-
     public void SetTileMaterialAndRotation() {
         Node parent = parentNode;
         if (parent != null) {
             Vector2 direction = parent.GetDirectionVector(this);
 
-            GetTileChild().transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.y));
+            GetHighlightLayer().transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.y));
             
             if (parent.parentNode != null) {
                 Vector2 parentDirection = parent.parentNode.GetDirectionVector(parent);
                 if (Mathf.Abs(direction.x) - Mathf.Abs(parentDirection.x) != 0 || Mathf.Abs(direction.y) - Mathf.Abs(parentDirection.y) != 0) {
-                    parent.GetComponent<Tile>().ChangeTileMaterial(TileGrid.ArrowCorner);
-                    parent.GetComponent<Tile>().GetTileChild().transform.rotation = Quaternion.Euler(0, GetRotation(direction, parentDirection), 0);
+                    parent.GetComponent<Tile>().SetHighlightMaterialTo(TileGrid.ArrowCorner);
+                    parent.GetComponent<Tile>().GetHighlightLayer().transform.rotation = Quaternion.Euler(0, GetRotation(direction, parentDirection), 0);
                 }
             }
 
-            ChangeTileMaterial(TileGrid.ArrowStraight);
+            SetHighlightMaterialTo(TileGrid.ArrowStraight);
         }
+
+        SetCursorLayerState(false);
     }
 
-    public GameObject GetTileChild() {
-        return transform.GetChild(0).gameObject;
+    public GameObject GetHighlightLayer() {
+        return transform.Find("HighlightLayer").gameObject;
     }
 
-    public void ChangeTileMaterial(Material material) {
-        GetTileChild().GetComponent<MeshRenderer>().material = material;
+    public GameObject GetCursorLayer() {
+        return transform.Find("CursorLayer").gameObject;
+    }
+
+    public void SetHighlightMaterialTo(Material material) {
+        GetHighlightLayer().GetComponent<MeshRenderer>().material = material;
+    }
+
+    public void SetCursorMaterialTo(Material material) {
+        GetCursorLayer().GetComponent<MeshRenderer>().material = material;
+    }
+
+    public void SetCursorLayerState(bool active) {
+        if (TileGrid.mode == GridMode.Attack || TileGrid.mode == GridMode.Knockback) {
+            SetCursorMaterialTo(TileGrid.AttackCursor);
+        }
+        else if (TileGrid.mode == GridMode.Move) {
+            SetCursorMaterialTo(TileGrid.SelectCursor);
+        }
+        GetCursorLayer().SetActive(active);
+    }
+
+    public void SetHighlightLayerState(bool active) {
+        GetHighlightLayer().SetActive(active);
     }
 
     public int GetRotation(Vector3 direction, Vector3 parentDirection) {
@@ -148,14 +159,14 @@ public class Tile : Node
 
     public void AddMaterial(Material material) {
         Material[] newMaterials = new Material[2];
-        newMaterials[0] = GetTileChild().GetComponent<MeshRenderer>().material;
+        newMaterials[0] = GetHighlightLayer().GetComponent<MeshRenderer>().material;
         newMaterials[1] = material;
-        GetTileChild().GetComponent<MeshRenderer>().materials = newMaterials;
+        GetHighlightLayer().GetComponent<MeshRenderer>().materials = newMaterials;
     }
 
     public void RemoveLastMaterial() {
         Material[] newMaterials = new Material[1];
-        newMaterials[0] = GetTileChild().GetComponent<MeshRenderer>().material;
-        GetTileChild().GetComponent<MeshRenderer>().materials = newMaterials;
+        newMaterials[0] = GetHighlightLayer().GetComponent<MeshRenderer>().material;
+        GetHighlightLayer().GetComponent<MeshRenderer>().materials = newMaterials;
     }
 }

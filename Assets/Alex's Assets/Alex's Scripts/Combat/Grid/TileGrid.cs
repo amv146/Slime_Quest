@@ -1,12 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Mathf;
-using System;
-using static TileGrid;
 
 public class TileGrid : MonoBehaviour
 {
@@ -38,11 +34,13 @@ public class TileGrid : MonoBehaviour
     public static Material ArrowCorner;
     public static Material ArrowEnd;
     public static Material SelectCursor;
+    public static Material AttackCursor;
 
     public Material ArrowStraightPublic;
     public Material ArrowCornerPublic;
     public Material ArrowEndPublic;
     public Material SelectCursorPublic;
+    public Material AttackCursorPublic;
 
     private List<Tile> path = new List<Tile>();
     public bool isHighlightEnabled = true;
@@ -53,7 +51,7 @@ public class TileGrid : MonoBehaviour
 
     public DirectionArrow Arrow;
 
-    public GridMode mode = GridMode.Move;
+    public static GridMode mode = GridMode.Move;
 
     private Tile knockbackTile;
 
@@ -64,11 +62,12 @@ public class TileGrid : MonoBehaviour
         ArrowCorner = ArrowCornerPublic;
         ArrowEnd = ArrowEndPublic;
         SelectCursor = SelectCursorPublic;
+        AttackCursor = AttackCursorPublic;
 
         tiles = new Tile[this.GetXLength(), this.GetZLength()];
         Arrow.gameObject.SetActive(false);
         Tile.clickCallback = RunClickCallback;
-        Tile.pathFindCallback = SwitchPathHighlight;
+        Tile.pathFindCallback = HighlightNewPath;
         Tile.tileGrassHighlighted = TileGrassHighlighted;
         Tile.tileGrass = TileGrass;
         for (int x = 0; x <= xMax / xSpacing; ++x) {
@@ -126,130 +125,135 @@ public class TileGrid : MonoBehaviour
     public List<Tile> GetCurrentPath() {
         return this.path;
     }
-    public List<Tile> GetNewPath(Tile tile) {
+    public List<Tile> FindPathTo(Tile targetTile) {
         AStarAlgorithm.ResetTiles(this);
+
         if (mode == GridMode.Move) {
             AStarAlgorithm.SetWeights(characters);
         }
-        path.Clear();
-        int counter = 0;
-        foreach (Node node in AStarAlgorithm.GetShortestPossiblePath(SelectedObject.currentTile, tile)) {
-            Tile tileTemp = this.GetTileAt(node);
 
-            if (mode == GridMode.Move) {
-                if (!isHighlightEnabled) {
-                    break;
-                }
-                if (counter == 0) {
-                    tileTemp.ChangeTileMaterial(SelectCursor);
-                }
-                tileTemp.SetTileMaterialAndRotation();
-                path.Add(tiles[node.X, node.Y]);
-                if (counter == SelectedObject.movementAmount || counter == this.GetEuclidianDistance(SelectedObject.currentTile, tile)) {
-                    tileTemp.ChangeTileMaterial(ArrowEnd);
-                    tileTemp.AddMaterial(SelectCursor);
-                    break;
-                }
-                else {
-                    tileTemp.RemoveLastMaterial();
-                }
+        path.Clear();
+
+        if (mode != GridMode.Knockback && !isHighlightEnabled) {
+            return null;
+        }
+
+        int counter = 0;
+        foreach (Tile tile in from node in AStarAlgorithm.GetShortestPossiblePath(SelectedObject.currentTile, targetTile) select this.GetTileAt(node)) {
+            int currentDistance = GetCurrentDistance(SelectedObject.currentTile, tile);
+            int maxDistance = GetMaxDistance();
+
+            if (currentDistance > maxDistance) {
+                break;
             }
-            else if (mode == GridMode.Attack) {
-                if (!isHighlightEnabled) {
-                    break;
-                }
-                if (this.GetDiagonalDistance(SelectedObject.currentTile, node) > SelectedObject.castRadius) {
-                    break;
-                }
-                if (node == tile || this.GetDiagonalDistance(SelectedObject.currentTile, node) == SelectedObject.castRadius) {
-                    path.Add(tiles[node.X, node.Y]);
-                    tileTemp.RemoveLastMaterial();
-                }
+            tile.SetTileMaterialAndRotation();
+
+
+            if (currentDistance == 0) {
+                tile.SetCursorLayerState(true);
+                tile.SetHighlightLayerState(false);
             }
-            else if (mode == GridMode.Knockback) {
-                if (counter == 0) {
-                    tileTemp.ChangeTileMaterial(SelectCursor);
-                }
-                if (this.GetDiagonalDistance(SelectedObject.currentTile, node) > currentSpell.knockbackRadius) {
-                    break;
-                }
-                if (node == tile || this.GetDiagonalDistance(SelectedObject.currentTile, node) == currentSpell.knockbackRadius) {
-                    path.Add(tiles[node.X, node.Y]);
-                    tileTemp.RemoveLastMaterial();
-                }
+            else if (tile == targetTile || currentDistance == maxDistance) {
+                tile.SetHighlightMaterialTo(ArrowEnd);
             }
+
+            path.Add(tile);
             counter++;
         }
-        if (mode == GridMode.Attack) {
-            Tile temp = path[path.Count - 1];
-            path = new List<Tile>();
-            path.Add(temp);
-            temp.ChangeTileMaterial(SelectCursor);
-        }
-        if (mode == GridMode.Knockback) {
-            Tile temp = path[path.Count - 1];
-            path = new List<Tile>();
-            path.Add(temp);
-            temp.ChangeTileMaterial(SelectCursor);
-            Arrow.SetDirection(SelectedObject.currentTile, temp);
-        }
-
         return path;
     }
 
-    
+    private int GetCurrentDistance(Tile startTile, Tile targetTile) {
+        switch (mode) {
+            case GridMode.Move:
+                return this.path.Count;
+            case GridMode.Attack:
+                return this.GetDiagonalDistance(startTile, targetTile);
+            case GridMode.Knockback:
+                return this.GetDiagonalDistance(startTile, targetTile);
+            default:
+                return 0;
+        }
+    }
 
-    public void SwitchPathHighlight(Tile tile, bool highlight) {
+    private int GetMaxDistance() {
+        switch (mode) {
+            case GridMode.Move:
+                return SelectedObject.movementAmount;
+            case GridMode.Attack:
+                return SelectedObject.castRadius;
+            case GridMode.Knockback:
+                return currentSpell.knockbackRadius;
+            default:
+                return 0;
+        }
+    }
+
+    public void HighlightNewPath(Tile targetTile) {
         if (!isHighlightEnabled) {
             return;
         }
-        if (highlight) {
-            foreach (Tile pathTile in GetNewPath(tile)) {
-                SwitchHighlight(pathTile, highlight);
+        List<Tile> oldPath = this.path;
+
+        for (int i = 0; i < oldPath.Count; ++i) {
+            Tile tile = oldPath[i];
+            tile.SetHighlightLayerState(false);
+            tile.SetCursorLayerState(false);
+        }
+
+        FindPathTo(targetTile);
+
+        for (int i = 0; i < path.Count; ++i) {
+            Tile tile = path[i];
+            SwitchHighlight(tile, true);
+            if (i == 0) {
+                tile.SetHighlightLayerState(false);
+            }
+            if (i == path.Count - 1) {
+                tile.SetCursorLayerState(true);
             }
         }
-        else {
-            foreach (Tile pathTile in path) {
-                SwitchHighlight(pathTile, highlight);
-            }
+
+        if (mode == GridMode.Knockback) {
+            Arrow.SetDirection(SelectedObject.currentTile, path[path.Count - 1]);
+        }
+    }
+
+    public void UnhighlightCurrentPath() {
+        for (int i = 0; i < path.Count; ++i) {
+            Tile tile = path[i];
+            tile.SetHighlightLayerState(false);
+            tile.SetCursorLayerState(false);
         }
     }
 
     public void SwitchHighlight(Tile tile, bool highlight) {
-        if (mode == GridMode.Move || mode == GridMode.Knockback) {
+        if (mode == GridMode.Move) {
             if (highlight) {
-                tile.transform.GetChild(0).gameObject.SetActive(true);
+                tile.SetHighlightLayerState(true);
             }
             else {
-                tile.transform.GetChild(0).gameObject.SetActive(false);
+                tile.SetHighlightLayerState(false);
             }
         }
         else if (mode == GridMode.Attack) {
+            if (!KnockbackTileExists() && tile != path[path.Count - 1]) {
+                return;
+            }
             if (highlight) {
-                tile.RemoveLastMaterial();
-                tile.ChangeTileMaterial(TileGrassAttack);
-                tile.GetTileChild().SetActive(true);
+                tile.SetHighlightMaterialTo(TileGrassAttack);
+                tile.SetHighlightLayerState(true);
             }
             else {
-                tile.transform.GetChild(0).gameObject.SetActive(false);
+                tile.SetHighlightLayerState(false);
             }
         }
-        else if (mode == GridMode.Knockback) {
-            if (highlight) {
-                tile.RemoveLastMaterial();
-                tile.ChangeTileMaterial(SelectCursor);
-                tile.GetTileChild().SetActive(true);
-            }
-            else {
-                tile.transform.GetChild(0).gameObject.SetActive(false);
-            }
-        }
-
-        tile.isHighlighted = highlight;
     }
 
     public void RunClickCallback(Tile tile) {
         if (mode == GridMode.Move && IsPlayerTurn) {
+            UnhighlightCurrentPath();
+            isHighlightEnabled = false;
             MoveSelectedObjectTo(tile);
         }
         else if (mode == GridMode.Attack) {

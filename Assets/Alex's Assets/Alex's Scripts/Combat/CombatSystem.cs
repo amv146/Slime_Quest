@@ -27,7 +27,7 @@ public class CombatSystem : MonoBehaviour {
     }
 
     void CastSpell(CharacterController character, Tile targetTile, Spell spell) {
-        tileGrid.mode = GridMode.Knockback;
+        TileGrid.mode = GridMode.Knockback;
         StartCoroutine(KnockbackPlayer(character, targetTile, spell));
     }
 
@@ -72,6 +72,8 @@ public class CombatSystem : MonoBehaviour {
                 tileGrid.SelectedObject = enemyController;
                 yield return new WaitUntil(tileGrid.KnockbackTileExists);
                 tileGrid.isHighlightEnabled = false;
+                tileGrid.GetKnockbackTile().SetCursorLayerState(false);
+                targetTile.SetCursorLayerState(false);
                 tileGrid.Arrow.Disable();
             }
             StartCoroutine(RunSpellSequence(character, targetTile, spell));
@@ -82,7 +84,7 @@ public class CombatSystem : MonoBehaviour {
     
 
     private IEnumerator RunSpellSequence(CharacterController character, Tile targetTile, Spell spell) {
-        tileGrid.mode = GridMode.Attack;
+        TileGrid.mode = GridMode.Attack;
         AStarAlgorithm.ResetTiles(tileGrid);
         if (spell.radiusType == SpellRadiusType.Box || spell.radiusType == SpellRadiusType.Circle) {
             for (int layer = 0; layer <= spell.radius; ++layer) {
@@ -134,7 +136,7 @@ public class CombatSystem : MonoBehaviour {
                 yield return new WaitForSeconds(0.5f);
             }
 
-            tileGrid.mode = GridMode.Attack;
+            TileGrid.mode = GridMode.Attack;
             tileGrid.SelectedObject = character;
             tileGrid.ResetKnockbackTile();
         }
