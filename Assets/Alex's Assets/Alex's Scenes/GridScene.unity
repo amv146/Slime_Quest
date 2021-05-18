@@ -1291,6 +1291,7 @@ MonoBehaviour:
   IsPlayerTurn: 1
   TurnText: {fileID: 338268916}
   Arrow: {fileID: 652820333}
+  mode: 0
 --- !u!4 &1222047375
 Transform:
   m_ObjectHideFlags: 0
@@ -1467,7 +1468,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &1440891079
 MonoBehaviour:
@@ -1481,6 +1482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff43e18e14a6424e8680d1681c4e506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnSystem: {fileID: 0}
   tileGrid: {fileID: 1222047373}
   player: {fileID: 1111830724}
 --- !u!4 &1440891080

@@ -7,6 +7,7 @@ using static SpellSystem;
 public delegate void SpellCallback(CharacterController character, Tile targetTile, Spell spell);
 
 public class CombatSystem : MonoBehaviour {
+    public TurnSystem turnSystem;
     public TileGridManager tileGrid;
     public CharacterController player;
     private List<CharacterController> characters;
@@ -15,9 +16,17 @@ public class CombatSystem : MonoBehaviour {
     // Use this for initialization
     void Start() {
         SpellSystem.tileGrid = tileGrid;
-        characters = tileGrid.characters;    
+        turnSystem.tileGrid = tileGrid;
+        characters = tileGrid.characters;
+        Tile.clickCallback = RunClickCallback;
         foreach (CharacterController character in characters) {
             character.castCallback = CastSpell;
+        }
+    }
+
+    public void RunClickCallback(Tile tile) {
+        if (turnSystem.IsPlayerTurn()) {
+            tileGrid.RunClickEvents(tile);
         }
     }
 
@@ -27,7 +36,7 @@ public class CombatSystem : MonoBehaviour {
     }
 
     void CastSpell(CharacterController character, Tile targetTile, Spell spell) {
-        TileGrid.mode = GridMode.Knockback;
+        tileGrid.mode = GridMode.Knockback;
         StartCoroutine(KnockbackPlayer(character, targetTile, spell));
     }
 
@@ -84,7 +93,7 @@ public class CombatSystem : MonoBehaviour {
     
 
     private IEnumerator RunSpellSequence(CharacterController character, Tile targetTile, Spell spell) {
-        TileGrid.mode = GridMode.Attack;
+        tileGrid.mode = GridMode.Attack;
         AStarAlgorithm.ResetTiles(tileGrid);
         if (spell.radiusType == SpellRadiusType.Box || spell.radiusType == SpellRadiusType.Circle) {
             for (int layer = 0; layer <= spell.radius; ++layer) {
@@ -136,7 +145,7 @@ public class CombatSystem : MonoBehaviour {
                 yield return new WaitForSeconds(0.5f);
             }
 
-            TileGrid.mode = GridMode.Attack;
+            tileGrid.mode = GridMode.Attack;
             tileGrid.SelectedObject = character;
             tileGrid.ResetKnockbackTile();
         }

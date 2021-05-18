@@ -103,12 +103,6 @@ public class Tile : Node
     }
 
     public void SetCursorLayerState(bool active) {
-        if (TileGrid.mode == GridMode.Attack || TileGrid.mode == GridMode.Knockback) {
-            SetCursorMaterialTo(TileGrid.AttackCursor);
-        }
-        else if (TileGrid.mode == GridMode.Move) {
-            SetCursorMaterialTo(TileGrid.SelectCursor);
-        }
         GetCursorLayer().SetActive(active);
     }
 

@@ -16,6 +16,7 @@ public class CharacterController : Movement
     public KeyCode KeybindingAbilityOne;
     public KeyCode KeybindingAbilityTwo;
     // Start is called before the first frame update
+
     private void Start() 
     {
         spells = new List<Spell>();

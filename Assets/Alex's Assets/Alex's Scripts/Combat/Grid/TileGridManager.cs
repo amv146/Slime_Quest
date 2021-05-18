@@ -6,8 +6,21 @@ public class TileGridManager : TileGrid {
 
     public override void Start() {
         base.Start();
-        Tile.clickCallback = RunClickCallback;
         Tile.pathFindCallback = HighlightNewPath;
+    }
+
+    public void RunClickEvents(Tile tile) {
+        if (mode == GridMode.Move) {
+            UnhighlightCurrentPath();
+            isHighlightEnabled = false;
+            MoveSelectedObjectTo(tile);
+        }
+        else if (mode == GridMode.Attack) {
+            CastPlayerSpellAt(path[path.Count - 1]);
+        }
+        else if (mode == GridMode.Knockback) {
+            knockbackTile = tile;
+        }
     }
 
     public void HighlightNewPath(Tile targetTile) {
@@ -28,9 +41,11 @@ public class TileGridManager : TileGrid {
             Tile tile = path[i];
             SwitchHighlight(tile, true);
             if (i == 0) {
+                tile.SetCursorMaterialTo(AttackCursor);
                 tile.SetHighlightLayerState(false);
             }
             if (i == path.Count - 1) {
+                tile.SetCursorMaterialTo(AttackCursor);
                 tile.SetCursorLayerState(true);
             }
         }
@@ -51,6 +66,7 @@ public class TileGridManager : TileGrid {
     public void SwitchHighlight(Tile tile, bool highlight) {
         if (mode == GridMode.Move) {
             if (highlight) {
+                tile.SetCursorMaterialTo(SelectCursor);
                 tile.SetHighlightLayerState(true);
             }
             else {
@@ -62,6 +78,7 @@ public class TileGridManager : TileGrid {
                 return;
             }
             if (highlight) {
+                tile.SetCursorMaterialTo(AttackCursor);
                 tile.SetHighlightMaterialTo(TileGrassAttack);
                 tile.SetHighlightLayerState(true);
             }
@@ -71,19 +88,6 @@ public class TileGridManager : TileGrid {
         }
     }
 
-    public void RunClickCallback(Tile tile) {
-        if (mode == GridMode.Move && IsPlayerTurn) {
-            UnhighlightCurrentPath();
-            isHighlightEnabled = false;
-            MoveSelectedObjectTo(tile);
-        }
-        else if (mode == GridMode.Attack) {
-            CastPlayerSpellAt(path[path.Count - 1]);
-        }
-        else if (mode == GridMode.Knockback) {
-            knockbackTile = tile;
-        }
-    }
 
     public void CastPlayerSpellAt(Tile tile) {
         currentSpell = SelectedObject.spells[0];

@@ -52,7 +52,7 @@ public class TileGrid : MonoBehaviour
 
     public DirectionArrow Arrow;
 
-    public static GridMode mode = GridMode.Move;
+    public GridMode mode = GridMode.Move;
 
     protected Tile knockbackTile;
 

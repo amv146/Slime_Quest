@@ -4,26 +4,55 @@ using UnityEngine;
 
 public class TurnSystem : MonoBehaviour
 {
-    public Queue<CharacterController> turnQueue;
-    public CharacterController currentPlayer;
-    const int MAX_MOVES = 2;
-    int movesLeft;
+    private Queue<CharacterController> turnQueue;
+    private CharacterController currentPlayer;
+    public TileGrid tileGrid {
+        set
+        {
+            turnQueue.Clear();
+            foreach (CharacterController character in value.characters) {
+                EnqueuePlayer(character);
 
-
-    void ChangeTurn() {
-        currentPlayer = turnQueue.Dequeue();
-        turnQueue.Enqueue(currentPlayer);
+            }
+        }
+        get
+        {
+            return tileGrid;
+        }
     }
+    const int MAX_MOVES = 2;
+    private int movesLeft;
+    private bool hasAttacked = false;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Start() {
+        movesLeft = MAX_MOVES;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void ChangeTurn() {
+        SetPlayerTurn();
+        EnqueuePlayer(currentPlayer);
+    }
+
+    public void EnqueuePlayer(CharacterController character) {
+        turnQueue.Enqueue(character);
+    }
+
+    void SetPlayerTurn() {
+        currentPlayer = turnQueue.Dequeue();
+        movesLeft = MAX_MOVES;
+        hasAttacked = false;
+    }
+
+    public void UseAttack() {
+
+    }
+
+    public void UseMove() {
+
+    }
+
+    public bool IsPlayerTurn() {
+        return (currentPlayer == GameObject.FindGameObjectWithTag("Player"));
     }
 }
