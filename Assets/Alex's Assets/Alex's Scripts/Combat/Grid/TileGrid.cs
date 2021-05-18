@@ -114,14 +114,6 @@ public class TileGrid : MonoBehaviour
         
     }
 
-    /** private bool SetUpTile(int tileX, int tileZ, GameObject gameObject, out Tile tile) {
-        if ((tile = gameObject.GetComponent<Tile>()) != null) {
-            tile.SetTileCoords(tileX, tileZ);
-            tiles[tileX, tileZ] = tile;
-        }
-    }
-    */
-
     public List<Tile> GetCurrentPath() {
         return this.path;
     }
@@ -188,5 +180,4 @@ public class TileGrid : MonoBehaviour
                 return 0;
         }
     }
-    
 }

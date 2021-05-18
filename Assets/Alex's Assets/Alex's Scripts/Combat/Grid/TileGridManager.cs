@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class TileGridManager : TileGrid {
+
     public override void Start() {
         base.Start();
         Tile.clickCallback = RunClickCallback;
         Tile.pathFindCallback = HighlightNewPath;
     }
-
 
     public void HighlightNewPath(Tile targetTile) {
         if (!isHighlightEnabled) {
