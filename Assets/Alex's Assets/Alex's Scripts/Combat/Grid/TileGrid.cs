@@ -43,7 +43,7 @@ public class TileGrid : MonoBehaviour
     public Material SelectCursorPublic;
     public Material AttackCursorPublic;
 
-    private List<Tile> path = new List<Tile>();
+    protected List<Tile> path = new List<Tile>();
     public bool isHighlightEnabled = true;
 
     public bool IsPlayerTurn;
@@ -54,11 +54,11 @@ public class TileGrid : MonoBehaviour
 
     public static GridMode mode = GridMode.Move;
 
-    private Tile knockbackTile;
+    protected Tile knockbackTile;
 
     public Spell currentSpell;
 
-    private void Start() {
+    public virtual void Start() {
         ArrowStraight = ArrowStraightPublic;
         ArrowCorner = ArrowCornerPublic;
         ArrowEnd = ArrowEndPublic;
@@ -67,8 +67,7 @@ public class TileGrid : MonoBehaviour
 
         tiles = new Tile[this.GetXLength(), this.GetZLength()];
         Arrow.gameObject.SetActive(false);
-        Tile.clickCallback = RunClickCallback;
-        Tile.pathFindCallback = HighlightNewPath;
+        
         Tile.tileGrassHighlighted = TileGrassHighlighted;
         Tile.tileGrass = TileGrass;
         for (int x = 0; x <= xMax / xSpacing; ++x) {
@@ -188,130 +187,6 @@ public class TileGrid : MonoBehaviour
             default:
                 return 0;
         }
-    }
-
-    public void HighlightNewPath(Tile targetTile) {
-        if (!isHighlightEnabled) {
-            return;
-        }
-        List<Tile> oldPath = this.path;
-
-        for (int i = 0; i < oldPath.Count; ++i) {
-            Tile tile = oldPath[i];
-            tile.SetHighlightLayerState(false);
-            tile.SetCursorLayerState(false);
-        }
-
-        FindPathTo(targetTile);
-
-        for (int i = 0; i < path.Count; ++i) {
-            Tile tile = path[i];
-            SwitchHighlight(tile, true);
-            if (i == 0) {
-                tile.SetHighlightLayerState(false);
-            }
-            if (i == path.Count - 1) {
-                tile.SetCursorLayerState(true);
-            }
-        }
-
-        if (mode == GridMode.Knockback) {
-            Arrow.SetDirection(SelectedObject.currentTile, path[path.Count - 1]);
-        }
-    }
-
-    public void UnhighlightCurrentPath() {
-        for (int i = 0; i < path.Count; ++i) {
-            Tile tile = path[i];
-            tile.SetHighlightLayerState(false);
-            tile.SetCursorLayerState(false);
-        }
-    }
-
-    public void SwitchHighlight(Tile tile, bool highlight) {
-        if (mode == GridMode.Move) {
-            if (highlight) {
-                tile.SetHighlightLayerState(true);
-            }
-            else {
-                tile.SetHighlightLayerState(false);
-            }
-        }
-        else if (mode == GridMode.Attack) {
-            if (!KnockbackTileExists() && tile != path[path.Count - 1]) {
-                return;
-            }
-            if (highlight) {
-                tile.SetHighlightMaterialTo(TileGrassAttack);
-                tile.SetHighlightLayerState(true);
-            }
-            else {
-                tile.SetHighlightLayerState(false);
-            }
-        }
-    }
-
-    public void RunClickCallback(Tile tile) {
-        if (mode == GridMode.Move && IsPlayerTurn) {
-            UnhighlightCurrentPath();
-            isHighlightEnabled = false;
-            MoveSelectedObjectTo(tile);
-        }
-        else if (mode == GridMode.Attack) {
-            CastPlayerSpellAt(path[path.Count - 1]);
-        }
-        else if (mode == GridMode.Knockback) {
-            knockbackTile = tile;
-        }
-    }
-
-    public void CastPlayerSpellAt(Tile tile) {
-        currentSpell = SelectedObject.spells[0];
-        SelectedObject.CastSpell(tile);
-        IsPlayerTurn = !IsPlayerTurn;
-        TurnText.GetComponent<TextController>().UpdateUI(IsPlayerTurn);
-    }
-
-    public void MoveSelectedObjectTo(Tile tile) {
-        isHighlightEnabled = false;
-        if (!SelectedObject.readyToMove) {
-            return;
-        }
-        StartCoroutine(RunMoveObjectTo(tile));
-    }
-
-    IEnumerator RunMoveObjectTo(Tile tile) {
-        Tile firstTile = SelectedObject.currentTile;
-        foreach (Tile pathTile in path) {
-            if (firstTile == pathTile) {
-                continue;
-            }
-            SelectedObject.MoveTo(this.TileCoordToWorldCoord(pathTile));
-            SelectedObject.currentTile = pathTile;
-            yield return new WaitUntil(() => SelectedObject.readyToMove);
-        }
-        isHighlightEnabled = true;
-        IsPlayerTurn = !IsPlayerTurn;
-        TurnText.GetComponent<TextController>().UpdateUI(IsPlayerTurn);
-
-    }
-
-    public void changeTurns()
-    {
-        IsPlayerTurn = !IsPlayerTurn;
-        TurnText.GetComponent<TextController>().UpdateUI(IsPlayerTurn);
-    }
-
-    public bool KnockbackTileExists() {
-        return (knockbackTile != null);
-    }
-
-    public Tile GetKnockbackTile() {
-        return knockbackTile;
-    }
-
-    public void ResetKnockbackTile() {
-        knockbackTile = null;
     }
     
 }

@@ -1242,7 +1242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1222047375}
-  - component: {fileID: 1222047374}
+  - component: {fileID: 1222047373}
   m_Layer: 8
   m_Name: Grid
   m_TagString: Untagged
@@ -1250,7 +1250,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!114 &1222047374
+--- !u!114 &1222047373
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1259,7 +1259,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1222047372}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c646230e70b244bfd99250f096d664ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c7db1b9860624d92baf36538a6a604d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   xMin: 0
@@ -1481,7 +1481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff43e18e14a6424e8680d1681c4e506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileGrid: {fileID: 1222047374}
+  tileGrid: {fileID: 1222047373}
   player: {fileID: 1111830724}
 --- !u!4 &1440891080
 Transform:

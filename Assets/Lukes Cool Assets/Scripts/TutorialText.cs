@@ -8,7 +8,7 @@ public class TutorialText : MonoBehaviour
 {
     public Text tutorialText;
     public GameObject textController;
-    public GameObject tileGrid;
+    public TileGridManager tileGrid;
 
     public CharacterController character;
     public GameObject enemy;
@@ -26,7 +26,7 @@ public class TutorialText : MonoBehaviour
     }
     IEnumerator textWait()
     {
-        tileGrid.GetComponent<TileGrid>().changeTurns();
+        tileGrid.changeTurns();
         tutorialText.text = "So Since you are ready to fight here is how combat works";
         yield return new WaitForSeconds(5f);
         tutorialText.text = "As you can see in the top left there is a Turn UI that keeps track of whos turn it is";
@@ -36,7 +36,7 @@ public class TutorialText : MonoBehaviour
         tutorialText.text = "If you get attacked with a spell you will lose one bar at 0 bars you lose";
         yield return new WaitForSeconds(5f);
         tutorialText.text = "Now for Movement, on your turn you can hover over the grid and can look at where you can move";
-        tileGrid.GetComponent<TileGrid>().changeTurns();
+        tileGrid.changeTurns();
         yield return new WaitForSeconds(5f);
         tutorialText.text = "After making a path you can click on a location to move there which uses your entire turn";
         while(tileGrid.GetComponent<TileGrid>().IsPlayerTurn == true)
@@ -46,7 +46,7 @@ public class TutorialText : MonoBehaviour
         tutorialText.text = "Another thing that can use your turn is using an attack which is similar to moving";
         yield return new WaitForSeconds(5f);
         tutorialText.text = "To attack you need to press A and you will see the location where your attack will go";
-        tileGrid.GetComponent<TileGrid>().changeTurns();
+        tileGrid.changeTurns();
 
         while(tileGrid.GetComponent<TileGrid>().IsPlayerTurn == true)
         {
@@ -56,7 +56,7 @@ public class TutorialText : MonoBehaviour
         yield return new WaitForSeconds(5f);
         tutorialText.text = "Now that you understand the basics try to defeat me";
         yield return new WaitForSeconds(5f);
-        tileGrid.GetComponent<TileGrid>().changeTurns();
+        tileGrid.changeTurns();
         tutorialText.text = "";
         while(enemy.GetComponent<CharacterController>().IsAlive() && character.IsAlive())
         {
@@ -111,7 +111,7 @@ public class TutorialText : MonoBehaviour
                 }
                 enemy.GetComponent<CharacterController>().currentTile = tileGrid.GetComponent<TileGrid>().GetTileAt((int)enemy.transform.position.x,(int)enemy.transform.position.z);
                 Debug.Log("X: "+enemy.GetComponent<CharacterController>().currentTile.tileX+" Z: "+enemy.GetComponent<CharacterController>().currentTile.tileZ);
-                tileGrid.GetComponent<TileGrid>().changeTurns();
+                tileGrid.changeTurns();
             }
             yield return new WaitForSeconds(1f);
         }

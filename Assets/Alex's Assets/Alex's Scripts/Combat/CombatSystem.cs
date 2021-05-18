@@ -7,7 +7,7 @@ using static SpellSystem;
 public delegate void SpellCallback(CharacterController character, Tile targetTile, Spell spell);
 
 public class CombatSystem : MonoBehaviour {
-    public TileGrid tileGrid;
+    public TileGridManager tileGrid;
     public CharacterController player;
     private List<CharacterController> characters;
     

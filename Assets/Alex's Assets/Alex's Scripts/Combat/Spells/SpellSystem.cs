@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 using System.Collections.Generic;
 
 public class SpellSystem {
-    public static TileGrid tileGrid;
+    public static TileGridManager tileGrid;
 
     public static CharacterController RunBoxSpell(Tile targetTile, Spell spell, int layer, CharacterController character, Action<Tile> alwaysActions = null, Action<Tile, CharacterController> offensiveActions = null) {
         CharacterController enemy = null;
