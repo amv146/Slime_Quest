@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class TurnSystem : MonoBehaviour
 {
-    private Queue<CharacterController> turnQueue;
+    private Queue<CharacterController> turnQueue = new Queue<CharacterController>();
     private CharacterController currentPlayer;
-    public TileGrid tileGrid {
+    private TileGridManager __tileGrid;
+    public TileGridManager tileGrid {
         set
         {
+            __tileGrid = value;
             turnQueue.Clear();
             foreach (CharacterController character in value.characters) {
                 EnqueuePlayer(character);
@@ -17,7 +19,7 @@ public class TurnSystem : MonoBehaviour
         }
         get
         {
-            return tileGrid;
+            return __tileGrid;
         }
     }
     const int MAX_MOVES = 2;
@@ -29,9 +31,13 @@ public class TurnSystem : MonoBehaviour
         movesLeft = MAX_MOVES;
     }
 
-    void ChangeTurn() {
+    public void ChangeTurn() {
         SetPlayerTurn();
         EnqueuePlayer(currentPlayer);
+
+        if (!IsPlayerTurn()) {
+            currentPlayer.GetComponent<AI>().MoveAlongPath(tileGrid);
+        }
     }
 
     public void EnqueuePlayer(CharacterController character) {
@@ -45,14 +51,31 @@ public class TurnSystem : MonoBehaviour
     }
 
     public void UseAttack() {
-
+        hasAttacked = true;
+        movesLeft--;
+        CheckForTurnSwitch();
     }
 
     public void UseMove() {
+        movesLeft--;
+        CheckForTurnSwitch();
+    }
 
+    private void CheckForTurnSwitch() {
+        if (CurrentTurnIsOver()) {
+            ChangeTurn();
+        }
     }
 
     public bool IsPlayerTurn() {
-        return (currentPlayer == GameObject.FindGameObjectWithTag("Player"));
+        return (currentPlayer.tag == "Player");
+    }
+
+    public bool CurrentTurnIsOver() {
+        return movesLeft == 0;
+    }
+
+    public bool CanCurrentPlayerAttack() {
+        return !hasAttacked;
     }
 }

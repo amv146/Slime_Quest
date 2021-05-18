@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using static SpellSystem;
+using System.Linq;
 
 public delegate void SpellCallback(CharacterController character, Tile targetTile, Spell spell);
 
@@ -10,15 +11,25 @@ public class CombatSystem : MonoBehaviour {
     public TurnSystem turnSystem;
     public TileGridManager tileGrid;
     public CharacterController player;
-    private List<CharacterController> characters;
+    private static List<CharacterController> characters;
     
 
     // Use this for initialization
-    void Start() {
+    void Awake() {
+        characters = new List<CharacterController>();
+
+        foreach (CharacterController player in from gameObject in GameObject.FindGameObjectsWithTag("Player") select gameObject.GetComponent<CharacterController>()) {
+            characters.Add(player);
+        }
+
+        foreach (CharacterController character in from gameObject in GameObject.FindGameObjectsWithTag("Character") select gameObject.GetComponent<CharacterController>()) {
+            characters.Add(character);
+        }
+        tileGrid.characters = characters;
         SpellSystem.tileGrid = tileGrid;
         turnSystem.tileGrid = tileGrid;
-        characters = tileGrid.characters;
         Tile.clickCallback = RunClickCallback;
+        turnSystem.ChangeTurn();
         foreach (CharacterController character in characters) {
             character.castCallback = CastSpell;
         }
@@ -26,8 +37,30 @@ public class CombatSystem : MonoBehaviour {
 
     public void RunClickCallback(Tile tile) {
         if (turnSystem.IsPlayerTurn()) {
-            tileGrid.RunClickEvents(tile);
+            if (tileGrid.mode == GridMode.Move) {
+                CombatMove(tile);
+            }
+            else if (tileGrid.mode == GridMode.Attack && turnSystem.CanCurrentPlayerAttack()) {
+                CombatAttack();
+            }
+            else if (tileGrid.mode == GridMode.Knockback) {
+                CombatKnockback(tile);
+            }
         }
+    }
+
+    private void CombatKnockback(Tile tile) {
+        tileGrid.RunKnockbackEvent(tile);
+    }
+
+    private void CombatAttack() {
+        tileGrid.RunSpellEvent();
+        turnSystem.UseAttack();
+    }
+
+    private void CombatMove(Tile tile) {
+        tileGrid.RunMoveEvent(tile);
+        turnSystem.UseMove();
     }
 
     // Update is called once per frame

@@ -11,9 +11,7 @@ public class TileGridManager : TileGrid {
 
     public void RunClickEvents(Tile tile) {
         if (mode == GridMode.Move) {
-            UnhighlightCurrentPath();
-            isHighlightEnabled = false;
-            MoveSelectedObjectTo(tile);
+            
         }
         else if (mode == GridMode.Attack) {
             CastPlayerSpellAt(path[path.Count - 1]);
@@ -21,6 +19,20 @@ public class TileGridManager : TileGrid {
         else if (mode == GridMode.Knockback) {
             knockbackTile = tile;
         }
+    }
+
+    public void RunMoveEvent(Tile tile) {
+        UnhighlightCurrentPath();
+        isHighlightEnabled = false;
+        SelectedObject.MoveAlongPath(this);
+    }
+
+    public void RunSpellEvent() {
+        CastPlayerSpellAt(path[path.Count - 1]);
+    }
+
+    public void RunKnockbackEvent(Tile tile) {
+        knockbackTile = tile;
     }
 
     public void HighlightNewPath(Tile targetTile) {
@@ -96,29 +108,7 @@ public class TileGridManager : TileGrid {
         TurnText.GetComponent<TextController>().UpdateUI(IsPlayerTurn);
     }
 
-    public void MoveSelectedObjectTo(Tile tile) {
-        isHighlightEnabled = false;
-        if (!SelectedObject.readyToMove) {
-            return;
-        }
-        StartCoroutine(RunMoveObjectTo(tile));
-    }
-
-    IEnumerator RunMoveObjectTo(Tile tile) {
-        Tile firstTile = SelectedObject.currentTile;
-        foreach (Tile pathTile in path) {
-            if (firstTile == pathTile) {
-                continue;
-            }
-            SelectedObject.MoveTo(this.TileCoordToWorldCoord(pathTile));
-            SelectedObject.currentTile = pathTile;
-            yield return new WaitUntil(() => SelectedObject.readyToMove);
-        }
-        isHighlightEnabled = true;
-        IsPlayerTurn = !IsPlayerTurn;
-        TurnText.GetComponent<TextController>().UpdateUI(IsPlayerTurn);
-
-    }
+    
 
     public void changeTurns() {
         IsPlayerTurn = !IsPlayerTurn;

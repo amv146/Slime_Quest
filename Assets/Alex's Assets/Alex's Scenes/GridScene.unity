@@ -1041,7 +1041,7 @@ GameObject:
   - component: {fileID: 1111830724}
   m_Layer: 2
   m_Name: Character
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1093,7 +1093,7 @@ MonoBehaviour:
   currentTile: {fileID: 0}
   health: 0
   castRadius: 3
-  KeybindingAbilityOne: 0
+  KeybindingAbilityOne: 97
   KeybindingAbilityTwo: 0
 --- !u!1 &1191706013
 GameObject:
@@ -1280,7 +1280,7 @@ MonoBehaviour:
   SelectedObject: {fileID: 1111830724}
   characters:
   - {fileID: 1111830724}
-  - {fileID: 1609007693}
+  - {fileID: 0}
   character: {fileID: 1111830718}
   ArrowStraightPublic: {fileID: 2100000, guid: 87e2cae87752aa346b7fca1f7f374845, type: 2}
   ArrowCornerPublic: {fileID: 2100000, guid: c0233804405c24045ab22ab92c20ea75, type: 2}
@@ -1463,6 +1463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1440891080}
   - component: {fileID: 1440891079}
+  - component: {fileID: 1440891081}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1482,7 +1483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff43e18e14a6424e8680d1681c4e506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSystem: {fileID: 0}
+  turnSystem: {fileID: 1440891081}
   tileGrid: {fileID: 1222047373}
   player: {fileID: 1111830724}
 --- !u!4 &1440891080
@@ -1499,6 +1500,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1440891081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440891078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ced78199f405426199c7208d4d354d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1609007692
 GameObject:
   m_ObjectHideFlags: 0
@@ -1526,7 +1539,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1609007692}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0adf8d6c1c52d4e86b55d2f585abf6c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a5c90205bbec4508b65f404cf9740e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movementAmount: 3

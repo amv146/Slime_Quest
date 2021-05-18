@@ -45,4 +45,26 @@ public class CharacterController : Movement
     public void setTile(Tile T) {
         
     }
+
+    public void MoveAlongPath(TileGrid tileGrid) {
+        if (!readyToMove) {
+            return;
+        }
+        StartCoroutine(RunMoveObjectTo(tileGrid));
+    }
+
+    IEnumerator RunMoveObjectTo(TileGrid tileGrid) {
+        Tile firstTile = currentTile;
+        foreach (Tile pathTile in tileGrid.GetCurrentPath()) {
+            if (firstTile == pathTile) {
+                continue;
+            }
+            MoveTo(tileGrid.TileCoordToWorldCoord(pathTile));
+            currentTile = pathTile;
+            yield return new WaitUntil(() => readyToMove);
+        }
+
+        tileGrid.isHighlightEnabled = true;
+
+    }
 }
