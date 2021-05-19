@@ -539,6 +539,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9072976014231390822, guid: 8cb4ca07cb71020448f039119ab138bc,
+        type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1428933162}
     - target: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
         type: 3}
       propertyPath: m_Name
@@ -1144,9 +1149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad7dfc46d36ceb49989a766165e98c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: ffd69d71a56142842aba9a3a1a65ce64, type: 2}
+  Mixer: {fileID: 0}
   MusicName: SoundEffects
-  slider: {fileID: 1155606484}
+  Slider: {fileID: 0}
 --- !u!114 &1155606484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1263,7 +1268,7 @@ MonoBehaviour:
   Keybinding: 
   PauseMenu: {fileID: 7591115619630864240}
   SceneToChange: MainMenu
-  BType: 4
+  BType: 5
   PlayerData: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
     type: 3}
 --- !u!114 &1175937770
@@ -1628,6 +1633,116 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371662553}
   m_CullTransparentMesh: 1
+--- !u!1001 &1414035901
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2416780920262986273, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986273, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986274, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: IsInGame
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986274, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: PauseMenu
+      value: 
+      objectReference: {fileID: 7591115619630864240}
+    - target: {fileID: 2416780920262986275, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986287, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986287, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986287, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986287, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.2164396
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986287, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986287, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986287, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.97629607
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986287, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986287, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986287, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920262986287, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920980298247, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920980298296, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416780920980298298, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c, type: 3}
+--- !u!1 &1428933162 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2416780920262986275, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1414035901}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1433570996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,9 +2006,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad7dfc46d36ceb49989a766165e98c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: ffd69d71a56142842aba9a3a1a65ce64, type: 2}
+  Mixer: {fileID: 0}
   MusicName: Background
-  slider: {fileID: 1634522654}
+  Slider: {fileID: 0}
 --- !u!114 &1634522654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2141,7 +2256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Keybinding: 
   PauseMenu: {fileID: 7591115619630864240}
-  SceneToChange: CrossRoads
+  SceneToChange: Slimetopia
   BType: 0
   PlayerData: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
     type: 3}

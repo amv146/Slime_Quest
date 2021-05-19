@@ -1,12 +1,21 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
-
-//Work on Updating the Text so whenever it is called the text will automatically be the Keybinding: Key
-//One way is to have the button's text at start be equal to the Keybinding: Key
+/*
+*   Name: Luke Driscoll, Mark Griffin, Alex Vallone, Grant Ward
+*   ID: 2344496, 2340502
+*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu
+*   Class: CPSC245-01/CPSC244-01
+*   Final Project
+*   This is my own work. I did not cheat on this assignment
+*   This class controls the buttons and how they work
+*   This code is used in the Menu which is the final project for my(Luke Driscoll) unity programming class(CPSC245) that I am currently taking
+*   I(Luke Driscoll) am the only person who has worked on this section
+*   I needed to include this menu inside this project to show the functionality of the menu
+*/
 
 
 
@@ -22,7 +31,8 @@ public class ButtonController : MonoBehaviour
         Keybinding,
         Exit,
         Resume,
-        Pause
+        Pause,
+        PauseMenu
     }
     public ButtonType BType;
 
@@ -38,7 +48,8 @@ public class ButtonController : MonoBehaviour
             this.GetComponentInChildren<Text>().text = "Keybinding: "+pData.GetKeybind(Keybinding);
         }
     }
-    public void updateButtonText()
+    //Updates the text of the button
+    public void UpdateButtonText()
     {
         if(BType == ButtonType.Keybinding)
         {
@@ -50,12 +61,13 @@ public class ButtonController : MonoBehaviour
     {
         
     }
+    //Each button does something different on press
     public void OnButtonPress()
     {
 
         if(BType == ButtonType.Keybinding)
         {
-            StartCoroutine(getButton());
+            StartCoroutine(GetButton());
         }
         else if(BType == ButtonType.SceneChanger)
         {
@@ -65,6 +77,7 @@ public class ButtonController : MonoBehaviour
         {
             PauseMenu.SetActive(false);
             Time.timeScale = 1;
+            PlayerPrefs.Save();
         }
         else if(BType == ButtonType.Exit)
         {
@@ -75,9 +88,15 @@ public class ButtonController : MonoBehaviour
             PauseMenu.SetActive(true);
             Time.timeScale = 0;
         }
+        else if(BType == ButtonType.PauseMenu)
+        {
+            PauseMenu.SetActive(true);
+        }
     }
-    IEnumerator getButton()
+    //Runs the keybinding changer
+    IEnumerator GetButton()
     {
+        //List of all keycodes
         List<KeyCode> keyCodes = new List<KeyCode>();
         keyCodes.Add(KeyCode.Alpha0);
         keyCodes.Add(KeyCode.Alpha1);
@@ -143,30 +162,37 @@ public class ButtonController : MonoBehaviour
         //Wait for next button to be pressed
         while(!isExit)
         {
-
             //If button is pressed
             //Check if the Button equals any enum
             foreach (KeyCode key in keyCodes)
             {
+
                 if(Input.GetKey(key))
                 {
                     //Parse the keycode into a string
                     string keyString = key.ToString();
                     //Change Specified Keybinding to this Keycode
                     KeyCode keycode = (KeyCode)System.Enum.Parse(typeof(KeyCode), keyString);
-                    if(!pData.isDuplicate(keycode))
+                    Debug.Log("Keycode Recognized");
+                    //CHecks if duplicate
+                    if(!pData.IsDuplicate(keycode))
                     {
-                        pData.updateKeybinding(Keybinding,keyString);
+                        Debug.Log("Not Duplicate");
+                        //Updates keybinding and its text
+                        pData.UpdateKeybinding(Keybinding,keyString);
                         this.GetComponentInChildren<Text>().text = "Keybinding: " + keyString;
+                        isExit = true;
+                    }
+                    else
+                    {
+                        Debug.Log("Is Duplicate");
                         isExit = true;
                     }
                     break;
 
                 }
             }
-            //If it does
-            //Go to PlayerData and change the keybinding to new key
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSecondsRealtime(0.1f);
         }
     }
 }

@@ -1,3 +1,15 @@
+/*
+*   Name: Luke Driscoll, Mark Griffin, Alex Vallone, Grant Ward
+*   ID: 2344496, 2340502
+*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu
+*   Class: CPSC245-01/CPSC244-01
+*   Final Project
+*   This is my own work. I did not cheat on this assignment
+*   This class controls the player and how it moves and animates
+*   This code is used in the Menu which is the final project for my(Luke Driscoll) unity programming class(CPSC245) that I am currently taking
+*   I(Luke Driscoll) am the only person who has worked on this section
+*   I needed to include this menu inside this project to show the functionality of the menu
+*/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +18,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody PlayerRigidBody;
-
+    public bool IsInGame = true;
     public SpriteRenderer PlayerSpriteRenderer;
 
     public Sprite FrontSprite;
@@ -15,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     public float MoveSpeed;
 
-    private Vector2 moveInput;
+    private Vector2 MoveInput;
     
     public Animator Anim;
 
@@ -36,17 +48,23 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        string sceneName = SceneManager.GetActiveScene().name;
-        if (SceneDataManager.Instance.scenePositions.ContainsKey(sceneName)) {
-            transform.position = SceneDataManager.Instance.scenePositions[SceneManager.GetActiveScene().name];
+        if(IsInGame)
+        {
+            //Makes the character move to its previous posistion in the scene
+            string sceneName = SceneManager.GetActiveScene().name;
+            if (SceneDataManager.Instance.ScenePositions.ContainsKey(sceneName)) {
+                transform.position = SceneDataManager.Instance.ScenePositions[SceneManager.GetActiveScene().name];
+            }
         }
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(PauseKeybinding))
+        //Gets user input
+        if(Input.GetKey(PauseKeybinding) && IsInGame)
         {
             PauseMenu.SetActive(true);
             Time.timeScale = 0;
@@ -54,51 +72,51 @@ public class PlayerController : MonoBehaviour
         }
         if(Input.GetKey(MoveUpKeybinding))
         {
-            moveInput.y = 1;
+            MoveInput.y = 1;
         }
         else if(Input.GetKey(MoveDownKeybinding))
         {
-            moveInput.y = -1;
+            MoveInput.y = -1;
         }
         else
         {
-            moveInput.y = 0;
+            MoveInput.y = 0;
         }
         if(Input.GetKey(MoveLeftKeybinding))
         {
-            moveInput.x = -1;
+            MoveInput.x = -1;
         }
         else if(Input.GetKey(MoveRightKeybinding))
         {
-            moveInput.x = 1;
+            MoveInput.x = 1;
         }
         else
         {
-            moveInput.x = 0;
+            MoveInput.x = 0;
         }
         
+        //Moves Character
+        PlayerRigidBody.velocity = new Vector3(MoveInput.x * MoveSpeed, PlayerRigidBody.velocity.y, MoveInput.y * MoveSpeed);
 
-        PlayerRigidBody.velocity = new Vector3(moveInput.x * MoveSpeed, PlayerRigidBody.velocity.y, moveInput.y * MoveSpeed);
-
-
-        if(!flipX && moveInput.x < 0)
+        //Flip animations
+        if(!flipX && MoveInput.x < 0)
         {
             flipX = true;
             Anim.SetTrigger("Flip");
 
         }
-        else if(flipX && moveInput.x > 0)
+        else if(flipX && MoveInput.x > 0)
         {
             flipX = false;
             Anim.SetTrigger("Flip");
         }
-        if(!flipY && moveInput.y < 0)
+        if(!flipY && MoveInput.y < 0)
         {
             flipY = true;
             Anim.SetTrigger("FlipY");
             Anim.SetBool("FacingForwards",true);
         }
-        else if(flipY && moveInput.y > 0)
+        else if(flipY && MoveInput.y > 0)
         {
             flipY = false;
             Anim.SetTrigger("FlipY");

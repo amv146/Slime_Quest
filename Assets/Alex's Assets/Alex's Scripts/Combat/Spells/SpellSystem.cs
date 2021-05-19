@@ -3,7 +3,15 @@ using System.Collections;
 using System;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
-
+/*
+*   Name: Luke Driscoll, Mark Griffin, Alex Vallone, Grant Ward
+*   ID: 2344496, 2340502
+*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu
+*   Class: CPSC244-01
+*   Final Project
+*   This is my own work. I did not cheat on this assignment
+*   This class controls the Spell System
+*/
 public class SpellSystem {
     public static TileGridManager tileGrid;
 

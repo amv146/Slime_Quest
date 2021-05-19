@@ -2,7 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+/*
+*   Name: Luke Driscoll, Mark Griffin, Alex Vallone, Grant Ward
+*   ID: 2344496, 2340502
+*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu
+*   Class: CPSC244-01
+*   Final Project
+*   This is my own work. I did not cheat on this assignment
+*   This class controls the scene changing
+*/
 public class SceneTransition : MonoBehaviour
 {
     public string sceneToLoad;
@@ -10,12 +18,12 @@ public class SceneTransition : MonoBehaviour
     public VectorValue playerPrevPos;
 
     public void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Player") && !other.isTrigger && SceneDataManager.Instance.isReadyToLoad) {
+        if (other.CompareTag("Player") && !other.isTrigger && SceneDataManager.Instance.IsReadyToLoad) {
             SceneDataManager.AddPosition(SceneManager.GetActiveScene().name, other.gameObject.transform.position);
             SceneManager.LoadScene(sceneToLoad);
         }
     }
-    public void transitionScene(string scene) {
+    public void TransitionScene(string scene) {
         SceneManager.LoadScene(scene);
     }
     // Start is called before the first frame update

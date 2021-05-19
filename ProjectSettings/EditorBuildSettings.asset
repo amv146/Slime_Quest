@@ -23,4 +23,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Lukes Cool Assets/Scenes/MainMenu.unity
     guid: 9835ea3bd73abfd408c8275f3cff3f99
+  - enabled: 1
+    path: Assets/Lukes Cool Assets/Scenes/Cave Floor 2.unity
+    guid: b8fe735de86699d4c99e4235aefb0ac8
+  - enabled: 1
+    path: Assets/Lukes Cool Assets/Scenes/Cave Floor 1.unity
+    guid: a874914a52c58bc47a494709a513e660
+  - enabled: 1
+    path: Assets/Lukes Cool Assets/Scenes/SlimeTopia.unity
+    guid: 857c39605dcc4fe43bf83828a411f2b0
   m_configObjects: {}

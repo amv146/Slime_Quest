@@ -1,15 +1,24 @@
-﻿using UnityEngine;
+﻿/*
+*   Name: Luke Driscoll, Mark Griffin, Alex Vallone, Grant Ward
+*   ID: 2344496, 2340502
+*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu
+*   Class: CPSC244-01
+*   Final Project
+*   This is my own work. I did not cheat on this assignment
+*   This class controls the scene changing
+*/
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class SceneDataManager : MonoBehaviour {
     public static SceneDataManager Instance;
-    public Dictionary<string, Vector3> scenePositions;
-    public bool isReadyToLoad = true;
+    public Dictionary<string, Vector3> ScenePositions;
+    public bool IsReadyToLoad = true;
     // Use this for initialization
 
     private void Awake() {
-        scenePositions = new Dictionary<string, Vector3>();
+        ScenePositions = new Dictionary<string, Vector3>();
         if (Instance == null) {
             DontDestroyOnLoad(gameObject);
             Instance = this;
@@ -20,20 +29,20 @@ public class SceneDataManager : MonoBehaviour {
 
 
     }
-
+    //Adds a position to for the Scenes
     public static void AddPosition(string sceneName, Vector3 position) {
         Instance.StartCoroutine(Instance.ToggleLoadState());
-        if (Instance.scenePositions.ContainsKey(sceneName)) {
-            Instance.scenePositions[sceneName] = position;
+        if (Instance.ScenePositions.ContainsKey(sceneName)) {
+            Instance.ScenePositions[sceneName] = position;
         }
         else {
-            Instance.scenePositions.Add(sceneName, position);
+            Instance.ScenePositions.Add(sceneName, position);
         }
     }
 
     public IEnumerator ToggleLoadState() {
-        isReadyToLoad = false;
+        IsReadyToLoad = false;
         yield return new WaitForSeconds(0.05f);
-        isReadyToLoad = true;
+        IsReadyToLoad = true;
     }
 }

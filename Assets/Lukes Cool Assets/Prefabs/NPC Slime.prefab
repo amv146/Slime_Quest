@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 9054182652002880571}
   - component: {fileID: 9054182652002880564}
   - component: {fileID: 9054182652002880565}
-  - component: {fileID: 9054182652002880566}
-  - component: {fileID: 9054182652002880570}
   - component: {fileID: 9054182652002880523}
   m_Layer: 0
   m_Name: NPC Slime
@@ -67,43 +65,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &9054182652002880566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9054182652002880567}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8b28e59266eb754baf9eb2387ea6fc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerRigidBody: {fileID: 9054182652002880565}
-  PlayerSpriteRenderer: {fileID: 9054182653526121518}
-  FrontSprite: {fileID: 21300000, guid: 7baaf5bd5ad8ee74caa471c84986e426, type: 3}
-  BackSprite: {fileID: 21300000, guid: 238e18a569a1fbe428915ff202b5f6ef, type: 3}
-  MoveSpeed: 5
-  Anim: {fileID: 9054182653526121516}
---- !u!95 &9054182652002880570
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9054182652002880567}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 969b563c3a57d0241870edd42fae0ae9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!136 &9054182652002880523
 CapsuleCollider:
   m_ObjectHideFlags: 0
