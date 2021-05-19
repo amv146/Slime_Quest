@@ -1890,8 +1890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0680d4e601fdb4141800cdd0feb1aaf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Cave Floor 2
-  playerPrevPos: {fileID: 0}
+  SceneToLoad: Cave Floor 2
 --- !u!1 &691436736
 GameObject:
   m_ObjectHideFlags: 0
@@ -3051,6 +3050,17 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6567725658299738253, guid: bd8824549d7690f429c536333e998176,
+        type: 3}
+      propertyPath: Slider
+      value: 
+      objectReference: {fileID: 1119640070}
+    - target: {fileID: 6567725658299738253, guid: bd8824549d7690f429c536333e998176,
+        type: 3}
+      propertyPath: Mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: ffd69d71a56142842aba9a3a1a65ce64,
+        type: 2}
     - target: {fileID: 7958867152803589416, guid: bd8824549d7690f429c536333e998176,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -3066,8 +3076,43 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9008434789816266003, guid: bd8824549d7690f429c536333e998176,
+        type: 3}
+      propertyPath: Mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: ffd69d71a56142842aba9a3a1a65ce64,
+        type: 2}
+    - target: {fileID: 9008434789816266003, guid: bd8824549d7690f429c536333e998176,
+        type: 3}
+      propertyPath: Slider
+      value: 
+      objectReference: {fileID: 1119640071}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd8824549d7690f429c536333e998176, type: 3}
+--- !u!114 &1119640070 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 935199181607250878, guid: bd8824549d7690f429c536333e998176,
+    type: 3}
+  m_PrefabInstance: {fileID: 1119640069}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1119640071 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 486904820505603087, guid: bd8824549d7690f429c536333e998176,
+    type: 3}
+  m_PrefabInstance: {fileID: 1119640069}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1123606844
 GameObject:
   m_ObjectHideFlags: 0
@@ -4047,8 +4092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0680d4e601fdb4141800cdd0feb1aaf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: CrossRoads
-  playerPrevPos: {fileID: 0}
+  SceneToLoad: Cave Floor 1
 --- !u!65 &1568382991
 BoxCollider:
   m_ObjectHideFlags: 0

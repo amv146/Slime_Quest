@@ -234,7 +234,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Tutorial
+          m_StringArgument: GridScene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &177054069
@@ -1280,6 +1280,11 @@ PrefabInstance:
       propertyPath: sceneToLoad
       value: CrossRoads
       objectReference: {fileID: 0}
+    - target: {fileID: 7152392493105343955, guid: a2a5b31e6b8d5104080ede1e2c32c3ee,
+        type: 3}
+      propertyPath: SceneToLoad
+      value: Crossroads
+      objectReference: {fileID: 0}
     - target: {fileID: 7152392493105343956, guid: a2a5b31e6b8d5104080ede1e2c32c3ee,
         type: 3}
       propertyPath: m_Name
@@ -1653,6 +1658,28 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6567725658299738253, guid: bd8824549d7690f429c536333e998176,
+        type: 3}
+      propertyPath: Mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: ffd69d71a56142842aba9a3a1a65ce64,
+        type: 2}
+    - target: {fileID: 6567725658299738253, guid: bd8824549d7690f429c536333e998176,
+        type: 3}
+      propertyPath: Slider
+      value: 
+      objectReference: {fileID: 1685684271}
+    - target: {fileID: 9008434789816266003, guid: bd8824549d7690f429c536333e998176,
+        type: 3}
+      propertyPath: Mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: ffd69d71a56142842aba9a3a1a65ce64,
+        type: 2}
+    - target: {fileID: 9008434789816266003, guid: bd8824549d7690f429c536333e998176,
+        type: 3}
+      propertyPath: Slider
+      value: 
+      objectReference: {fileID: 1685684272}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd8824549d7690f429c536333e998176, type: 3}
 --- !u!1 &1685684270 stripped
@@ -1661,6 +1688,30 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1685684269}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1685684271 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 935199181607250878, guid: bd8824549d7690f429c536333e998176,
+    type: 3}
+  m_PrefabInstance: {fileID: 1685684269}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1685684272 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 486904820505603087, guid: bd8824549d7690f429c536333e998176,
+    type: 3}
+  m_PrefabInstance: {fileID: 1685684269}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1745828282
 PrefabInstance:
   m_ObjectHideFlags: 0

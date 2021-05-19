@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 /*
 *   Name: Luke Driscoll, Mark Griffin, Alex Vallone, Grant Ward
-*   ID: 2344496, 2340502
-*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu
+*   ID: 2344496, 2340502, 2343966
+*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu, vallone@chapman.edu
 *   Class: CPSC244-01
 *   Final Project
 *   This is my own work. I did not cheat on this assignment
@@ -14,12 +14,11 @@ using UnityEngine.SceneManagement;
 */
 public class TutorialText : MonoBehaviour
 {
-    public Text tutorialText;
-    public GameObject textController;
-    public TileGridManager tileGrid;
+    public Text TutText;
+    public TileGridManager TileGrid;
 
-    public CharacterController character;
-    public GameObject enemy;
+    public CharacterController Character;
+    public GameObject Enemy;
 
     // Start is called before the first frame update
     void Start()
@@ -32,46 +31,47 @@ public class TutorialText : MonoBehaviour
     {
         
     }
+    //
     IEnumerator textWait()
     {
-        tileGrid.changeTurns();
-        tutorialText.text = "So Since you are ready to fight here is how combat works";
+        TileGrid.changeTurns();
+        TutText.text = "So Since you are ready to fight here is how combat works";
         yield return new WaitForSeconds(5f);
-        tutorialText.text = "As you can see in the top left there is a Turn UI that keeps track of whos turn it is";
+        TutText.text = "As you can see in the top left there is a Turn UI that keeps track of whos turn it is";
         yield return new WaitForSeconds(5f);
-        tutorialText.text = "Also, if you look below either me or you, you can see 5 bars which is your health";
+        TutText.text = "Also, if you look below either me or you, you can see 5 bars which is your health";
         yield return new WaitForSeconds(5f);
-        tutorialText.text = "If you get attacked with a spell you will lose one bar at 0 bars you lose";
+        TutText.text = "If you get attacked with a spell you will lose one bar at 0 bars you lose";
         yield return new WaitForSeconds(5f);
-        tutorialText.text = "Now for Movement, on your turn you can hover over the grid and can look at where you can move";
-        tileGrid.changeTurns();
+        TutText.text = "Now for Movement, on your turn you can hover over the grid and can look at where you can move";
+        TileGrid.changeTurns();
         yield return new WaitForSeconds(5f);
-        tutorialText.text = "After making a path you can click on a location to move there which uses your entire turn";
-        while(tileGrid.GetComponent<TileGrid>().IsPlayerTurn == true)
+        TutText.text = "After making a path you can click on a location to move there which uses your entire turn";
+        while(TileGrid.GetComponent<TileGrid>().IsPlayerTurn == true)
         {
             yield return new WaitForSeconds(1f);
         }
-        tutorialText.text = "Another thing that can use your turn is using an attack which is similar to moving";
+        TutText.text = "Another thing that can use your turn is using an attack which is similar to moving";
         yield return new WaitForSeconds(5f);
-        tutorialText.text = "To attack you need to press A and you will see the location where your attack will go";
-        tileGrid.changeTurns();
+        TutText.text = "To attack you need to press A and you will see the location where your attack will go";
+        TileGrid.changeTurns();
 
-        while(tileGrid.GetComponent<TileGrid>().IsPlayerTurn == true)
+        while(TileGrid.GetComponent<TileGrid>().IsPlayerTurn == true)
         {
             yield return new WaitForSeconds(1f);
         }
-        tutorialText.text = "Right now since you are a begineer you can only attack in a box around the location";
+        TutText.text = "Right now since you are a begineer you can only attack in a box around the location";
         yield return new WaitForSeconds(5f);
-        tutorialText.text = "Now that you understand the basics try to defeat me";
+        TutText.text = "Now that you understand the basics try to defeat me";
         yield return new WaitForSeconds(5f);
-        tileGrid.changeTurns();
-        tutorialText.text = "";
-        while(enemy.GetComponent<CharacterController>().IsAlive() && character.IsAlive())
+        TileGrid.changeTurns();
+        TutText.text = "";
+        while(Enemy.GetComponent<CharacterController>().IsAlive() && Character.IsAlive())
         {
-            if(!tileGrid.GetComponent<TileGrid>().IsPlayerTurn)
+            if(!TileGrid.GetComponent<TileGrid>().IsPlayerTurn)
             {
                 int moveDir;
-                Vector3 pos = enemy.transform.position;
+                Vector3 pos = Enemy.transform.position;
                 while(true)
                 {
                     moveDir = Random.Range(0, 3);
@@ -81,7 +81,7 @@ public class TutorialText : MonoBehaviour
                     //RightDown 3 z-
                     if(moveDir == 0)
                     {
-                        if(enemy.transform.position.z < 5)
+                        if(Enemy.transform.position.z < 5)
                         {
                             pos.z += 1;
                             break;
@@ -89,7 +89,7 @@ public class TutorialText : MonoBehaviour
                     }
                     else if(moveDir == 1)
                     {
-                        if(enemy.transform.position.x < 5)
+                        if(Enemy.transform.position.x < 5)
                         {
                             pos.x += 1;
                             break;
@@ -97,7 +97,7 @@ public class TutorialText : MonoBehaviour
                     }
                     else if(moveDir == 2)
                     {
-                        if(enemy.transform.position.z > 0)
+                        if(Enemy.transform.position.z > 0)
                         {
                             pos.z -= 1;
                             break;
@@ -105,21 +105,21 @@ public class TutorialText : MonoBehaviour
                     }
                     else if(moveDir == 3)
                     {
-                        if(enemy.transform.position.x > 0)
+                        if(Enemy.transform.position.x > 0)
                         {
                             pos.x -= 1;
                             break;
                         }
                     }
                 }
-                enemy.GetComponent<CharacterController>().MoveTo(pos);
-                while(!enemy.GetComponent<CharacterController>().readyToMove)
+                Enemy.GetComponent<CharacterController>().MoveTo(pos);
+                while(!Enemy.GetComponent<CharacterController>().readyToMove)
                 {
                     yield return new WaitForSeconds(0.1f);
                 }
-                enemy.GetComponent<CharacterController>().currentTile = tileGrid.GetComponent<TileGrid>().GetTileAt((int)enemy.transform.position.x,(int)enemy.transform.position.z);
-                Debug.Log("X: "+enemy.GetComponent<CharacterController>().currentTile.tileX+" Z: "+enemy.GetComponent<CharacterController>().currentTile.tileZ);
-                tileGrid.changeTurns();
+                Enemy.GetComponent<CharacterController>().currentTile = TileGrid.GetComponent<TileGrid>().GetTileAt((int)Enemy.transform.position.x,(int)Enemy.transform.position.z);
+                Debug.Log("X: "+Enemy.GetComponent<CharacterController>().currentTile.tileX+" Z: "+Enemy.GetComponent<CharacterController>().currentTile.tileZ);
+                TileGrid.changeTurns();
             }
             yield return new WaitForSeconds(1f);
         }

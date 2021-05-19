@@ -6,8 +6,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 /*
 *   Name: Luke Driscoll, Mark Griffin, Alex Vallone, Grant Ward
-*   ID: 2344496, 2340502
-*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu
+*   ID: 2344496, 2340502, 2343966
+*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu, vallone@chapman.edu
 *   Class: CPSC245-01/CPSC244-01
 *   Final Project
 *   This is my own work. I did not cheat on this assignment
@@ -16,10 +16,6 @@ using UnityEngine.SceneManagement;
 *   I(Luke Driscoll) am the only person who has worked on this section
 *   I needed to include this menu inside this project to show the functionality of the menu
 */
-
-
-
-
 public class ButtonController : MonoBehaviour
 {
     public string Keybinding;

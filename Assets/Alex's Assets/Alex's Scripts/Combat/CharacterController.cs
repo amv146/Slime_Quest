@@ -5,8 +5,8 @@ using UnityEngine;
 using static SpellMethods;
 /*
 *   Name: Luke Driscoll, Mark Griffin, Alex Vallone, Grant Ward
-*   ID: 2344496, 2340502
-*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu
+*   ID: 2344496, 2340502, 2343966
+*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu, vallone@chapman.edu 
 *   Class: CPSC244-01
 *   Final Project
 *   This is my own work. I did not cheat on this assignment
@@ -26,6 +26,7 @@ public class CharacterController : Movement
     public Spell currentSpell;
     public KeyCode KeybindingAbilityOne;
     public KeyCode KeybindingAbilityTwo;
+    public AudioSource SoundEffect;
     // Start is called before the first frame update
 
     private void Start() 

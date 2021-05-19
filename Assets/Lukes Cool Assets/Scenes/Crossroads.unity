@@ -1151,8 +1151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0680d4e601fdb4141800cdd0feb1aaf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Slimetopia
-  playerPrevPos: {fileID: 0}
+  SceneToLoad: SlimeTopia
 --- !u!65 &1434803237
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1454,6 +1453,17 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6567725658299738253, guid: bd8824549d7690f429c536333e998176,
+        type: 3}
+      propertyPath: Mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: ffd69d71a56142842aba9a3a1a65ce64,
+        type: 2}
+    - target: {fileID: 6567725658299738253, guid: bd8824549d7690f429c536333e998176,
+        type: 3}
+      propertyPath: Slider
+      value: 
+      objectReference: {fileID: 1510117303}
     - target: {fileID: 7958867152803589416, guid: bd8824549d7690f429c536333e998176,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1469,8 +1479,43 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9008434789816266003, guid: bd8824549d7690f429c536333e998176,
+        type: 3}
+      propertyPath: Mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: ffd69d71a56142842aba9a3a1a65ce64,
+        type: 2}
+    - target: {fileID: 9008434789816266003, guid: bd8824549d7690f429c536333e998176,
+        type: 3}
+      propertyPath: Slider
+      value: 
+      objectReference: {fileID: 1510117304}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd8824549d7690f429c536333e998176, type: 3}
+--- !u!114 &1510117303 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 935199181607250878, guid: bd8824549d7690f429c536333e998176,
+    type: 3}
+  m_PrefabInstance: {fileID: 1510117302}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1510117304 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 486904820505603087, guid: bd8824549d7690f429c536333e998176,
+    type: 3}
+  m_PrefabInstance: {fileID: 1510117302}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1638632219
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1661,8 +1706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0680d4e601fdb4141800cdd0feb1aaf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Cave Floor 1
-  playerPrevPos: {fileID: 0}
+  SceneToLoad: Cave Floor 1
 --- !u!65 &1730753799
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2073,6 +2117,11 @@ PrefabInstance:
         type: 3}
       propertyPath: playerPos.z
       value: 87
+      objectReference: {fileID: 0}
+    - target: {fileID: 7152392493105343955, guid: a2a5b31e6b8d5104080ede1e2c32c3ee,
+        type: 3}
+      propertyPath: SceneToLoad
+      value: DojoInterior
       objectReference: {fileID: 0}
     - target: {fileID: 7152392493105343956, guid: a2a5b31e6b8d5104080ede1e2c32c3ee,
         type: 3}

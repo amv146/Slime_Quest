@@ -1,7 +1,11 @@
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 /*
 *   Name: Luke Driscoll, Mark Griffin, Alex Vallone, Grant Ward
-*   ID: 2344496, 2340502
-*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu
+*   ID: 2344496, 2340502, 2343966
+*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu, vallone@chapman.edu
 *   Class: CPSC245-01/CPSC244-01
 *   Final Project
 *   This is my own work. I did not cheat on this assignment
@@ -10,20 +14,25 @@
 *   I(Luke Driscoll) am the only person who has worked on this section
 *   I needed to include this menu inside this project to show the functionality of the menu
 */
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerData : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject Player;
     public GameObject Character;
+    public bool InCombat = false;
     //At Start check if keybindings exist if not make them
     //IF they do exist then update the characters keybindings.
     void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
+        if(!InCombat)
+        {
+            Player = GameObject.FindGameObjectWithTag("Player");
+            Debug.Log(1);
+        }
+        else
+        {
+            Player = GameObject.FindGameObjectWithTag("PlayerCombat");
+        }
         if(PlayerPrefs.HasKey("KeybindingUp"))
         {
             // The Key Exists
@@ -101,7 +110,7 @@ public class PlayerData : MonoBehaviour
         } 
         else
         {
-            PlayerPrefs.SetString("KeybindingAbiltyOne", "Alpha2");
+            PlayerPrefs.SetString("KeybindingAbiltyOne", "Alpha1");
             string abilityone = PlayerPrefs.GetString("KeybindingAbiltyOne");
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), abilityone);
             Character.GetComponent<CharacterController>().KeybindingAbilityOne = key;

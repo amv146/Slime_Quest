@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 /*
 *   Name: Luke Driscoll, Mark Griffin, Alex Vallone, Grant Ward
-*   ID: 2344496, 2340502
-*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu
+*   ID: 2344496, 2340502, 2343966
+*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu, vallone@chapman.edu
 *   Class: CPSC244-01
 *   Final Project
 *   This is my own work. I did not cheat on this assignment
@@ -13,14 +13,13 @@ using UnityEngine.SceneManagement;
 */
 public class SceneTransition : MonoBehaviour
 {
-    public string sceneToLoad;
+    public string SceneToLoad;
     //public Vector3 playerPos = new Vector3(41,2,93);
-    public VectorValue playerPrevPos;
 
     public void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player") && !other.isTrigger && SceneDataManager.Instance.IsReadyToLoad) {
             SceneDataManager.AddPosition(SceneManager.GetActiveScene().name, other.gameObject.transform.position);
-            SceneManager.LoadScene(sceneToLoad);
+            SceneManager.LoadScene(SceneToLoad);
         }
     }
     public void TransitionScene(string scene) {

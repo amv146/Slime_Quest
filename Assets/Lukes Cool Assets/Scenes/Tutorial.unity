@@ -394,11 +394,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96adf82a32c52ae40bbb71f247dc92bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialText: {fileID: 1586611554}
-  textController: {fileID: 1124968459}
-  tileGrid: {fileID: 1184902925}
-  character: {fileID: 207771666}
-  enemy: {fileID: 222699478}
+  TutText: {fileID: 1586611554}
+  TileGrid: {fileID: 0}
+  Character: {fileID: 207771666}
+  Enemy: {fileID: 222699478}
 --- !u!1 &426430873
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,6 +986,7 @@ MonoBehaviour:
   IsPlayerTurn: 1
   TurnText: {fileID: 1124968462}
   Arrow: {fileID: 81443731}
+  mode: 0
 --- !u!1 &1580899125
 GameObject:
   m_ObjectHideFlags: 0
@@ -1186,7 +1186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff43e18e14a6424e8680d1681c4e506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileGrid: {fileID: 1184902927}
+  turnSystem: {fileID: 0}
+  tileGrid: {fileID: 0}
   player: {fileID: 207771666}
 --- !u!4 &1629748250
 Transform:

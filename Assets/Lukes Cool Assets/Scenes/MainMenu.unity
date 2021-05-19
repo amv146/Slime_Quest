@@ -543,7 +543,12 @@ PrefabInstance:
         type: 3}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 1428933162}
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072976014231390822, guid: 8cb4ca07cb71020448f039119ab138bc,
+        type: 3}
+      propertyPath: InCombat
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
         type: 3}
       propertyPath: m_Name
@@ -1149,9 +1154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad7dfc46d36ceb49989a766165e98c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mixer: {fileID: 0}
+  Mixer: {fileID: 24100000, guid: ffd69d71a56142842aba9a3a1a65ce64, type: 2}
   MusicName: SoundEffects
-  Slider: {fileID: 0}
+  Slider: {fileID: 1155606484}
 --- !u!114 &1155606484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1737,11 +1742,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c, type: 3}
---- !u!1 &1428933162 stripped
+--- !u!1 &1431724750 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 2416780920262986275, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+  m_CorrespondingSourceObject: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
     type: 3}
-  m_PrefabInstance: {fileID: 1414035901}
+  m_PrefabInstance: {fileID: 194640567}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1433570996
 GameObject:
@@ -2006,9 +2011,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad7dfc46d36ceb49989a766165e98c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mixer: {fileID: 0}
+  Mixer: {fileID: 24100000, guid: ffd69d71a56142842aba9a3a1a65ce64, type: 2}
   MusicName: Background
-  Slider: {fileID: 0}
+  Slider: {fileID: 1634522654}
 --- !u!114 &1634522654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2745,8 +2750,7 @@ MonoBehaviour:
   PauseMenu: {fileID: 7591115619630864240}
   SceneToChange: 
   BType: 1
-  PlayerData: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
-    type: 3}
+  PlayerData: {fileID: 1431724750}
 --- !u!1 &7591115618677651876
 GameObject:
   m_ObjectHideFlags: 0
@@ -2894,8 +2898,7 @@ MonoBehaviour:
   PauseMenu: {fileID: 7591115619630864240}
   SceneToChange: 
   BType: 1
-  PlayerData: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
-    type: 3}
+  PlayerData: {fileID: 1431724750}
 --- !u!1 &7591115618824472771
 GameObject:
   m_ObjectHideFlags: 0
@@ -3199,8 +3202,7 @@ MonoBehaviour:
   PauseMenu: {fileID: 7591115619630864240}
   SceneToChange: 
   BType: 1
-  PlayerData: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
-    type: 3}
+  PlayerData: {fileID: 1431724750}
 --- !u!1 &7591115618902799077
 GameObject:
   m_ObjectHideFlags: 0
@@ -3809,8 +3811,7 @@ MonoBehaviour:
   PauseMenu: {fileID: 7591115619630864240}
   SceneToChange: 
   BType: 1
-  PlayerData: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
-    type: 3}
+  PlayerData: {fileID: 1431724750}
 --- !u!222 &7591115619095534416
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3835,8 +3836,7 @@ MonoBehaviour:
   PauseMenu: {fileID: 7591115619630864240}
   SceneToChange: 
   BType: 1
-  PlayerData: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
-    type: 3}
+  PlayerData: {fileID: 1431724750}
 --- !u!1 &7591115619095534428
 GameObject:
   m_ObjectHideFlags: 0
@@ -4185,8 +4185,7 @@ MonoBehaviour:
   PauseMenu: {fileID: 7591115619630864240}
   SceneToChange: 
   BType: 1
-  PlayerData: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
-    type: 3}
+  PlayerData: {fileID: 1431724750}
 --- !u!1 &7591115619190267259
 GameObject:
   m_ObjectHideFlags: 0
@@ -5316,8 +5315,7 @@ MonoBehaviour:
   PauseMenu: {fileID: 7591115619630864240}
   SceneToChange: 
   BType: 1
-  PlayerData: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
-    type: 3}
+  PlayerData: {fileID: 1431724750}
 --- !u!1 &7591115620497604815
 GameObject:
   m_ObjectHideFlags: 0

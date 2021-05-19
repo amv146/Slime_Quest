@@ -5,7 +5,15 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEditor.SceneManagement;
-
+/*
+*   Name: Luke Driscoll, Mark Griffin, Alex Vallone, Grant Ward
+*   ID: 2344496, 2340502, 2343966
+*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu, vallone@chapman.edu
+*   Class: CPSC244-01
+*   Final Project
+*   This is my own work. I did not cheat on this assignment
+*   This class controls the Conversation Piece Dialog
+*/
 public class ConversationPieceDialog : ScriptableWizard
 {
 

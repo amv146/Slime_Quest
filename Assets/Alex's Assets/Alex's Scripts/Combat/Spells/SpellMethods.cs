@@ -2,8 +2,8 @@
 using System.Collections;
 /*
 *   Name: Luke Driscoll, Mark Griffin, Alex Vallone, Grant Ward
-*   ID: 2344496, 2340502
-*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu
+*   ID: 2344496, 2340502, 2343966
+*   Email: ldriscoll@chapman.edu, magriffin@chapman.edu, vallone@chapman.edu
 *   Class: CPSC244-01
 *   Final Project
 *   This is my own work. I did not cheat on this assignment
@@ -12,6 +12,7 @@ using System.Collections;
 public static class SpellMethods {
     public static void DamageEnemy(CharacterController enemy) {
         enemy.DecreaseHealth();
+        enemy.SoundEffect.Play();
     }
 
     public static void BlockTiles(Tile tile) {
