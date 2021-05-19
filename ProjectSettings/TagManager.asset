@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - conversation
+  - Character
   layers:
   - Default
   - TransparentFX

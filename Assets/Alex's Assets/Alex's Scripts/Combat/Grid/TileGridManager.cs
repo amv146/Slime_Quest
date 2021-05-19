@@ -9,22 +9,12 @@ public class TileGridManager : TileGrid {
         Tile.pathFindCallback = HighlightNewPath;
     }
 
-    public void RunClickEvents(Tile tile) {
-        if (mode == GridMode.Move) {
-            
-        }
-        else if (mode == GridMode.Attack) {
-            CastPlayerSpellAt(path[path.Count - 1]);
-        }
-        else if (mode == GridMode.Knockback) {
-            knockbackTile = tile;
-        }
-    }
+  
 
     public void RunMoveEvent(Tile tile) {
         UnhighlightCurrentPath();
         isHighlightEnabled = false;
-        SelectedObject.MoveAlongPath(this);
+        SelectedObject.MoveAlongCurrentPath();
     }
 
     public void RunSpellEvent() {
@@ -124,6 +114,7 @@ public class TileGridManager : TileGrid {
     }
 
     public void ResetKnockbackTile() {
+        mode = GridMode.Move;
         knockbackTile = null;
     }
 }

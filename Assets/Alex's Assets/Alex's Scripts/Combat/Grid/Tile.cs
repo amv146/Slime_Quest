@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public delegate void ClickCallback(Tile tile);
+public delegate IEnumerator ClickCallback(Tile tile);
 public delegate void HighlightCallback(Tile tile);
 
 public class Tile : Node
@@ -49,7 +49,7 @@ public class Tile : Node
     }
 
     private void OnMouseUp() {
-        clickCallback(this);
+        StartCoroutine(clickCallback(this));
     }
 
     private void OnMouseEnter() {

@@ -42,6 +42,18 @@ public class Node : MonoBehaviour, IComparable {
         return Mathf.Abs(targetNode.X - X) + Mathf.Abs(targetNode.Y - Y);
     }
 
+    public int DiagonalDistance(Node targetNode) {
+        int XDistance = Mathf.Abs(this.X - targetNode.X);
+        int YDistance = Mathf.Abs(this.Y - targetNode.Y);
+
+        if (XDistance <= YDistance) {
+            return YDistance;
+        }
+        else {
+            return XDistance;
+        }
+    }
+
     public Vector2 GetDirectionVector(Node targetNode) {
         return new Vector2(targetNode.X - this.X, targetNode.Y - this.Y);
     }

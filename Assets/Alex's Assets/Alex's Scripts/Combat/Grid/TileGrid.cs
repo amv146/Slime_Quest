@@ -126,10 +126,6 @@ public class TileGrid : MonoBehaviour
 
         path.Clear();
 
-        if (mode != GridMode.Knockback && !isHighlightEnabled) {
-            return null;
-        }
-
         int counter = 0;
         foreach (Tile tile in from node in AStarAlgorithm.GetShortestPossiblePath(SelectedObject.currentTile, targetTile) select this.GetTileAt(node)) {
             int currentDistance = GetCurrentDistance(SelectedObject.currentTile, tile);
@@ -160,9 +156,9 @@ public class TileGrid : MonoBehaviour
             case GridMode.Move:
                 return this.path.Count;
             case GridMode.Attack:
-                return this.GetDiagonalDistance(startTile, targetTile);
+                return startTile.DiagonalDistance(targetTile);
             case GridMode.Knockback:
-                return this.GetDiagonalDistance(startTile, targetTile);
+                return startTile.DiagonalDistance(targetTile);
             default:
                 return 0;
         }

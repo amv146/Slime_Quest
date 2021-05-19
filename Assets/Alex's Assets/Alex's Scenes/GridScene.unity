@@ -1278,9 +1278,7 @@ MonoBehaviour:
   TileGrassAttack: {fileID: 2100000, guid: e72d730a539154411984ec5086f2fac9, type: 2}
   TileGrass: {fileID: 2100000, guid: e1c982bfa63f040f081ca1a02d7f0e61, type: 2}
   SelectedObject: {fileID: 1111830724}
-  characters:
-  - {fileID: 1111830724}
-  - {fileID: 0}
+  characters: []
   character: {fileID: 1111830718}
   ArrowStraightPublic: {fileID: 2100000, guid: 87e2cae87752aa346b7fca1f7f374845, type: 2}
   ArrowCornerPublic: {fileID: 2100000, guid: c0233804405c24045ab22ab92c20ea75, type: 2}
@@ -1525,7 +1523,7 @@ GameObject:
   - component: {fileID: 1609007693}
   m_Layer: 2
   m_Name: Sensei
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

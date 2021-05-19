@@ -72,16 +72,6 @@ public static class TileGridExtensions {
         return Mathf.Abs(startNode.X - targetNode.X) + Mathf.Abs(startNode.Y - targetNode.Y);
     }
 
-    public static int GetDiagonalDistance(this TileGrid tileGrid, Node startNode, Node targetNode) {
-        int XDistance = Mathf.Abs(startNode.X - targetNode.X);
-        int YDistance = Mathf.Abs(startNode.Y - targetNode.Y);
-
-        if (XDistance <= YDistance) {
-            return YDistance;
-        }
-        else {
-            return XDistance;
-        }
-    }
+    
 
 }

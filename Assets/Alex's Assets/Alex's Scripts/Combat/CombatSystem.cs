@@ -29,22 +29,39 @@ public class CombatSystem : MonoBehaviour {
         SpellSystem.tileGrid = tileGrid;
         turnSystem.tileGrid = tileGrid;
         Tile.clickCallback = RunClickCallback;
+        AI.aiCallback = RunAICallback;
+
         turnSystem.ChangeTurn();
         foreach (CharacterController character in characters) {
             character.castCallback = CastSpell;
+            character.moveCallback = MoveAlongPath;
         }
     }
 
-    public void RunClickCallback(Tile tile) {
+    public IEnumerator RunClickCallback(Tile tile) {
+        turnSystem.SetMoveOver(false);
         if (turnSystem.IsPlayerTurn()) {
             if (tileGrid.mode == GridMode.Move) {
-                CombatMove(tile);
+                yield return StartCoroutine(CombatMove(tile));
             }
             else if (tileGrid.mode == GridMode.Attack && turnSystem.CanCurrentPlayerAttack()) {
-                CombatAttack();
+                yield return StartCoroutine(CombatAttack());
             }
             else if (tileGrid.mode == GridMode.Knockback) {
                 CombatKnockback(tile);
+            }
+        }
+    }
+
+    public IEnumerator RunAICallback(Tile tile) {
+        Debug.Log("AI2");
+        turnSystem.SetMoveOver(false);
+        if (!turnSystem.IsPlayerTurn()) {
+            if (tileGrid.mode == GridMode.Move) {
+                yield return StartCoroutine(CombatMove(tile));
+            }
+            else if (tileGrid.mode == GridMode.Attack && turnSystem.CanCurrentPlayerAttack()) {
+                yield return StartCoroutine(CombatAttack());
             }
         }
     }
@@ -53,14 +70,19 @@ public class CombatSystem : MonoBehaviour {
         tileGrid.RunKnockbackEvent(tile);
     }
 
-    private void CombatAttack() {
+    private IEnumerator CombatAttack() {
         tileGrid.RunSpellEvent();
-        turnSystem.UseAttack();
+        Debug.Log("Here");
+        yield return new WaitUntil(turnSystem.IsMoveOver);
+        Debug.Log("Attack done");
+        turnSystem.UseMove(true);
+        tileGrid.ResetKnockbackTile();
     }
 
-    private void CombatMove(Tile tile) {
+    private IEnumerator CombatMove(Tile tile) {
         tileGrid.RunMoveEvent(tile);
-        turnSystem.UseMove();
+        yield return new WaitUntil(turnSystem.IsMoveOver);
+        turnSystem.UseMove(false);
     }
 
     // Update is called once per frame
@@ -69,7 +91,9 @@ public class CombatSystem : MonoBehaviour {
     }
 
     void CastSpell(CharacterController character, Tile targetTile, Spell spell) {
-        tileGrid.mode = GridMode.Knockback;
+        if (character.tag == "Player") {
+            tileGrid.mode = GridMode.Knockback;
+        }
         StartCoroutine(KnockbackPlayer(character, targetTile, spell));
     }
 
@@ -123,8 +147,6 @@ public class CombatSystem : MonoBehaviour {
 
     }
 
-    
-
     private IEnumerator RunSpellSequence(CharacterController character, Tile targetTile, Spell spell) {
         tileGrid.mode = GridMode.Attack;
         AStarAlgorithm.ResetTiles(tileGrid);
@@ -142,7 +164,7 @@ public class CombatSystem : MonoBehaviour {
                             otherCharacter.currentTile = tileGrid.GetKnockbackTile();
                             otherCharacter.MoveTo(tileGrid.TileCoordToWorldCoord(tileGrid.GetKnockbackTile()));
                             Debug.Log("Hit!");
-                            spell.action(otherCharacter);
+                            spell.action(character, otherCharacter);
                         });
                 }
                 else if (spell.radiusType == SpellRadiusType.Circle) {
@@ -156,7 +178,7 @@ public class CombatSystem : MonoBehaviour {
                             otherCharacter.currentTile = tileGrid.GetKnockbackTile();
                             otherCharacter.MoveTo(tileGrid.TileCoordToWorldCoord(tileGrid.GetKnockbackTile()));
                             Debug.Log("Hit!");
-                            spell.action(otherCharacter);
+                            spell.action(character, otherCharacter);
                         });
                 }
                 yield return new WaitForSeconds(0.5f);
@@ -177,10 +199,8 @@ public class CombatSystem : MonoBehaviour {
                 }
                 yield return new WaitForSeconds(0.5f);
             }
-
-            tileGrid.mode = GridMode.Attack;
             tileGrid.SelectedObject = character;
-            tileGrid.ResetKnockbackTile();
+            turnSystem.SetMoveOver(true);
         }
         else if (spell.radiusType == SpellRadiusType.Line) {
             List<Node> path = AStarAlgorithm.GetShortestPossiblePath(character.currentTile, targetTile);
@@ -196,7 +216,7 @@ public class CombatSystem : MonoBehaviour {
                         otherCharacter.currentTile = tileGrid.GetKnockbackTile();
                         otherCharacter.MoveTo(tileGrid.TileCoordToWorldCoord(tileGrid.GetKnockbackTile()));
                         Debug.Log("Hit!");
-                        spell.action(otherCharacter);
+                        spell.action(character, otherCharacter);
                     });
                 }
                 yield return new WaitForSeconds(0.10f);
@@ -215,8 +235,30 @@ public class CombatSystem : MonoBehaviour {
 
 
             tileGrid.SelectedObject = character;
-            tileGrid.ResetKnockbackTile();
-            tileGrid.isHighlightEnabled = true;
+            turnSystem.SetMoveOver(true);
         }
+    }
+
+    public void MoveAlongPath(CharacterController character) {
+        if (!character.readyToMove) {
+            return;
+        }
+        StartCoroutine(RunMoveObjectTo(character));
+    }
+
+    IEnumerator RunMoveObjectTo(CharacterController character) {
+        Tile firstTile = character.currentTile;
+        foreach (Tile pathTile in tileGrid.GetCurrentPath()) {
+            if (firstTile == pathTile) {
+                continue;
+            }
+            character.MoveTo(tileGrid.TileCoordToWorldCoord(pathTile));
+            character.currentTile = pathTile;
+            yield return new WaitUntil(() => character.readyToMove);
+        }
+
+        Debug.Log(turnSystem.currentPlayer.name + ": Move over"); 
+        turnSystem.SetMoveOver(true);
+
     }
 }

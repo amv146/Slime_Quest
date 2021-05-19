@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using static SpellMethods;
 
+public delegate void MoveCallback(CharacterController character);
+
 public class CharacterController : Movement
 {
     public Tile currentTile;
@@ -11,6 +13,7 @@ public class CharacterController : Movement
     public int health;
     public List<Spell> spells;
     public SpellCallback castCallback;
+    public MoveCallback moveCallback;
     public int castRadius = 3;
     public Spell currentSpell;
     public KeyCode KeybindingAbilityOne;
@@ -33,6 +36,11 @@ public class CharacterController : Movement
     public void CastSpell(Tile targetTile) {
         castCallback(this, targetTile, spells[0]);
     }
+
+    public void MoveAlongCurrentPath() {
+        moveCallback(this);
+    }
+
     public void DecreaseHealth()
     {
         hc.DecreaseHealth();
@@ -44,27 +52,5 @@ public class CharacterController : Movement
     }
     public void setTile(Tile T) {
         
-    }
-
-    public void MoveAlongPath(TileGrid tileGrid) {
-        if (!readyToMove) {
-            return;
-        }
-        StartCoroutine(RunMoveObjectTo(tileGrid));
-    }
-
-    IEnumerator RunMoveObjectTo(TileGrid tileGrid) {
-        Tile firstTile = currentTile;
-        foreach (Tile pathTile in tileGrid.GetCurrentPath()) {
-            if (firstTile == pathTile) {
-                continue;
-            }
-            MoveTo(tileGrid.TileCoordToWorldCoord(pathTile));
-            currentTile = pathTile;
-            yield return new WaitUntil(() => readyToMove);
-        }
-
-        tileGrid.isHighlightEnabled = true;
-
     }
 }

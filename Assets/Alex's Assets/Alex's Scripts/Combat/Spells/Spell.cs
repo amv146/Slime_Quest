@@ -10,4 +10,5 @@ public class Spell {
     public int radius;
     public SpellAction action;
     public int knockbackRadius;
+    public int power = 0;
 }
