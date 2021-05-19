@@ -68,6 +68,7 @@ public class ButtonController : MonoBehaviour
         else if(BType == ButtonType.SceneChanger)
         {
             SceneManager.LoadScene(SceneToChange);
+            Time.timeScale = 1;
         }
         else if(BType == ButtonType.Resume)
         {
