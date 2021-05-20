@@ -1871,6 +1871,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 418402880}
   m_PrefabAsset: {fileID: 0}
+--- !u!135 &511123191
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511123190}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.0547476
+  m_Center: {x: 0, y: 1.5547476, z: 0}
 --- !u!195 &511123194
 NavMeshAgent:
   m_ObjectHideFlags: 0

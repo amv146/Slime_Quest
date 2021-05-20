@@ -36,6 +36,16 @@ public class HealthController : MonoBehaviour
             tm.text += '-';
         }
     }
+    public void SetHealth(int health)
+    {
+        Debug.Log("Setting Health");
+        tm = GetComponent<TextMesh>();
+        tm.text = "";
+        for (int i = 0; i < health; i++)
+        {
+            tm.text += '-';
+        }
+    }
 
     public void DecreaseHealth()
     {

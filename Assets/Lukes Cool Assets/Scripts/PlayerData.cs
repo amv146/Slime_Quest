@@ -17,6 +17,8 @@ using UnityEngine;
 public class PlayerData : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Sprite EnemySprite;
+    public int EnemyHealth;
     public GameObject Player;
     public PlayerController PlayerCntr;
     public GameObject Character;

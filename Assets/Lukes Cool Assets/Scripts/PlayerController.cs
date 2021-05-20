@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     public KeyCode PauseKeybinding;
     public GameObject PauseMenu;
+    public GameObject DataController;
 
 
     private bool flipX = true;
@@ -122,6 +123,20 @@ public class PlayerController : MonoBehaviour
             Anim.SetTrigger("FlipY");
             Anim.SetBool("FacingForwards",false);
 
+        }
+    }
+    private void OnTriggerStay(Collider other) {
+        if(other.tag == "Enemy")
+        {
+            if(other.gameObject.transform.position.x >= (this.gameObject.transform.position).x && other.gameObject.transform.position.x <= (this.gameObject.transform.position).x)
+            {
+                Debug.Log("Start Encounter");
+                DataController.GetComponent<PlayerData>().EnemySprite = other.gameObject.GetComponent<EnemyController>().EnemySprite;
+                DataController.GetComponent<PlayerData>().EnemyHealth = other.gameObject.GetComponent<EnemyController>().Health;
+                SceneManager.LoadScene("Combat");
+            }
+            
+            
         }
     }
 }

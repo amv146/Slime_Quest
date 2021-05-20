@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using static SpellMethods;
 /*
@@ -54,6 +55,10 @@ public class CharacterController : Movement
     {
         hc.DecreaseHealth();
         health--;
+        if(this.health == 0)
+        {
+            SceneManager.LoadScene("Cave Floor 1");
+        }
     }
     public bool IsAlive()
     {
@@ -61,5 +66,11 @@ public class CharacterController : Movement
     }
     public void setTile(Tile T) {
         
+    }
+    public void SetHealth(int h)
+    {
+        this.health = h;
+        hc = GetComponentInChildren<HealthController>();
+        hc.SetHealth(h);
     }
 }

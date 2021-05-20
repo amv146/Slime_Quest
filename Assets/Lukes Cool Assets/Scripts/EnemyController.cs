@@ -18,6 +18,9 @@ public class EnemyController : MonoBehaviour
     public Vector3 Target;
     private Vector3 Position;
     public bool CanMove;
+    public Sprite EnemySprite;
+    public int Health;
+
     public List<GameObject> Enemies;
     
     void Start()

@@ -523,6 +523,8 @@ MonoBehaviour:
   Player: {fileID: 511123190}
   Target: {x: 0, y: 0, z: 0}
   CanMove: 0
+  EnemySprite: {fileID: 21300000, guid: 7009acdc6890c1f4282de1a2448b5ec0, type: 3}
+  Health: 2
   Enemies: []
 --- !u!4 &172318787 stripped
 Transform:
@@ -629,7 +631,7 @@ PrefabInstance:
     - target: {fileID: 9054182652002880571, guid: fef74b47c4d0b2f4a9d3f1f7054e5a30,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 104
+      value: 105.04
       objectReference: {fileID: 0}
     - target: {fileID: 9054182652002880571, guid: fef74b47c4d0b2f4a9d3f1f7054e5a30,
         type: 3}
@@ -747,6 +749,8 @@ MonoBehaviour:
   Player: {fileID: 511123190}
   Target: {x: 0, y: 0, z: 0}
   CanMove: 0
+  EnemySprite: {fileID: 21300000, guid: 7009acdc6890c1f4282de1a2448b5ec0, type: 3}
+  Health: 2
   Enemies: []
 --- !u!1 &194500184
 GameObject:
@@ -1022,6 +1026,8 @@ MonoBehaviour:
   Player: {fileID: 511123190}
   Target: {x: 0, y: 0, z: 0}
   CanMove: 0
+  EnemySprite: {fileID: 21300000, guid: 7009acdc6890c1f4282de1a2448b5ec0, type: 3}
+  Health: 2
   Enemies: []
 --- !u!4 &308451476 stripped
 Transform:
@@ -1177,6 +1183,8 @@ MonoBehaviour:
   Player: {fileID: 511123190}
   Target: {x: 0, y: 0, z: 0}
   CanMove: 0
+  EnemySprite: {fileID: 21300000, guid: 7009acdc6890c1f4282de1a2448b5ec0, type: 3}
+  Health: 2
   Enemies: []
 --- !u!4 &415266402 stripped
 Transform:
@@ -1196,6 +1204,16 @@ PrefabInstance:
       propertyPath: PauseMenu
       value: 
       objectReference: {fileID: 25262328}
+    - target: {fileID: 2416780920262986274, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: DataController
+      value: 
+      objectReference: {fileID: 1483136048}
+    - target: {fileID: 2416780920262986274, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
+        type: 3}
+      propertyPath: MoveSpeed
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 2416780920262986275, guid: 2f1451f8e2d71774ca0f2a6b2f53f98c,
         type: 3}
       propertyPath: m_Name
@@ -1831,6 +1849,8 @@ MonoBehaviour:
   Player: {fileID: 511123190}
   Target: {x: 0, y: 0, z: 0}
   CanMove: 0
+  EnemySprite: {fileID: 21300000, guid: 7009acdc6890c1f4282de1a2448b5ec0, type: 3}
+  Health: 2
   Enemies: []
 --- !u!1 &658005460
 GameObject:
@@ -2178,6 +2198,8 @@ MonoBehaviour:
   Player: {fileID: 511123190}
   Target: {x: 0, y: 0, z: 0}
   CanMove: 0
+  EnemySprite: {fileID: 21300000, guid: 7009acdc6890c1f4282de1a2448b5ec0, type: 3}
+  Health: 2
   Enemies: []
 --- !u!1 &803357166
 GameObject:
@@ -2527,6 +2549,8 @@ MonoBehaviour:
   Player: {fileID: 511123190}
   Target: {x: 0, y: 0, z: 0}
   CanMove: 0
+  EnemySprite: {fileID: 21300000, guid: 7009acdc6890c1f4282de1a2448b5ec0, type: 3}
+  Health: 2
   Enemies: []
 --- !u!1001 &940700739
 PrefabInstance:
@@ -2789,6 +2813,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DataController
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 9072976014231390841, guid: 8cb4ca07cb71020448f039119ab138bc,
         type: 3}
@@ -3677,6 +3706,12 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1483136048 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1069068954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1542977479
 GameObject:
   m_ObjectHideFlags: 0
@@ -3917,6 +3952,8 @@ MonoBehaviour:
   Player: {fileID: 511123190}
   Target: {x: 0, y: 0, z: 0}
   CanMove: 0
+  EnemySprite: {fileID: 21300000, guid: 7009acdc6890c1f4282de1a2448b5ec0, type: 3}
+  Health: 2
   Enemies: []
 --- !u!1001 &1551763956
 PrefabInstance:
@@ -4269,6 +4306,8 @@ MonoBehaviour:
   Player: {fileID: 511123190}
   Target: {x: 0, y: 0, z: 0}
   CanMove: 0
+  EnemySprite: {fileID: 21300000, guid: 7009acdc6890c1f4282de1a2448b5ec0, type: 3}
+  Health: 2
   Enemies: []
 --- !u!1001 &1620210768
 PrefabInstance:
@@ -4902,6 +4941,8 @@ MonoBehaviour:
   Player: {fileID: 511123190}
   Target: {x: 0, y: 0, z: 0}
   CanMove: 0
+  EnemySprite: {fileID: 21300000, guid: 7009acdc6890c1f4282de1a2448b5ec0, type: 3}
+  Health: 2
   Enemies: []
 --- !u!1001 &1814874375
 PrefabInstance:
@@ -5218,6 +5259,8 @@ MonoBehaviour:
   Player: {fileID: 511123190}
   Target: {x: 0, y: 0, z: 0}
   CanMove: 0
+  EnemySprite: {fileID: 21300000, guid: 7009acdc6890c1f4282de1a2448b5ec0, type: 3}
+  Health: 2
   Enemies: []
 --- !u!1001 &1974573781
 PrefabInstance:
