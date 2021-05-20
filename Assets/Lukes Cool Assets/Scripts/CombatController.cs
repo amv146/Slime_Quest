@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class CombatController : MonoBehaviour
 {
     public GameObject DataController;
     public Sprite sprite;
     public int Health;
+    public AudioMixer a;
     // Start is called before the first frame update
     void Start()
     {
