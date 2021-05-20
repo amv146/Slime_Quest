@@ -18,6 +18,7 @@ public class PlayerData : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject Player;
+    public PlayerController PlayerCntr;
     public GameObject Character;
     public bool InCombat = false;
     //At Start check if keybindings exist if not make them
@@ -26,12 +27,12 @@ public class PlayerData : MonoBehaviour
     {
         if(!InCombat)
         {
-            Player = GameObject.FindGameObjectWithTag("Player");
+            PlayerCntr = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             Debug.Log(1);
         }
         else
         {
-            Player = GameObject.FindGameObjectWithTag("PlayerCombat");
+            PlayerCntr = GameObject.FindGameObjectWithTag("PlayerCombat").GetComponent<PlayerController>();
         }
         if(PlayerPrefs.HasKey("KeybindingUp"))
         {
@@ -39,14 +40,14 @@ public class PlayerData : MonoBehaviour
             string up = PlayerPrefs.GetString("KeybindingUp");
             //Update Keybinding
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), up);
-            Player.GetComponent<PlayerController>().MoveUpKeybinding = key;
+            PlayerCntr.MoveUpKeybinding = key;
         } 
         else
         {
             PlayerPrefs.SetString("KeybindingUp", "W");
             string up = PlayerPrefs.GetString("KeybindingUp");
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), up);
-            Player.GetComponent<PlayerController>().MoveUpKeybinding = key;
+            PlayerCntr.MoveUpKeybinding = key;
             PlayerPrefs.Save();
         }
         if(PlayerPrefs.HasKey("KeybindingDown"))
@@ -55,7 +56,7 @@ public class PlayerData : MonoBehaviour
             string down = PlayerPrefs.GetString("KeybindingDown");
             //Update Keybinding
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), down);
-            Player.GetComponent<PlayerController>().MoveDownKeybinding = key;
+            PlayerCntr.MoveDownKeybinding = key;
 
         } 
         else
@@ -63,7 +64,7 @@ public class PlayerData : MonoBehaviour
             PlayerPrefs.SetString("KeybindingDown", "S");
             string down = PlayerPrefs.GetString("KeybindingDown");
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), down);
-            Player.GetComponent<PlayerController>().MoveDownKeybinding = key;
+            PlayerCntr.MoveDownKeybinding = key;
             PlayerPrefs.Save();
         }
         if(PlayerPrefs.HasKey("KeybindingLeft"))
@@ -72,7 +73,7 @@ public class PlayerData : MonoBehaviour
             string left = PlayerPrefs.GetString("KeybindingLeft");
             //Update Keybinding
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), left);
-            Player.GetComponent<PlayerController>().MoveLeftKeybinding = key;
+            PlayerCntr.MoveLeftKeybinding = key;
 
         } 
         else
@@ -80,7 +81,7 @@ public class PlayerData : MonoBehaviour
             PlayerPrefs.SetString("KeybindingLeft", "A");
             string left = PlayerPrefs.GetString("KeybindingLeft");
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), left);
-            Player.GetComponent<PlayerController>().MoveLeftKeybinding = key;
+            PlayerCntr.MoveLeftKeybinding = key;
             PlayerPrefs.Save();
         }
         if(PlayerPrefs.HasKey("KeybindingRight"))
@@ -89,7 +90,7 @@ public class PlayerData : MonoBehaviour
             string right = PlayerPrefs.GetString("KeybindingRight");
             //Update Keybinding
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), right);
-            Player.GetComponent<PlayerController>().MoveRightKeybinding = key;
+            PlayerCntr.MoveRightKeybinding = key;
 
         } 
         else
@@ -97,7 +98,7 @@ public class PlayerData : MonoBehaviour
             PlayerPrefs.SetString("KeybindingRight", "D");
             string right = PlayerPrefs.GetString("KeybindingRight");
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), right);
-            Player.GetComponent<PlayerController>().MoveRightKeybinding = key;
+            PlayerCntr.MoveRightKeybinding = key;
             PlayerPrefs.Save();
         }
         if(PlayerPrefs.HasKey("KeybindingAbiltyOne"))
@@ -138,14 +139,14 @@ public class PlayerData : MonoBehaviour
             string pause = PlayerPrefs.GetString("KeybindingPauseMenu");
             //Update Keybinding
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), pause);
-            Player.GetComponent<PlayerController>().PauseKeybinding = key;
+            PlayerCntr.PauseKeybinding = key;
         } 
         else
         {
             PlayerPrefs.SetString("KeybindingPauseMenu", "Escape");
             string pause = PlayerPrefs.GetString("KeybindingPauseMenu");
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), pause);
-            Player.GetComponent<PlayerController>().PauseKeybinding = key;
+            PlayerCntr.PauseKeybinding = key;
             PlayerPrefs.Save();
         }
         PlayerPrefs.Save();
@@ -158,25 +159,25 @@ public class PlayerData : MonoBehaviour
         {
             PlayerPrefs.SetString("KeybindingUp", newKeybinding);
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), newKeybinding);
-            Player.GetComponent<PlayerController>().MoveUpKeybinding = key;
+            PlayerCntr.MoveUpKeybinding = key;
         }
         else if(KeybindingName == "KeybindingDown")
         {
             PlayerPrefs.SetString("KeybindingDown", newKeybinding);
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), newKeybinding);
-            Player.GetComponent<PlayerController>().MoveDownKeybinding = key;
+            PlayerCntr.MoveDownKeybinding = key;
         }
         else if(KeybindingName == "KeybindingLeft")
         {
             PlayerPrefs.SetString("KeybindingLeft", newKeybinding);
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), newKeybinding);
-            Player.GetComponent<PlayerController>().MoveLeftKeybinding = key;
+            PlayerCntr.MoveLeftKeybinding = key;
         }
         else if(KeybindingName == "KeybindingRight")
         {
             PlayerPrefs.SetString("KeybindingRight", newKeybinding);
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), newKeybinding);
-            Player.GetComponent<PlayerController>().MoveRightKeybinding = key;
+            PlayerCntr.MoveRightKeybinding = key;
         }
         else if(KeybindingName == "KeybindingAbiltyOne")
         {
@@ -194,7 +195,7 @@ public class PlayerData : MonoBehaviour
         {
             PlayerPrefs.SetString("KeybindingPauseMenu", newKeybinding);
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), newKeybinding);
-            Player.GetComponent<PlayerController>().PauseKeybinding = key;
+            PlayerCntr.PauseKeybinding = key;
         }
         // Save the preference to an external file
         
@@ -206,7 +207,7 @@ public class PlayerData : MonoBehaviour
             string up = PlayerPrefs.GetString("KeybindingUp");
             //Update Keybinding
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), up);
-            Player.GetComponent<PlayerController>().MoveUpKeybinding = key;
+            PlayerCntr.MoveUpKeybinding = key;
 
         } 
         if(PlayerPrefs.HasKey("KeybindingDown"))
@@ -215,7 +216,7 @@ public class PlayerData : MonoBehaviour
             string down = PlayerPrefs.GetString("KeybindingDown");
             //Update Keybinding
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), down);
-            Player.GetComponent<PlayerController>().MoveDownKeybinding = key;
+            PlayerCntr.MoveDownKeybinding = key;
 
         } 
         if(PlayerPrefs.HasKey("KeybindingLeft"))
@@ -224,7 +225,7 @@ public class PlayerData : MonoBehaviour
             string left = PlayerPrefs.GetString("KeybindingLeft");
             //Update Keybinding
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), left);
-            Player.GetComponent<PlayerController>().MoveLeftKeybinding = key;
+            PlayerCntr.MoveLeftKeybinding = key;
 
         } 
         if(PlayerPrefs.HasKey("KeybindingRight"))
@@ -233,7 +234,7 @@ public class PlayerData : MonoBehaviour
             string right = PlayerPrefs.GetString("KeybindingRight");
             //Update Keybinding
             KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), right);
-
+            PlayerCntr.MoveRightKeybinding = key;
         } 
         if(PlayerPrefs.HasKey("KeybindingAbiltyOne"))
         {
@@ -256,8 +257,8 @@ public class PlayerData : MonoBehaviour
             // The Key Exists
             string pause = PlayerPrefs.GetString("KeybindingPauseMenu");
             //Update Keybinding
-            
-            Debug.Log(Player.GetComponent<PlayerController>().PauseKeybinding);
+            KeyCode key = (KeyCode)System.Enum.Parse(typeof(KeyCode), pause);
+            PlayerCntr.PauseKeybinding = key;
         }
         PlayerPrefs.Save();
     }

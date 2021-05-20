@@ -4092,7 +4092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0680d4e601fdb4141800cdd0feb1aaf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneToLoad: Cave Floor 1
+  SceneToLoad: Crossroads
 --- !u!65 &1568382991
 BoxCollider:
   m_ObjectHideFlags: 0
