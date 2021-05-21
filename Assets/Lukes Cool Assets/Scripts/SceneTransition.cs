@@ -18,12 +18,24 @@ public class SceneTransition : MonoBehaviour
 
     public void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player") && !other.isTrigger && SceneDataManager.Instance.IsReadyToLoad) {
+            
             SceneDataManager.AddPosition(SceneManager.GetActiveScene().name, other.gameObject.transform.position);
             SceneManager.LoadScene(SceneToLoad);
+            if(SceneToLoad == "Cave Floor 1" || SceneToLoad == "Cave Floor 2" || SceneToLoad == "Cave Floor 3" )
+            {
+                PlayerPrefs.SetInt("Health",5);
+                PlayerPrefs.Save();
+                Debug.Log("Reseting Health");
+            }
         }
     }
     public void TransitionScene(string scene) {
-        SceneManager.LoadScene(scene);
+        
+        if (SceneDataManager.Instance.IsReadyToLoad) {
+            
+            SceneDataManager.AddPosition(SceneManager.GetActiveScene().name, GameObject.FindGameObjectWithTag("Player").gameObject.transform.position);
+            SceneManager.LoadScene(scene);
+        }
     }
     // Start is called before the first frame update
     void Start() {

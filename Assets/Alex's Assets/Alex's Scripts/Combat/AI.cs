@@ -103,8 +103,8 @@ public class AI : CharacterController {
         int xDistance = enemy.currentTile.X - currentTile.X;
         int yDistance = enemy.currentTile.Y - currentTile.Y;
 
-        int xKnockback = (spell.knockbackRadius) * xDistance / (xDistance + yDistance);
-        int yKnockback = (spell.knockbackRadius) * yDistance / (xDistance + yDistance);
+        int xKnockback = 2 * xDistance / (xDistance + yDistance);//(spell.knockbackRadius) * xDistance / (xDistance + yDistance);
+        int yKnockback = 2 * yDistance / (xDistance + yDistance);//(spell.knockbackRadius) * yDistance / (xDistance + yDistance);
 
         int knockbackTileX;
         int knockbackTileY;

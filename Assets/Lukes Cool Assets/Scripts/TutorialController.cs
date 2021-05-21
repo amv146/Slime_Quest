@@ -14,13 +14,12 @@ using UnityEngine.UI;
 public class TutorialController : MonoBehaviour
 {
     public GameObject Text;
-    public GameObject BattleButton;
+    public GameObject Combatcontroller;
 
     // Start is called before the first frame update
     void Start()
     {
         Text.SetActive(false);
-        BattleButton.SetActive(false);
     }
 
     // Update is called once per frame
@@ -30,11 +29,17 @@ public class TutorialController : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log(1);
         if(other.CompareTag("Player") && !other.isTrigger)
         {
             Text.SetActive(true);
-            BattleButton.SetActive(true);
+            StartCoroutine(StartBattle());
         }
+    }
+    IEnumerator StartBattle()
+    {
+        yield return new WaitForSeconds(30f);
+        Combatcontroller.GetComponent<CombatController>().startBattle();
     }
     
 }

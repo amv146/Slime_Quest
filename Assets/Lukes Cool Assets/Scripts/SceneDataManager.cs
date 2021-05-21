@@ -13,6 +13,9 @@ using System.Collections.Generic;
 */
 public class SceneDataManager : MonoBehaviour {
     public static SceneDataManager Instance;
+    public Sprite EnemySprite;
+    public int EnemieHealth;
+
     public Dictionary<string, Vector3> ScenePositions;
     public bool IsReadyToLoad = true;
     // Use this for initialization

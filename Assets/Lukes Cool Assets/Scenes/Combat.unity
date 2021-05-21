@@ -1172,11 +1172,18 @@ MonoBehaviour:
   movementAmount: 3
   readyToMove: 1
   currentTile: {fileID: 0}
-  health: 10
+  health: 2
   castRadius: 3
   KeybindingAbilityOne: 0
   KeybindingAbilityTwo: 0
   SoundEffect: {fileID: 1440349037}
+  isEnemy: 1
+  isDead: 0
+  ScenePosManager: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
+    type: 3}
+  SceneDataMan: {fileID: 7601228637798655179, guid: 0e084db61c0bc49e89676b9c1feb7a9f,
+    type: 3}
+  sprite: {fileID: 1129049905}
 --- !u!65 &1440349039
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1213,15 +1220,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1440349036}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76815dff42a97884caf63b2df319461d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DataController: {fileID: 84822029}
-  sprite: {fileID: 0}
-  Health: 0
-  a: {fileID: 0}
+  Enemies: []
+  Healths: 
+  ScenePosManager: {fileID: 0}
+  SceneDataMan: {fileID: 0}
 --- !u!1 &1464153305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,7 +1315,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 5456c6e5fe681614bbd401669e642341, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.13
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1431,6 +1439,11 @@ MonoBehaviour:
   KeybindingAbilityOne: 0
   KeybindingAbilityTwo: 0
   SoundEffect: {fileID: 0}
+  isEnemy: 0
+  isDead: 0
+  ScenePosManager: {fileID: 0}
+  SceneDataMan: {fileID: 0}
+  sprite: {fileID: 0}
 --- !u!65 &1595230358
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1623,7 +1636,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1817975172}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -6087717307962557552, guid: ffd69d71a56142842aba9a3a1a65ce64,
     type: 2}
@@ -1631,7 +1644,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1733,6 +1746,13 @@ MonoBehaviour:
   KeybindingAbilityOne: 97
   KeybindingAbilityTwo: 0
   SoundEffect: {fileID: 1817975173}
+  isEnemy: 0
+  isDead: 0
+  ScenePosManager: {fileID: 7601228637798655179, guid: 0e084db61c0bc49e89676b9c1feb7a9f,
+    type: 3}
+  SceneDataMan: {fileID: 7601228637798655179, guid: 0e084db61c0bc49e89676b9c1feb7a9f,
+    type: 3}
+  sprite: {fileID: 713392584}
 --- !u!65 &1817975175
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1830,7 +1850,7 @@ PrefabInstance:
     - target: {fileID: 9072976014231390823, guid: 8cb4ca07cb71020448f039119ab138bc,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9072976014231390841, guid: 8cb4ca07cb71020448f039119ab138bc,
         type: 3}

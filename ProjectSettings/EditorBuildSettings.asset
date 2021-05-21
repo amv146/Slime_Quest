@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Lukes Cool Assets/Scenes/Combat.unity
     guid: 7824efa4471e1844f97de06e2092bcad
+  - enabled: 1
+    path: Assets/Lukes Cool Assets/Scenes/Cave Floor 3.unity
+    guid: f063f28e88189574b9a41c75d341038b
   m_configObjects: {}

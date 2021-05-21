@@ -27,6 +27,17 @@ public class PlayerData : MonoBehaviour
     //IF they do exist then update the characters keybindings.
     void Start()
     {
+        //Player Health
+        if(!PlayerPrefs.HasKey("Health"))
+        {
+            PlayerPrefs.SetInt("Health", 5);
+            PlayerPrefs.Save();
+            Debug.Log("Pref Health: "+PlayerPrefs.GetInt("Health"));
+        }
+        else
+        {
+            Debug.Log("Pref Health: "+PlayerPrefs.GetInt("Health"));
+        }
         if(!InCombat)
         {
             PlayerCntr = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();

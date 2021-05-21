@@ -28,10 +28,18 @@ public class CharacterController : Movement
     public KeyCode KeybindingAbilityOne;
     public KeyCode KeybindingAbilityTwo;
     public AudioSource SoundEffect;
+    public bool isEnemy = false;
+    public bool isDead = false;
+    public GameObject ScenePosManager;
+    public GameObject SceneDataMan;
+    public GameObject sprite;
+
     // Start is called before the first frame update
 
     private void Start() 
     {
+        SceneDataMan = GameObject.FindGameObjectWithTag("SceneManager");
+        ScenePosManager = SceneDataMan;
         spells = new List<Spell>();
         Spell newSpell = new Spell();
         newSpell.radius = 2;
@@ -40,6 +48,18 @@ public class CharacterController : Movement
         newSpell.action = (caster, enemy, tile) => DamageEnemy(enemy);
         spells.Add(newSpell);
         hc = GetComponentInChildren<HealthController>();
+        if(!isEnemy)
+        {  
+            Debug.Log("Health of Player: "+PlayerPrefs.GetInt("Health"));
+            hc.SetHealth(PlayerPrefs.GetInt("Health"));
+        }
+        else
+        {
+            Debug.Log("Health of Enemy: "+health);
+            hc.SetHealth(SceneDataMan.GetComponent<SceneDataManager>().EnemieHealth);
+            this.sprite.GetComponent<SpriteRenderer>().sprite = SceneDataMan.GetComponent<SceneDataManager>().EnemySprite;
+
+        }
         health = hc.currentHealth();
     }
 
@@ -55,9 +75,21 @@ public class CharacterController : Movement
     {
         hc.DecreaseHealth();
         health--;
+        if(!isEnemy)
+        {
+            PlayerPrefs.SetInt("Health",health);
+            PlayerPrefs.Save();
+        }
         if(this.health == 0)
         {
-            SceneManager.LoadScene("Cave Floor 1");
+            if(isEnemy)
+            {
+                ScenePosManager.GetComponent<SceneTransition>().TransitionScene("Cave Floor 1");
+            }
+            else
+            {
+                ScenePosManager.GetComponent<SceneTransition>().TransitionScene("Crossroads");
+            }
         }
     }
     public bool IsAlive()

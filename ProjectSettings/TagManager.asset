@@ -8,6 +8,7 @@ TagManager:
   - Character
   - Enemy
   - PlayerCombat
+  - SceneManager
   layers:
   - Default
   - TransparentFX
